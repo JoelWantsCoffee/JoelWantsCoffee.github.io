@@ -1,0 +1,27 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: "Times New Roman", Times, serif;
+}
+
+.top {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 80px;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF20;
+}
+
+.main {
+
+}
+
+.pannel {
+    height: 200px;
+}
+
+p {
+
+}
