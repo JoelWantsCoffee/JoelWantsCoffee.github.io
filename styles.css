@@ -1,17 +1,52 @@
 body {
-    background-color: black;
+    background-color: #BFD3CA;
     color: white;
     font-family: "Times New Roman", Times, serif;
 }
 
-.top {
+.title {
+    flex: 1;
+
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    width: 100%;
-    height: 80px;
+    align-content: center;
+
+    font-family: 'Abril Fatface';
+    font-size: 256px;
+    font-weight: 400;
+    text-align: right;
+    
     margin: 0;
-    padding: 0;
-    background-color: #FFFFFF20;
+}
+
+.title p {
+    margin: 0;
+}
+
+.subtitle {
+    flex: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: left;
+
+    font-family: 'Karla', sans-serif;
+    font-size: 48px;
+    font-weight: 200;
+}
+
+.subtitle p {
+    margin: 0;
+    margin-right: 8px;
+}
+
+.title-page {
+    display: flex;
+    flex-direction: row;
+
+    height: 100vh;
 }
 
 .main {
