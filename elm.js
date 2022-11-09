@@ -4419,7 +4419,6 @@ var $elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
-var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -4429,6 +4428,59 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$pannel = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('pannel')
+		]),
+	_List_fromArray(
+		[
+			$elm$html$Html$text('chese')
+		]));
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $author$project$Main$scrollDown = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('bar')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					A2($elm$html$Html$Attributes$style, 'display', 'flex'),
+					A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
+					A2($elm$html$Html$Attributes$style, 'align-items', 'center')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							A2($elm$html$Html$Attributes$style, 'marginBottom', '10px')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('scroll down')
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('scroll')
+						]),
+					_List_Nil)
+				]))
+		]));
+var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm$core$List$foldrHelper = F4(
 	function (fn, acc, ctr, ls) {
 		if (!ls.b) {
@@ -4499,10 +4551,12 @@ var $elm$core$List$map = F2(
 			xs);
 	});
 var $elm$html$Html$p = _VirtualDom_node('p');
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
 var $author$project$Main$titlePage = A2(
 	$elm$html$Html$div,
 	_List_fromArray(
@@ -4511,6 +4565,13 @@ var $author$project$Main$titlePage = A2(
 		]),
 	_List_fromArray(
 		[
+			A2(
+			$elm$html$Html$img,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$src('assets/design.svg')
+				]),
+			_List_Nil),
 			A2(
 			$elm$html$Html$p,
 			_List_fromArray(
@@ -4572,12 +4633,43 @@ var $author$project$Main$titlePage = A2(
 						])
 					])))
 		]));
+var $author$project$Main$topBar = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('bar')
+		]),
+	A2(
+		$elm$core$List$map,
+		$elm$html$Html$div(
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('head-button')
+				])),
+		_List_fromArray(
+			[
+				_List_fromArray(
+				[
+					$elm$html$Html$text('about')
+				]),
+				_List_fromArray(
+				[
+					$elm$html$Html$text('home')
+				]),
+				_List_fromArray(
+				[
+					$elm$html$Html$text('contact')
+				])
+			])));
 var $author$project$Main$view = function (model) {
 	return A2(
 		$elm$html$Html$div,
-		_List_Nil,
 		_List_fromArray(
-			[$author$project$Main$titlePage]));
+			[
+				$elm$html$Html$Attributes$class('whole-page')
+			]),
+		_List_fromArray(
+			[$author$project$Main$topBar, $author$project$Main$titlePage, $author$project$Main$scrollDown, $author$project$Main$pannel]));
 };
 var $author$project$Main$main = $author$project$Main$view('dummy model');
 _Platform_export({'Main':{'init':_VirtualDom_init($author$project$Main$main)(0)(0)}});}(this));

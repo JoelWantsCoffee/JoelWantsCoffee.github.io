@@ -6,6 +6,7 @@ import List
 
 
 titlePage = div [ class "title-page" ] [
+    img [ src "assets/design.svg" ] [],
     p [ class "title" ] [ text "Joel"], 
     div [ class "subtitle" ]
             (List.map (\a -> 
@@ -20,8 +21,31 @@ titlePage = div [ class "title-page" ] [
             ])
     ]
 
-view model = div [] [
-    titlePage
+topBar = div [ class "bar" ] <|
+        List.map ( div [ class "head-button" ] ) [
+            [ text "about" ],
+            [ text "home" ],
+            [ text "contact" ]
+        ]
+
+scrollDown = div [ class "bar" ] [ 
+    div [ 
+            style "display" "flex", 
+            style "flex-direction" "column",
+            style "align-items" "center"
+        ] [
+            div [ style "marginBottom" "10px" ] [text "scroll down"], 
+            div [ class "scroll" ] [ ]
+        ]
+ ]
+
+pannel = div [ class "pannel" ] [ text "chese" ]
+
+view model = div [ class "whole-page" ] [
+        topBar,
+        titlePage,
+        scrollDown,
+        pannel
     ]
     
 
