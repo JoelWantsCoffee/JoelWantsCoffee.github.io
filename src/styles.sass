@@ -1,0 +1,116 @@
+$col-back: #FAFAFA
+$col-box: #FFFFFF
+$col-back-elevated: #FAFBFC
+$col-text: #000000
+$col-line: #E7E8E9
+@import url('./src/fluent-light.css')
+
+// $col-back: #000
+// $col-box: #131416
+// $col-back-elevated: #24292e
+// $col-text: #FFF
+// $col-line: #3B3B3B
+// @import url('./src/fluent-dark.css')
+
+$font-stack: 'Inter', sans-serif
+$font-mono: 'JetBrains Mono'
+
+body
+    font: 100% $font-stack
+    background-color: $col-back
+    color: $col-text
+
+
+.navbar
+    box-sizing: border-box
+
+    background-color: $col-box
+    width: 100%
+    height: 10vh
+
+    overflow: hidden
+
+    text-transform: uppercase
+    
+    font-weight: bold
+    font-size: 1.2em
+
+    display: flex
+    align-items: center
+
+    border-bottom: 1px solid $col-line
+
+    ul
+        display: flex
+        justify-content: flex-end
+        gap: 2em
+
+        list-style-type: none
+        margin: 0
+        padding: 0
+
+    li
+        cursor: pointer
+
+
+.main
+    box-sizing: border-box
+    width: 100%
+    height: 90vh
+    overflow-x: hidden
+    overflow-y: scroll
+    padding: 1em
+
+
+.art, .pan
+    background-color: $col-box
+    border: 1px solid $col-line
+    border-radius: 0.75em
+
+.art
+    box-sizing: border-box
+
+    width: 75%
+    padding: 2em
+    padding-top: 0.5em
+    margin: auto
+
+
+.pan
+    width: 60%
+    height: 30vh
+    overflow: hidden
+    padding: 2em
+
+    display: grid
+    grid-template-columns: 1fr 2fr
+    grid-template-rows: 1fr
+    gap: 2em
+    grid-template-areas: "pan-image pan-content"
+
+    cursor: pointer
+
+    .pan-content
+        margin-top: -2em
+
+    .pan-image
+        width: 100%
+        height: 100%
+        border-radius: 0.5em
+        border: 1px solid $col-line
+
+        display: grid
+        place-items: center
+
+
+// $general-font: 'Inter', sans-serif
+// $general-font-feature-settings: "calt", "ccmp", "kern", "salt" 0
+// $col-text-heading: $col-text
+
+.content
+    code
+        background-color: $col-back-elevated
+
+    // .MathJax
+    //     display: flex
+    //     justify-content: center
