@@ -5268,6 +5268,7 @@ var $author$project$Main$update = F2(
 	function (_v0, m) {
 		return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5283,6 +5284,12 @@ var $elm$core$Basics$composeR = F3(
 			f(x));
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm_explorations$markdown$Markdown$defaultOptions = {
 	ak: $elm$core$Maybe$Nothing,
@@ -5321,6 +5328,8 @@ var $elm$html$Html$Attributes$src = function (url) {
 };
 var $elm$html$Html$table = _VirtualDom_node('table');
 var $elm$html$Html$td = _VirtualDom_node('td');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$html$Html$tr = _VirtualDom_node('tr');
 var $author$project$Main$about = A2(
 	$elm$html$Html$div,
@@ -5382,10 +5391,33 @@ var $author$project$Main$about = A2(
 					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('mt-6')
+							$elm$html$Html$Attributes$class('mt-3')
 						]),
-					$elm$core$List$singleton(
-						$author$project$Main$md('When I\'m not up to those things, I like to sing, draw, and write. And play volleyball.')))
+					_List_fromArray(
+						[
+							$elm$html$Html$text('When I\'m not up to those things, I like to sing, draw, and write. And play volleyball.')
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('mt-3')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('A full copy of my cv is available '),
+							A2(
+							$elm$html$Html$a,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$href('./Joel_Richardson_website_cv.pdf'),
+									$elm$html$Html$Attributes$class('italic underline')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('here')
+								]))
+						]))
 				])),
 			A2(
 			$elm$html$Html$div,
@@ -5433,8 +5465,6 @@ var $elm$core$List$append = F2(
 var $elm$core$List$concat = function (lists) {
 	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
 };
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $author$project$Main$topBar = A2(
 	$elm$html$Html$div,
 	_List_fromArray(

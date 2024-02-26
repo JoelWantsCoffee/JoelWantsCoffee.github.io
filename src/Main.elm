@@ -252,7 +252,8 @@ Here's what I've been up to recently:
                         , [ md "**2022 - 2024**", md "Developed **compilers** and **programming languages** for *[Planwisely](https://www.planwisely.io/)*, at Veitch Lister Consulting" ]
                         , [ md "**2023**", md "Completed an **honours thesis** about polynomial factoring, under the supervision of *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*" ]
                         ]
-            , Html.div [ class "mt-6" ] <| List.singleton <| md "When I'm not up to those things, I like to sing, draw, and write. And play volleyball."
+            , Html.div [ class "mt-3" ] [ Html.text "When I'm not up to those things, I like to sing, draw, and write. And play volleyball." ]
+            , Html.div [ class "mt-3" ] [ Html.text "A full copy of my cv is available ", Html.a [ Attr.href "./Joel_Richardson_website_cv.pdf", class "italic underline" ] [ Html.text "here" ] ]
             ]
         , Html.div [ class "w-1/3" ] [ Html.img [ Attr.src "https://lh3.googleusercontent.com/pw/ABLVV84uHoktVcNwxAKcFJ8wxMQ-4EEStJ5-SLBE-MEvHYhHy5-dNbFOk0LLjecZ3IfKiHmORxx3VfVsvPfn-oeVE_5k3JiLDaHUKwBsgrWgvuwtj2z_tX0dYxcLTxrhC5Ai6tI9_ZR0Mugsa6ID-VPB_x9NYg=w1182-h1576-s-no-gm", class "h-full rounded-lg border border-flu-300 object-cover" ] [] ]
         ]
