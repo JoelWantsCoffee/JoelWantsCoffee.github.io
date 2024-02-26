@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url("./src/fluent-light.css");
+@tailwindcss base;
+@tailwindcss components;
+@tailwindcss utilities;
+.content p {
+  @apply my-2;
+}
+.content a {
+  @apply underline;
+}
+.content h1 {
+  @apply text-2xl font-bold mb-4;
+}
+.content h2 {
+  @apply text-lg font-bold mt-6 mb-4;
+}
+.content li {
+  @apply list-decimal ml-5;
+}
+.content code {
+  @apply rounded-md border border-flu-200 my-4;
+}
+
+/*# sourceMappingURL=temp.css.map */

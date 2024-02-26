@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.au,
-		impl.aZ,
-		impl.bL,
+		impl.bl,
+		impl.bN,
+		impl.bJ,
 		function() { return function() {} }
 	);
 });
@@ -3933,6 +3933,447 @@ function _VirtualDom_dekey(keyedNode)
 
 
 
+// ELEMENT
+
+
+var _Debugger_element;
+
+var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debugMetadata, args)
+{
+	return _Platform_initialize(
+		flagDecoder,
+		args,
+		impl.bl,
+		impl.bN,
+		impl.bJ,
+		function(sendToApp, initialModel) {
+			var view = impl.bO;
+			/**/
+			var domNode = args['node'];
+			//*/
+			/**_UNUSED/
+			var domNode = args && args['node'] ? args['node'] : _Debug_crash(0);
+			//*/
+			var currNode = _VirtualDom_virtualize(domNode);
+
+			return _Browser_makeAnimator(initialModel, function(model)
+			{
+				var nextNode = view(model);
+				var patches = _VirtualDom_diff(currNode, nextNode);
+				domNode = _VirtualDom_applyPatches(domNode, currNode, patches, sendToApp);
+				currNode = nextNode;
+			});
+		}
+	);
+});
+
+
+
+// DOCUMENT
+
+
+var _Debugger_document;
+
+var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, debugMetadata, args)
+{
+	return _Platform_initialize(
+		flagDecoder,
+		args,
+		impl.bl,
+		impl.bN,
+		impl.bJ,
+		function(sendToApp, initialModel) {
+			var divertHrefToApp = impl.Z && impl.Z(sendToApp)
+			var view = impl.bO;
+			var title = _VirtualDom_doc.title;
+			var bodyNode = _VirtualDom_doc.body;
+			var currNode = _VirtualDom_virtualize(bodyNode);
+			return _Browser_makeAnimator(initialModel, function(model)
+			{
+				_VirtualDom_divertHrefToApp = divertHrefToApp;
+				var doc = view(model);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.a3);
+				var patches = _VirtualDom_diff(currNode, nextNode);
+				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
+				currNode = nextNode;
+				_VirtualDom_divertHrefToApp = 0;
+				(title !== doc.bM) && (_VirtualDom_doc.title = title = doc.bM);
+			});
+		}
+	);
+});
+
+
+
+// ANIMATION
+
+
+var _Browser_cancelAnimationFrame =
+	typeof cancelAnimationFrame !== 'undefined'
+		? cancelAnimationFrame
+		: function(id) { clearTimeout(id); };
+
+var _Browser_requestAnimationFrame =
+	typeof requestAnimationFrame !== 'undefined'
+		? requestAnimationFrame
+		: function(callback) { return setTimeout(callback, 1000 / 60); };
+
+
+function _Browser_makeAnimator(model, draw)
+{
+	draw(model);
+
+	var state = 0;
+
+	function updateIfNeeded()
+	{
+		state = state === 1
+			? 0
+			: ( _Browser_requestAnimationFrame(updateIfNeeded), draw(model), 1 );
+	}
+
+	return function(nextModel, isSync)
+	{
+		model = nextModel;
+
+		isSync
+			? ( draw(model),
+				state === 2 && (state = 1)
+				)
+			: ( state === 0 && _Browser_requestAnimationFrame(updateIfNeeded),
+				state = 2
+				);
+	};
+}
+
+
+
+// APPLICATION
+
+
+function _Browser_application(impl)
+{
+	var onUrlChange = impl.bA;
+	var onUrlRequest = impl.bB;
+	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
+
+	return _Browser_document({
+		Z: function(sendToApp)
+		{
+			key.a = sendToApp;
+			_Browser_window.addEventListener('popstate', key);
+			_Browser_window.navigator.userAgent.indexOf('Trident') < 0 || _Browser_window.addEventListener('hashchange', key);
+
+			return F2(function(domNode, event)
+			{
+				if (!event.ctrlKey && !event.metaKey && !event.shiftKey && event.button < 1 && !domNode.target && !domNode.hasAttribute('download'))
+				{
+					event.preventDefault();
+					var href = domNode.href;
+					var curr = _Browser_getUrl();
+					var next = $elm$url$Url$fromString(href).a;
+					sendToApp(onUrlRequest(
+						(next
+							&& curr.aJ === next.aJ
+							&& curr.at === next.at
+							&& curr.aF.a === next.aF.a
+						)
+							? $elm$browser$Browser$Internal(next)
+							: $elm$browser$Browser$External(href)
+					));
+				}
+			});
+		},
+		bl: function(flags)
+		{
+			return A3(impl.bl, flags, _Browser_getUrl(), key);
+		},
+		bO: impl.bO,
+		bN: impl.bN,
+		bJ: impl.bJ
+	});
+}
+
+function _Browser_getUrl()
+{
+	return $elm$url$Url$fromString(_VirtualDom_doc.location.href).a || _Debug_crash(1);
+}
+
+var _Browser_go = F2(function(key, n)
+{
+	return A2($elm$core$Task$perform, $elm$core$Basics$never, _Scheduler_binding(function() {
+		n && history.go(n);
+		key();
+	}));
+});
+
+var _Browser_pushUrl = F2(function(key, url)
+{
+	return A2($elm$core$Task$perform, $elm$core$Basics$never, _Scheduler_binding(function() {
+		history.pushState({}, '', url);
+		key();
+	}));
+});
+
+var _Browser_replaceUrl = F2(function(key, url)
+{
+	return A2($elm$core$Task$perform, $elm$core$Basics$never, _Scheduler_binding(function() {
+		history.replaceState({}, '', url);
+		key();
+	}));
+});
+
+
+
+// GLOBAL EVENTS
+
+
+var _Browser_fakeNode = { addEventListener: function() {}, removeEventListener: function() {} };
+var _Browser_doc = typeof document !== 'undefined' ? document : _Browser_fakeNode;
+var _Browser_window = typeof window !== 'undefined' ? window : _Browser_fakeNode;
+
+var _Browser_on = F3(function(node, eventName, sendToSelf)
+{
+	return _Scheduler_spawn(_Scheduler_binding(function(callback)
+	{
+		function handler(event)	{ _Scheduler_rawSpawn(sendToSelf(event)); }
+		node.addEventListener(eventName, handler, _VirtualDom_passiveSupported && { passive: true });
+		return function() { node.removeEventListener(eventName, handler); };
+	}));
+});
+
+var _Browser_decodeEvent = F2(function(decoder, event)
+{
+	var result = _Json_runHelp(decoder, event);
+	return $elm$core$Result$isOk(result) ? $elm$core$Maybe$Just(result.a) : $elm$core$Maybe$Nothing;
+});
+
+
+
+// PAGE VISIBILITY
+
+
+function _Browser_visibilityInfo()
+{
+	return (typeof _VirtualDom_doc.hidden !== 'undefined')
+		? { bi: 'hidden', a6: 'visibilitychange' }
+		:
+	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
+		? { bi: 'mozHidden', a6: 'mozvisibilitychange' }
+		:
+	(typeof _VirtualDom_doc.msHidden !== 'undefined')
+		? { bi: 'msHidden', a6: 'msvisibilitychange' }
+		:
+	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
+		? { bi: 'webkitHidden', a6: 'webkitvisibilitychange' }
+		: { bi: 'hidden', a6: 'visibilitychange' };
+}
+
+
+
+// ANIMATION FRAMES
+
+
+function _Browser_rAF()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		var id = _Browser_requestAnimationFrame(function() {
+			callback(_Scheduler_succeed(Date.now()));
+		});
+
+		return function() {
+			_Browser_cancelAnimationFrame(id);
+		};
+	});
+}
+
+
+function _Browser_now()
+{
+	return _Scheduler_binding(function(callback)
+	{
+		callback(_Scheduler_succeed(Date.now()));
+	});
+}
+
+
+
+// DOM STUFF
+
+
+function _Browser_withNode(id, doStuff)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		_Browser_requestAnimationFrame(function() {
+			var node = document.getElementById(id);
+			callback(node
+				? _Scheduler_succeed(doStuff(node))
+				: _Scheduler_fail($elm$browser$Browser$Dom$NotFound(id))
+			);
+		});
+	});
+}
+
+
+function _Browser_withWindow(doStuff)
+{
+	return _Scheduler_binding(function(callback)
+	{
+		_Browser_requestAnimationFrame(function() {
+			callback(_Scheduler_succeed(doStuff()));
+		});
+	});
+}
+
+
+// FOCUS and BLUR
+
+
+var _Browser_call = F2(function(functionName, id)
+{
+	return _Browser_withNode(id, function(node) {
+		node[functionName]();
+		return _Utils_Tuple0;
+	});
+});
+
+
+
+// WINDOW VIEWPORT
+
+
+function _Browser_getViewport()
+{
+	return {
+		aQ: _Browser_getScene(),
+		aY: {
+			a_: _Browser_window.pageXOffset,
+			a$: _Browser_window.pageYOffset,
+			aZ: _Browser_doc.documentElement.clientWidth,
+			ar: _Browser_doc.documentElement.clientHeight
+		}
+	};
+}
+
+function _Browser_getScene()
+{
+	var body = _Browser_doc.body;
+	var elem = _Browser_doc.documentElement;
+	return {
+		aZ: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ar: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+	};
+}
+
+var _Browser_setViewport = F2(function(x, y)
+{
+	return _Browser_withWindow(function()
+	{
+		_Browser_window.scroll(x, y);
+		return _Utils_Tuple0;
+	});
+});
+
+
+
+// ELEMENT VIEWPORT
+
+
+function _Browser_getViewportOf(id)
+{
+	return _Browser_withNode(id, function(node)
+	{
+		return {
+			aQ: {
+				aZ: node.scrollWidth,
+				ar: node.scrollHeight
+			},
+			aY: {
+				a_: node.scrollLeft,
+				a$: node.scrollTop,
+				aZ: node.clientWidth,
+				ar: node.clientHeight
+			}
+		};
+	});
+}
+
+
+var _Browser_setViewportOf = F3(function(id, x, y)
+{
+	return _Browser_withNode(id, function(node)
+	{
+		node.scrollLeft = x;
+		node.scrollTop = y;
+		return _Utils_Tuple0;
+	});
+});
+
+
+
+// ELEMENT
+
+
+function _Browser_getElement(id)
+{
+	return _Browser_withNode(id, function(node)
+	{
+		var rect = node.getBoundingClientRect();
+		var x = _Browser_window.pageXOffset;
+		var y = _Browser_window.pageYOffset;
+		return {
+			aQ: _Browser_getScene(),
+			aY: {
+				a_: x,
+				a$: y,
+				aZ: _Browser_doc.documentElement.clientWidth,
+				ar: _Browser_doc.documentElement.clientHeight
+			},
+			bb: {
+				a_: x + rect.left,
+				a$: y + rect.top,
+				aZ: rect.width,
+				ar: rect.height
+			}
+		};
+	});
+}
+
+
+
+// LOAD and RELOAD
+
+
+function _Browser_reload(skipCache)
+{
+	return A2($elm$core$Task$perform, $elm$core$Basics$never, _Scheduler_binding(function(callback)
+	{
+		_VirtualDom_doc.location.reload(skipCache);
+	}));
+}
+
+function _Browser_load(url)
+{
+	return A2($elm$core$Task$perform, $elm$core$Basics$never, _Scheduler_binding(function(callback)
+	{
+		try
+		{
+			_Browser_window.location = url;
+		}
+		catch(err)
+		{
+			// Only Firefox can throw a NS_ERROR_MALFORMED_URI exception here.
+			// Other browsers reload the page, so let's be consistent about that.
+			_VirtualDom_doc.location.reload(false);
+		}
+	}));
+}
+
+
+
+
 // VIRTUAL-DOM WIDGETS
 
 
@@ -4017,15 +4458,15 @@ function _Markdown_formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.bk.a;
+	var gfm = options.bh.a;
 
 	return {
 		highlight: toHighlight,
 		gfm: gfm,
-		tables: gfm && gfm.bM,
-		breaks: gfm && gfm.a7,
-		sanitize: options.bI,
-		smartypants: options.bJ
+		tables: gfm && gfm.bK,
+		breaks: gfm && gfm.a4,
+		sanitize: options.bG,
+		smartypants: options.bH
 	};
 }
 var $elm$core$Basics$EQ = 1;
@@ -4518,6 +4959,315 @@ var $elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
 			return 3;
 	}
 };
+var $elm$browser$Browser$External = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$browser$Browser$Internal = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$core$Basics$identity = function (x) {
+	return x;
+};
+var $elm$browser$Browser$Dom$NotFound = $elm$core$Basics$identity;
+var $elm$url$Url$Http = 0;
+var $elm$url$Url$Https = 1;
+var $elm$url$Url$Url = F6(
+	function (protocol, host, port_, path, query, fragment) {
+		return {ap: fragment, at: host, aD: path, aF: port_, aJ: protocol, aK: query};
+	});
+var $elm$core$String$contains = _String_contains;
+var $elm$core$String$length = _String_length;
+var $elm$core$String$slice = _String_slice;
+var $elm$core$String$dropLeft = F2(
+	function (n, string) {
+		return (n < 1) ? string : A3(
+			$elm$core$String$slice,
+			n,
+			$elm$core$String$length(string),
+			string);
+	});
+var $elm$core$String$indexes = _String_indexes;
+var $elm$core$String$isEmpty = function (string) {
+	return string === '';
+};
+var $elm$core$String$left = F2(
+	function (n, string) {
+		return (n < 1) ? '' : A3($elm$core$String$slice, 0, n, string);
+	});
+var $elm$core$String$toInt = _String_toInt;
+var $elm$url$Url$chompBeforePath = F5(
+	function (protocol, path, params, frag, str) {
+		if ($elm$core$String$isEmpty(str) || A2($elm$core$String$contains, '@', str)) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var _v0 = A2($elm$core$String$indexes, ':', str);
+			if (!_v0.b) {
+				return $elm$core$Maybe$Just(
+					A6($elm$url$Url$Url, protocol, str, $elm$core$Maybe$Nothing, path, params, frag));
+			} else {
+				if (!_v0.b.b) {
+					var i = _v0.a;
+					var _v1 = $elm$core$String$toInt(
+						A2($elm$core$String$dropLeft, i + 1, str));
+					if (_v1.$ === 1) {
+						return $elm$core$Maybe$Nothing;
+					} else {
+						var port_ = _v1;
+						return $elm$core$Maybe$Just(
+							A6(
+								$elm$url$Url$Url,
+								protocol,
+								A2($elm$core$String$left, i, str),
+								port_,
+								path,
+								params,
+								frag));
+					}
+				} else {
+					return $elm$core$Maybe$Nothing;
+				}
+			}
+		}
+	});
+var $elm$url$Url$chompBeforeQuery = F4(
+	function (protocol, params, frag, str) {
+		if ($elm$core$String$isEmpty(str)) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var _v0 = A2($elm$core$String$indexes, '/', str);
+			if (!_v0.b) {
+				return A5($elm$url$Url$chompBeforePath, protocol, '/', params, frag, str);
+			} else {
+				var i = _v0.a;
+				return A5(
+					$elm$url$Url$chompBeforePath,
+					protocol,
+					A2($elm$core$String$dropLeft, i, str),
+					params,
+					frag,
+					A2($elm$core$String$left, i, str));
+			}
+		}
+	});
+var $elm$url$Url$chompBeforeFragment = F3(
+	function (protocol, frag, str) {
+		if ($elm$core$String$isEmpty(str)) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var _v0 = A2($elm$core$String$indexes, '?', str);
+			if (!_v0.b) {
+				return A4($elm$url$Url$chompBeforeQuery, protocol, $elm$core$Maybe$Nothing, frag, str);
+			} else {
+				var i = _v0.a;
+				return A4(
+					$elm$url$Url$chompBeforeQuery,
+					protocol,
+					$elm$core$Maybe$Just(
+						A2($elm$core$String$dropLeft, i + 1, str)),
+					frag,
+					A2($elm$core$String$left, i, str));
+			}
+		}
+	});
+var $elm$url$Url$chompAfterProtocol = F2(
+	function (protocol, str) {
+		if ($elm$core$String$isEmpty(str)) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var _v0 = A2($elm$core$String$indexes, '#', str);
+			if (!_v0.b) {
+				return A3($elm$url$Url$chompBeforeFragment, protocol, $elm$core$Maybe$Nothing, str);
+			} else {
+				var i = _v0.a;
+				return A3(
+					$elm$url$Url$chompBeforeFragment,
+					protocol,
+					$elm$core$Maybe$Just(
+						A2($elm$core$String$dropLeft, i + 1, str)),
+					A2($elm$core$String$left, i, str));
+			}
+		}
+	});
+var $elm$core$String$startsWith = _String_startsWith;
+var $elm$url$Url$fromString = function (str) {
+	return A2($elm$core$String$startsWith, 'http://', str) ? A2(
+		$elm$url$Url$chompAfterProtocol,
+		0,
+		A2($elm$core$String$dropLeft, 7, str)) : (A2($elm$core$String$startsWith, 'https://', str) ? A2(
+		$elm$url$Url$chompAfterProtocol,
+		1,
+		A2($elm$core$String$dropLeft, 8, str)) : $elm$core$Maybe$Nothing);
+};
+var $elm$core$Basics$never = function (_v0) {
+	never:
+	while (true) {
+		var nvr = _v0;
+		var $temp$_v0 = nvr;
+		_v0 = $temp$_v0;
+		continue never;
+	}
+};
+var $elm$core$Task$Perform = $elm$core$Basics$identity;
+var $elm$core$Task$succeed = _Scheduler_succeed;
+var $elm$core$Task$init = $elm$core$Task$succeed(0);
+var $elm$core$List$foldrHelper = F4(
+	function (fn, acc, ctr, ls) {
+		if (!ls.b) {
+			return acc;
+		} else {
+			var a = ls.a;
+			var r1 = ls.b;
+			if (!r1.b) {
+				return A2(fn, a, acc);
+			} else {
+				var b = r1.a;
+				var r2 = r1.b;
+				if (!r2.b) {
+					return A2(
+						fn,
+						a,
+						A2(fn, b, acc));
+				} else {
+					var c = r2.a;
+					var r3 = r2.b;
+					if (!r3.b) {
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(fn, c, acc)));
+					} else {
+						var d = r3.a;
+						var r4 = r3.b;
+						var res = (ctr > 500) ? A3(
+							$elm$core$List$foldl,
+							fn,
+							acc,
+							$elm$core$List$reverse(r4)) : A4($elm$core$List$foldrHelper, fn, acc, ctr + 1, r4);
+						return A2(
+							fn,
+							a,
+							A2(
+								fn,
+								b,
+								A2(
+									fn,
+									c,
+									A2(fn, d, res))));
+					}
+				}
+			}
+		}
+	});
+var $elm$core$List$foldr = F3(
+	function (fn, acc, ls) {
+		return A4($elm$core$List$foldrHelper, fn, acc, 0, ls);
+	});
+var $elm$core$List$map = F2(
+	function (f, xs) {
+		return A3(
+			$elm$core$List$foldr,
+			F2(
+				function (x, acc) {
+					return A2(
+						$elm$core$List$cons,
+						f(x),
+						acc);
+				}),
+			_List_Nil,
+			xs);
+	});
+var $elm$core$Task$andThen = _Scheduler_andThen;
+var $elm$core$Task$map = F2(
+	function (func, taskA) {
+		return A2(
+			$elm$core$Task$andThen,
+			function (a) {
+				return $elm$core$Task$succeed(
+					func(a));
+			},
+			taskA);
+	});
+var $elm$core$Task$map2 = F3(
+	function (func, taskA, taskB) {
+		return A2(
+			$elm$core$Task$andThen,
+			function (a) {
+				return A2(
+					$elm$core$Task$andThen,
+					function (b) {
+						return $elm$core$Task$succeed(
+							A2(func, a, b));
+					},
+					taskB);
+			},
+			taskA);
+	});
+var $elm$core$Task$sequence = function (tasks) {
+	return A3(
+		$elm$core$List$foldr,
+		$elm$core$Task$map2($elm$core$List$cons),
+		$elm$core$Task$succeed(_List_Nil),
+		tasks);
+};
+var $elm$core$Platform$sendToApp = _Platform_sendToApp;
+var $elm$core$Task$spawnCmd = F2(
+	function (router, _v0) {
+		var task = _v0;
+		return _Scheduler_spawn(
+			A2(
+				$elm$core$Task$andThen,
+				$elm$core$Platform$sendToApp(router),
+				task));
+	});
+var $elm$core$Task$onEffects = F3(
+	function (router, commands, state) {
+		return A2(
+			$elm$core$Task$map,
+			function (_v0) {
+				return 0;
+			},
+			$elm$core$Task$sequence(
+				A2(
+					$elm$core$List$map,
+					$elm$core$Task$spawnCmd(router),
+					commands)));
+	});
+var $elm$core$Task$onSelfMsg = F3(
+	function (_v0, _v1, _v2) {
+		return $elm$core$Task$succeed(0);
+	});
+var $elm$core$Task$cmdMap = F2(
+	function (tagger, _v0) {
+		var task = _v0;
+		return A2($elm$core$Task$map, tagger, task);
+	});
+_Platform_effectManagers['Task'] = _Platform_createManager($elm$core$Task$init, $elm$core$Task$onEffects, $elm$core$Task$onSelfMsg, $elm$core$Task$cmdMap);
+var $elm$core$Task$command = _Platform_leaf('Task');
+var $elm$core$Task$perform = F2(
+	function (toMessage, task) {
+		return $elm$core$Task$command(
+			A2($elm$core$Task$map, toMessage, task));
+	});
+var $elm$browser$Browser$element = _Browser_element;
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$Main$init = function (_v0) {
+	return _Utils_Tuple2(
+		{},
+		$elm$core$Platform$Cmd$none);
+};
+var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$Main$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Main$update = F2(
+	function (_v0, m) {
+		return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
+	});
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -4527,94 +5277,19 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$Main$art = function (x) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('art')
-			]),
-		_List_fromArray(
-			[x]));
-};
-var $elm$html$Html$li = _VirtualDom_node('li');
-var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
-var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$html$Html$ul = _VirtualDom_node('ul');
-var $author$project$Main$navbar = A2(
-	$elm$html$Html$div,
-	_List_fromArray(
-		[
-			$elm$html$Html$Attributes$class('navbar')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					A2($elm$html$Html$Attributes$style, 'flex', '1'),
-					A2($elm$html$Html$Attributes$style, 'padding-left', '2em')
-				]),
-			_List_fromArray(
-				[
-					$elm$html$Html$text('Joel\'s Website')
-				])),
-			A2(
-			$elm$html$Html$ul,
-			_List_fromArray(
-				[
-					A2($elm$html$Html$Attributes$style, 'flex', '1'),
-					A2($elm$html$Html$Attributes$style, 'text-align', 'right')
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$li,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$elm$html$Html$text('Home')
-						])),
-					A2(
-					$elm$html$Html$li,
-					_List_Nil,
-					_List_fromArray(
-						[
-							$elm$html$Html$text('Contact')
-						])),
-					$elm$html$Html$text('|')
-				]))
-		]));
-var $author$project$Main$scroll = function (x) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('main')
-			]),
-		_List_fromArray(
-			[
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						A2($elm$html$Html$Attributes$style, 'display', 'flex'),
-						A2($elm$html$Html$Attributes$style, 'flex-direction', 'column'),
-						A2($elm$html$Html$Attributes$style, 'align-items', 'center')
-					]),
-				x)
-			]));
-};
+var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm_explorations$markdown$Markdown$defaultOptions = {
 	ak: $elm$core$Maybe$Nothing,
-	bk: $elm$core$Maybe$Just(
-		{a7: false, bM: false}),
-	bI: true,
-	bJ: false
+	bh: $elm$core$Maybe$Just(
+		{a4: false, bK: false}),
+	bG: true,
+	bH: false
 };
 var $elm$core$Maybe$isJust = function (maybe) {
 	if (!maybe.$) {
@@ -4625,7 +5300,7 @@ var $elm$core$Maybe$isJust = function (maybe) {
 };
 var $elm_explorations$markdown$Markdown$toHtmlWith = _Markdown_toHtml;
 var $elm_explorations$markdown$Markdown$toHtml = $elm_explorations$markdown$Markdown$toHtmlWith($elm_explorations$markdown$Markdown$defaultOptions);
-var $author$project$Main$markdown = function (x) {
+var $author$project$Main$md = function (x) {
 	return A2(
 		$elm_explorations$markdown$Markdown$toHtml,
 		_List_fromArray(
@@ -4634,23 +5309,213 @@ var $author$project$Main$markdown = function (x) {
 			]),
 		x);
 };
-var $author$project$Main$tmp = $author$project$Main$markdown('\n# Some heading\n\nidk some text probabling explaing something about computer graphics or cheese or something honestly who knows at this poing ngl\n\n## Cheese\n\n```\npublic class main {\n  public static int main( String[][] args ) {\n    return 0;\n  }\n}\n```\n\n$\\displaystyle\\sum_{n=1}^\\infty n = -\\frac{1}{2}$\n');
-var $author$project$Main$view = function (model) {
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
+};
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $elm$html$Html$table = _VirtualDom_node('table');
+var $elm$html$Html$td = _VirtualDom_node('td');
+var $elm$html$Html$tr = _VirtualDom_node('tr');
+var $author$project$Main$about = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('space-x-8 flex')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('w-2/3 flex flex-col')
+				]),
+			_List_fromArray(
+				[
+					$author$project$Main$md('\n# About Me\n\n**Hi! I\'m Joel.** I study **Mathematics** and **Computer Science** at the *[University of Queensland](https://www.uq.edu.au/)* in Brisbane, Australia.\n\nHere\'s what I\'ve been up to recently:\n'),
+					A2(
+					$elm$html$Html$table,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('mt-2 rounded-lg border border-flu-300 p-4')
+						]),
+					$elm$core$List$reverse(
+						A2(
+							$elm$core$List$map,
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$List$map(
+									A2(
+										$elm$core$Basics$composeR,
+										$elm$core$List$singleton,
+										$elm$html$Html$td(
+											_List_fromArray(
+												[
+													$elm$html$Html$Attributes$class('border border-flu-300 p-2 align-top')
+												])))),
+								$elm$html$Html$tr(_List_Nil)),
+							_List_fromArray(
+								[
+									_List_fromArray(
+									[
+										$author$project$Main$md('**2022**'),
+										$author$project$Main$md('Completed a dual **Bachelor of Mathematics** / **Bachelor of Computer Science** with majors in Pure Mathematics and Programming Languages')
+									]),
+									_List_fromArray(
+									[
+										$author$project$Main$md('**2022 - 2024**'),
+										$author$project$Main$md('Developed **compilers** and **programming languages** for *[Planwisely](https://www.planwisely.io/)*, at Veitch Lister Consulting')
+									]),
+									_List_fromArray(
+									[
+										$author$project$Main$md('**2023**'),
+										$author$project$Main$md('Completed an **honours thesis** about polynomial factoring, under the supervision of *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*')
+									])
+								])))),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('mt-6')
+						]),
+					$elm$core$List$singleton(
+						$author$project$Main$md('When I\'m not up to those things, I like to sing, draw, and write. And play volleyball.')))
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('w-1/3')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$img,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$src('https://lh3.googleusercontent.com/pw/ABLVV84uHoktVcNwxAKcFJ8wxMQ-4EEStJ5-SLBE-MEvHYhHy5-dNbFOk0LLjecZ3IfKiHmORxx3VfVsvPfn-oeVE_5k3JiLDaHUKwBsgrWgvuwtj2z_tX0dYxcLTxrhC5Ai6tI9_ZR0Mugsa6ID-VPB_x9NYg=w1182-h1576-s-no-gm'),
+							$elm$html$Html$Attributes$class('h-full rounded-lg border border-flu-300 object-cover')
+						]),
+					_List_Nil)
+				]))
+		]));
+var $elm$html$Html$iframe = _VirtualDom_node('iframe');
+var $author$project$Main$berlekamp = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Main$md('\n# Berlekamp\'s Algorithm\n\nLet $\\F_p$ be the finite field of order prime $p$, and suppose that $f \\in \\F_p[x]$ is a squarefree polynomial. What are the irreducible factors of $f$?\n\nOne traditional method for answering this question was given by Elwyn Berlekamp, in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. As a part of my honours thesis I implemented his method, but I wasn\'t able to find any fantastic resources on it. So here\'s my shot at explaining it!\n\nFor our first foothold, we\'ll notice that our method doesn\'t really need to find *every* irreducible factor of $f$. Or at least, it doesn\'t need to find every factor in one go. If a method can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then we can repeadly apply the method until we\'ve found every factor. Code that does that might look something like this:\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing -> \n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two *meaningful* parts - two parts both containing some of the factors of $f$. '),
+			A2(
+			$elm$html$Html$iframe,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('quiver-embed w-full h-64 text-center'),
+					$elm$html$Html$Attributes$src('https://q.uiver.app/#q=WzAsMyxbMSwwLCJmPShmXzFmXzJmXzMpKGZfNFxcbGRvdHMgZl9uKSJdLFswLDIsImdfMT0oZl8xZl8yZl8zKSJdLFsyLDIsImdfMj0oZl80XFxsZG90cyBmX24pIl0sWzAsMiwiIiwyLHsiY3VydmUiOi0yfV0sWzAsMSwiIiwwLHsiY3VydmUiOjJ9XV0=&embed')
+				]),
+			_List_Nil),
+			$author$project$Main$md('\nAnd once we\'ve found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it\'s natural to express what we want of $g_1$ as follows:\n\n- We require that $g_1$ divides $f$\n- We require that at least one factor of $f$ divides $g_1$\n- We require that at least one factor of $f$ doesn\'t divide $g_1$\n\nBetter still, we can throw away the first requirement; the map $g \\mapsto \\gcd{(f,\\,g)}$, when applied to a polynomial satisfying (2) and (3), will produce a polynomial satisfying all three requirements. This is obvious, given a couple seconds thought. Alright, so now we\'re trying to find a polynomial $g_1$ such that:\n\n- At least one factor of $f$ divides $g_1$\n- At least one factor of $f$ doesn\'t divide $g_1$\n\nLet\'s turn our attention to the set we\'re searching over - at the moment this is $\\F_p[x]$, which is pretty big, so it\'d be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)\n\n$$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$\n\nBefore we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yeilds a ring isomorphism\n\n$$ \\begin{align\\*} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times \\F_p[x]/ \\ideal{f_2} \\times \\cdots \\times \\F_p[x]/ \\ideal{f_n} \\\\\\\\\n    \\\\\\\\\n    g \\; \\mapsto& \\;\\; (r_1,\\,r_2,\\,\\ldots,\\,r_n)\n\\end{align\\*}$$\n\nWe consider how $\\phi$ acts on the factors of $f$. It\'s clear (given a seconds thought) that $\\phi(f_i)$ is zero in it\'s $i^{\\text{th}}$ component, and (given a couple seconds thought) that it is non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We\'re trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is non-zero, but is zero in at least one component.\n\nCan we find an even smaller set to search? One thing to consider is that in $A_f$ the factors of $f$ are all fixed under exponentiation by positive integers. So we might think about limiting our set to only points fixed under exponentiation - but exponentiation to what power? Well if we try any old value, say two, we\'ll run into a hiccup; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are such that $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead we can try exponentiation to the $p^{\\text{th}}$ power. Consider the map\n\n$$ \\begin{align\\*} Q_f : A_f \\; \\to& \\;\\; A_f \\\\\\\\\n    g \\; \\mapsto& \\;\\; g^{\\, p}\n\\end{align\\*} $$\n\nWe can apply the freshman\'s dream to see that the fixed points of $Q_f$ form a ring.\n\n$$ \\begin{align\\*}\n    \\forall \\, g,h \\in \\text{fix} (Q_f) \\quad\\quad& Q_f(gh) = (gh)^p = g^ph^p = gh\\\\\\\\\n    &Q_f(g + h) = (g + h)^p = g^p + h^p = g + h\n\\end{align\\*} $$\n\nThe fixed points of $Q_f$ turn out to be pretty useful, so we\'re going to give them a name.\n\n$$ B_f \\;\\defeq\\; \\text{fix} (Q_f)$$\n\nThis is called the Berlekamp subalgebra of $A_f$. Now, it follows from Fermat\'s little theorem that $Q_f$ is linear, check this out:\n\n$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad Q_f(tu + v) = {(tu + v)}^p = t^p u^p + v^p = tQ_f(u) + Q_f(v) $$\n\nThis is a pretty major win for us - it gives a fast method to produce elements of $B_f$. Watch this:\n\n$$B_f = \\text{fix} (Q_f) = \\ker(Q_f - \\text{id})$$\n\nWe can encode $(Q_f - \\text{id})$ as a matrix, then use gassian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are preciely the linear combinations of $B$! But we\'re not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:\n\n$$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$\n\nI plan to write another post proving this equality (the proof involves a pretty sweet application of combinatorics and group theory), but for now we\'ll just take it as given. That $h^p - p$ is just screaming $B_f$, so sure enough we\'ll sub in any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)\n\n$$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$\n\nSomewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$! \n\n```hs\nfindNonTrivialDivisor :: Polynomial -> Maybe Polynomial\nfindNonTrivialDivisor f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> Nothing\n    basis -> do\n        let h = head basis                   \n        find ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        -- don\'t forget to apply that ^^^ gcd we talked about earlier!\n```\n\nBut we can do better. What if we lift the $\\text{gcd}$ into the product?\n\n$$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nAll we\'ve really done is remove some factors from the product - precisely the factors that aren\'t in $f$ - so the product as a whole must still be a mutliple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:\n\nSuppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Morever, $q$ divides their difference, $s - t$. Since $q$ isn\'t a unit, this is impossible. \n\nSo we get the following equality:\n\n$$f = \\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nUsing this equality we can improve our algorithm:\n\n```hs\nfactorBerlekamp :: Polynomial -> Set Polynomial\nfactorBerlekamp f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> do\n        return $ basis\n    basis -> do\n        let h = head basis\n        let terms = filter ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        return $ Set.unionMap factorBerlekamp terms\n```\n\nSo that\'s general gist of Berlekamp\'s agloritm. Thanks for reading!\n\n*I\'ll leave the following note without proof: the vector space dimension of $B_f$ is equal to the number of factors of $f$, which I think that is pretty dang cool.*\n')
+		]));
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Main$topBar = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('w-full p-6 space-x-6 flex text-lg items-center font-bold border border-flu-300 bg-flu-0')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('grow')
+				]),
+			_List_Nil),
+			A2(
+			$elm$html$Html$div,
+			_List_Nil,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Joel Richardson')
+				])),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('grow')
+				]),
+			_List_Nil),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('w-0 h-0 overflow-clip')
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text('$\\newcommand{\\ideal}[1]{\\left\\langle\\,#1\\,\\right\\rangle}$ $\\renewcommand{\\deg}[1]{\\text{deg}\\left(#1\\right)}$ $\\newcommand{\\set}[1]{ \\left\\{ \\, #1 \\, \\right\\} }$ $\\newcommand{\\F}[0]{\\mathbb{F}}$ $\\renewcommand{\\leq}[0]{\\leqslant}$ $\\renewcommand{\\geq}[0]{\\geqslant}$ $\\newcommand{\\defeq}[0]{\\overset{\\scriptsize\\textnormal{def}}{=}}$')
+				]))
+		]));
+var $author$project$Main$view = function (_v0) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('whole-page')
+				$elm$html$Html$Attributes$class('flex flex-col place-items-center bg-flu-50 space-y-4 min-h-screen')
 			]),
-		_List_fromArray(
-			[
-				$author$project$Main$navbar,
-				$author$project$Main$scroll(
-				_List_fromArray(
+		$elm$core$List$concat(
+			_List_fromArray(
+				[
+					_List_fromArray(
+					[$author$project$Main$topBar]),
+					A2(
+					$elm$core$List$map,
+					A2(
+						$elm$core$Basics$composeR,
+						$elm$core$List$singleton,
+						$elm$html$Html$div(
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg')
+								]))),
+					_List_fromArray(
+						[$author$project$Main$about, $author$project$Main$berlekamp])),
+					_List_fromArray(
 					[
-						$author$project$Main$art($author$project$Main$tmp)
-					]))
-			]));
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('w-full p-4 pb-8 text-flu-300 text-center')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('that\'s it - the end.')
+							]))
+					])
+				])));
 };
-var $author$project$Main$main = $author$project$Main$view('dummy model');
-_Platform_export({'Main':{'init':_VirtualDom_init($author$project$Main$main)(0)(0)}});}(this));
+var $author$project$Main$main = $elm$browser$Browser$element(
+	{bl: $author$project$Main$init, bJ: $author$project$Main$subscriptions, bN: $author$project$Main$update, bO: $author$project$Main$view});
+_Platform_export({'Main':{'init':$author$project$Main$main(
+	$elm$json$Json$Decode$succeed(
+		{}))(0)}});}(this));

@@ -15,29 +15,26 @@
   <style>body { padding: 0; margin: 0; }</style>
 
   <!-- atom-one-light github color-brewer -->
-  <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css">
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/atom-one-light.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/monokai.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/haskell.min.js"></script>
 
   <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$']]
-      }
-    };
+    MathJax = {tex: {inlineMath: [['$', '$']]}};
   </script>
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="out/styles.css">
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 
-<body>
+<body class="bg-flu-50">
 
   
 <pre id="elm"></pre>
-<script src="elm.js"></script>
+<script src="out/elm.js"></script>
 <script>
   var app = Elm.Main.init({ node: document.getElementById("elm") });
   hljs.highlightAll();
