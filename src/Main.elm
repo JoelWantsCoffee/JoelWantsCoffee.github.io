@@ -94,11 +94,13 @@ berlekamp =
         [ md """
 # Berlekamp's Algorithm
 
-Let $\\F_p$ be the finite field of order prime $p$, and suppose that $f \\in \\F_p[x]$ is a squarefree polynomial. What are the irreducible factors of $f$?
+Let $\\F_p$ be the finite field of order prime $p$, and suppose that $f \\in \\F_p[x]$ is a squarefree polynomial. How can we find the factors of $f$?
 
-One traditional method for answering this question was given by Elwyn Berlekamp, in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. As a part of my honours thesis I implemented his method, but I wasn't able to find any fantastic resources on it. So here's my shot at explaining it!
+A traditional answer to this question was given by Elwyn Berlekamp, in his well known 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. In my honours thesis I implemented his algorithm, but I wasn't able to find any fantastic resources on it. So, here's my shot at explaining it.
 
-For our first foothold, we'll notice that our method doesn't really need to find *every* irreducible factor of $f$. Or at least, it doesn't need to find every factor in one go. If a method can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then we can repeadly apply the method until we've found every factor. Code that does that might look something like this:
+We're going to think about our problem, *factoring a polynomial over a finite field*, and chip away at it until we run into Berlekamp's algorithm.
+
+For our first foothold, we'll notice that any algorithm doesn't really need to find *every* irreducible factor of $f$. Or at least, it doesn't need to find every factor in one go. If an algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then we can repeatedly apply the algorithm until we've found every factor. Code that does that might look something like this:
 
 ```hs
 -- this code is pretty easy to verify using induction.
@@ -125,7 +127,7 @@ Better still, we can throw away the first requirement; the map $g \\mapsto \\gcd
 - At least one factor of $f$ divides $g_1$
 - At least one factor of $f$ doesn't divide $g_1$
 
-Let's turn our attention to the set we're searching over - at the moment this is $\\F_p[x]$, which is pretty big, so it'd be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)
+Let's turn our attention to the set we're searching over - currently, it's $\\F_p[x]$, which is pretty big, so it'd be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)
 
 $$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$
 
@@ -138,7 +140,7 @@ $$ \\begin{align\\*} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times
 
 We consider how $\\phi$ acts on the factors of $f$. It's clear (given a seconds thought) that $\\phi(f_i)$ is zero in it's $i^{\\text{th}}$ component, and (given a couple seconds thought) that it is non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We're trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is non-zero, but is zero in at least one component.
 
-Can we find an even smaller set to search? One thing to consider is that in $A_f$ the factors of $f$ are all fixed under exponentiation by positive integers. So we might think about limiting our set to only points fixed under exponentiation - but exponentiation to what power? Well if we try any old value, say two, we'll run into a hiccup; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are such that $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead we can try exponentiation to the $p^{\\text{th}}$ power. Consider the map
+Can we find an even smaller set to search? One thing to consider is that in $A_f$ the factors of $f$ are all fixed under exponentiation by positive integers. So we might think about limiting our set to only points fixed under exponentiation - but exponentiation to what power? Well if we try any old value, say two, we'll run into a hiccup; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are such that $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, we can try exponentiation to the $p^{\\text{th}}$ power. Consider the map
 
 $$ \\begin{align\\*} Q_f : A_f \\; \\to& \\;\\; A_f \\\\\\\\
     g \\; \\mapsto& \\;\\; g^{\\, p}
@@ -163,11 +165,11 @@ This is a pretty major win for us - it gives a fast method to produce elements o
 
 $$B_f = \\text{fix} (Q_f) = \\ker(Q_f - \\text{id})$$
 
-We can encode $(Q_f - \\text{id})$ as a matrix, then use gassian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are preciely the linear combinations of $B$! But we're not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:
+We can encode $(Q_f - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we're not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:
 
 $$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$
 
-I plan to write another post proving this equality (the proof involves a pretty sweet application of combinatorics and group theory), but for now we'll just take it as given. That $h^p - p$ is just screaming $B_f$, so sure enough we'll sub in any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)
+I plan to write another post to prove this equality, which involves an interesting application of combinatorics and group theory. For now, however, we'll take it as given. That $h^p - h$ is just screaming $B_f$, so sure enough we'll sub in any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)
 
 $$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$
 
@@ -187,9 +189,9 @@ But we can do better. What if we lift the $\\text{gcd}$ into the product?
 
 $$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$
 
-All we've really done is remove some factors from the product - precisely the factors that aren't in $f$ - so the product as a whole must still be a mutliple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:
+All we've really done is remove some factors from the product - precisely the factors that aren't in $f$ - so the product as a whole must still be a multiple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:
 
-Suppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Morever, $q$ divides their difference, $s - t$. Since $q$ isn't a unit, this is impossible. 
+Suppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn't a unit, this is impossible. 
 
 So we get the following equality:
 
@@ -208,7 +210,7 @@ factorBerlekamp f = case nullspaceBasis (berlekampMatrix f) of
         return $ Set.unionMap factorBerlekamp terms
 ```
 
-So that's general gist of Berlekamp's agloritm. Thanks for reading!
+So that's the general gist of Berlekamp's algoritm. Thanks for reading!
 
 *I'll leave the following note without proof: the vector space dimension of $B_f$ is equal to the number of factors of $f$, which I think that is pretty dang cool.*
 """
@@ -252,10 +254,10 @@ Here's what I've been up to recently:
                         , [ md "**2022 - 2024**", md "Developed **compilers** and **programming languages** for *[Planwisely](https://www.planwisely.io/)*, at Veitch Lister Consulting" ]
                         , [ md "**2023**", md "Completed an **honours thesis** about polynomial factoring, under the supervision of *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*" ]
                         ]
-            , Html.div [ class "mt-3" ] [ Html.text "When I'm not up to those things, I like to sing, draw, and write. And play volleyball." ]
+            , Html.div [ class "mt-3" ] [ Html.text "When I'm not up to those things, I like to sing, draw, write, and play volleyball." ]
             , Html.div [ class "mt-3" ] [ Html.text "A full copy of my cv is available ", Html.a [ Attr.href "./Joel_Richardson_website_cv.pdf", class "italic underline" ] [ Html.text "here" ] ]
             ]
-        , Html.div [ class "w-1/3" ] [ Html.img [ Attr.src "https://lh3.googleusercontent.com/pw/ABLVV84uHoktVcNwxAKcFJ8wxMQ-4EEStJ5-SLBE-MEvHYhHy5-dNbFOk0LLjecZ3IfKiHmORxx3VfVsvPfn-oeVE_5k3JiLDaHUKwBsgrWgvuwtj2z_tX0dYxcLTxrhC5Ai6tI9_ZR0Mugsa6ID-VPB_x9NYg=w1182-h1576-s-no-gm", class "h-full rounded-lg border border-flu-300 object-cover" ] [] ]
+        , Html.div [ class "w-1/3" ] [ Html.img [ Attr.src "https://lh3.googleusercontent.com/pw/AP1GczMnZRMJyUz8-gdOuBLBCwntJRTblbN-y-H7YyRUmyOMc2n_a64JLnaFWxhezYTngmWhKoxBhNeoDAm-3neJzX2iC1vYu7auvlX7qjOHwSbWKbvmJsTNjkbm_DmJN84qqaOzlpkxg8nu7vyO0Rkblyh_rQ=w2076-h1576-s-no-gm", class "h-full rounded-lg border border-flu-300 object-cover" ] [] ]
         ]
 
 
