@@ -23,5 +23,8 @@
 .content code {
   @apply rounded-md border border-flu-200 my-4;
 }
+.content .katex-display {
+  @apply my-6;
+}
 
 /*# sourceMappingURL=temp.css.map */

@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region._.K === region.al.K)
+	if (region.ae.M === region.at.M)
 	{
-		return 'on line ' + region._.K;
+		return 'on line ' + region.ae.M;
 	}
-	return 'on lines ' + region._.K + ' through ' + region.al.K;
+	return 'on lines ' + region.ae.M + ' through ' + region.at.M;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bl,
-		impl.bN,
-		impl.bJ,
+		impl.bL,
+		impl.cb,
+		impl.b7,
 		function() { return function() {} }
 	);
 });
@@ -2719,9 +2719,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		z: func(record.z),
-		aa: record.aa,
-		Y: record.Y
+		B: func(record.B),
+		af: record.af,
+		ac: record.ac
 	}
 });
 
@@ -2989,11 +2989,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.z;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.aa;
+		var message = !tag ? value : tag < 3 ? value.a : value.B;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.af;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.Y) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.ac) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3943,11 +3943,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bl,
-		impl.bN,
-		impl.bJ,
+		impl.bL,
+		impl.cb,
+		impl.b7,
 		function(sendToApp, initialModel) {
-			var view = impl.bO;
+			var view = impl.bl;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3979,12 +3979,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bl,
-		impl.bN,
-		impl.bJ,
+		impl.bL,
+		impl.cb,
+		impl.b7,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.Z && impl.Z(sendToApp)
-			var view = impl.bO;
+			var divertHrefToApp = impl.ad && impl.ad(sendToApp)
+			var view = impl.bl;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3992,12 +3992,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.a3);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bt);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.bM) && (_VirtualDom_doc.title = title = doc.bM);
+				(title !== doc.ca) && (_VirtualDom_doc.title = title = doc.ca);
 			});
 		}
 	);
@@ -4053,12 +4053,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.bA;
-	var onUrlRequest = impl.bB;
+	var onUrlChange = impl.b_;
+	var onUrlRequest = impl.b$;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		Z: function(sendToApp)
+		ad: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.aJ === next.aJ
-							&& curr.at === next.at
-							&& curr.aF.a === next.aF.a
+							&& curr.a6 === next.a6
+							&& curr.aB === next.aB
+							&& curr.a2.a === next.a2.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4084,13 +4084,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bl: function(flags)
+		bL: function(flags)
 		{
-			return A3(impl.bl, flags, _Browser_getUrl(), key);
+			return A3(impl.bL, flags, _Browser_getUrl(), key);
 		},
-		bO: impl.bO,
-		bN: impl.bN,
-		bJ: impl.bJ
+		bl: impl.bl,
+		cb: impl.cb,
+		b7: impl.b7
 	});
 }
 
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bi: 'hidden', a6: 'visibilitychange' }
+		? { bI: 'hidden', bw: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bi: 'mozHidden', a6: 'mozvisibilitychange' }
+		? { bI: 'mozHidden', bw: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bi: 'msHidden', a6: 'msvisibilitychange' }
+		? { bI: 'msHidden', bw: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bi: 'webkitHidden', a6: 'webkitvisibilitychange' }
-		: { bi: 'hidden', a6: 'visibilitychange' };
+		? { bI: 'webkitHidden', bw: 'webkitvisibilitychange' }
+		: { bI: 'hidden', bw: 'visibilitychange' };
 }
 
 
@@ -4247,12 +4247,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		aQ: _Browser_getScene(),
-		aY: {
-			a_: _Browser_window.pageXOffset,
-			a$: _Browser_window.pageYOffset,
-			aZ: _Browser_doc.documentElement.clientWidth,
-			ar: _Browser_doc.documentElement.clientHeight
+		bd: _Browser_getScene(),
+		bm: {
+			bo: _Browser_window.pageXOffset,
+			bp: _Browser_window.pageYOffset,
+			bn: _Browser_doc.documentElement.clientWidth,
+			az: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4262,8 +4262,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		aZ: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		ar: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		bn: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		az: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4286,15 +4286,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			aQ: {
-				aZ: node.scrollWidth,
-				ar: node.scrollHeight
+			bd: {
+				bn: node.scrollWidth,
+				az: node.scrollHeight
 			},
-			aY: {
-				a_: node.scrollLeft,
-				a$: node.scrollTop,
-				aZ: node.clientWidth,
-				ar: node.clientHeight
+			bm: {
+				bo: node.scrollLeft,
+				bp: node.scrollTop,
+				bn: node.clientWidth,
+				az: node.clientHeight
 			}
 		};
 	});
@@ -4324,18 +4324,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			aQ: _Browser_getScene(),
-			aY: {
-				a_: x,
-				a$: y,
-				aZ: _Browser_doc.documentElement.clientWidth,
-				ar: _Browser_doc.documentElement.clientHeight
+			bd: _Browser_getScene(),
+			bm: {
+				bo: x,
+				bp: y,
+				bn: _Browser_doc.documentElement.clientWidth,
+				az: _Browser_doc.documentElement.clientHeight
 			},
-			bb: {
-				a_: x + rect.left,
-				a$: y + rect.top,
-				aZ: rect.width,
-				ar: rect.height
+			bB: {
+				bo: x + rect.left,
+				bp: y + rect.top,
+				bn: rect.width,
+				az: rect.height
 			}
 		};
 	});
@@ -4445,9 +4445,9 @@ function _Markdown_formatOptions(options)
 {
 	function toHighlight(code, lang)
 	{
-		if (!lang && $elm$core$Maybe$isJust(options.ak))
+		if (!lang && $elm$core$Maybe$isJust(options.ar))
 		{
-			lang = options.ak.a;
+			lang = options.ar.a;
 		}
 
 		if (typeof hljs !== 'undefined' && lang && hljs.listLanguages().indexOf(lang) >= 0)
@@ -4458,17 +4458,1031 @@ function _Markdown_formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.bh.a;
+	var gfm = options.bH.a;
 
 	return {
 		highlight: toHighlight,
 		gfm: gfm,
-		tables: gfm && gfm.bK,
-		breaks: gfm && gfm.a4,
-		sanitize: options.bG,
-		smartypants: options.bH
+		tables: gfm && gfm.b8,
+		breaks: gfm && gfm.bu,
+		sanitize: options.b4,
+		smartypants: options.b5
 	};
 }
+
+
+/*
+ * Copyright (c) 2010 Mozilla Corporation
+ * Copyright (c) 2010 Vladimir Vukicevic
+ * Copyright (c) 2013 John Mayer
+ * Copyright (c) 2018 Andrey Kuzmin
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+// Vector2
+
+var _MJS_v2 = F2(function(x, y) {
+    return new Float64Array([x, y]);
+});
+
+var _MJS_v2getX = function(a) {
+    return a[0];
+};
+
+var _MJS_v2getY = function(a) {
+    return a[1];
+};
+
+var _MJS_v2setX = F2(function(x, a) {
+    return new Float64Array([x, a[1]]);
+});
+
+var _MJS_v2setY = F2(function(y, a) {
+    return new Float64Array([a[0], y]);
+});
+
+var _MJS_v2toRecord = function(a) {
+    return { bo: a[0], bp: a[1] };
+};
+
+var _MJS_v2fromRecord = function(r) {
+    return new Float64Array([r.bo, r.bp]);
+};
+
+var _MJS_v2add = F2(function(a, b) {
+    var r = new Float64Array(2);
+    r[0] = a[0] + b[0];
+    r[1] = a[1] + b[1];
+    return r;
+});
+
+var _MJS_v2sub = F2(function(a, b) {
+    var r = new Float64Array(2);
+    r[0] = a[0] - b[0];
+    r[1] = a[1] - b[1];
+    return r;
+});
+
+var _MJS_v2negate = function(a) {
+    var r = new Float64Array(2);
+    r[0] = -a[0];
+    r[1] = -a[1];
+    return r;
+};
+
+var _MJS_v2direction = F2(function(a, b) {
+    var r = new Float64Array(2);
+    r[0] = a[0] - b[0];
+    r[1] = a[1] - b[1];
+    var im = 1.0 / _MJS_v2lengthLocal(r);
+    r[0] = r[0] * im;
+    r[1] = r[1] * im;
+    return r;
+});
+
+function _MJS_v2lengthLocal(a) {
+    return Math.sqrt(a[0] * a[0] + a[1] * a[1]);
+}
+var _MJS_v2length = _MJS_v2lengthLocal;
+
+var _MJS_v2lengthSquared = function(a) {
+    return a[0] * a[0] + a[1] * a[1];
+};
+
+var _MJS_v2distance = F2(function(a, b) {
+    var dx = a[0] - b[0];
+    var dy = a[1] - b[1];
+    return Math.sqrt(dx * dx + dy * dy);
+});
+
+var _MJS_v2distanceSquared = F2(function(a, b) {
+    var dx = a[0] - b[0];
+    var dy = a[1] - b[1];
+    return dx * dx + dy * dy;
+});
+
+var _MJS_v2normalize = function(a) {
+    var r = new Float64Array(2);
+    var im = 1.0 / _MJS_v2lengthLocal(a);
+    r[0] = a[0] * im;
+    r[1] = a[1] * im;
+    return r;
+};
+
+var _MJS_v2scale = F2(function(k, a) {
+    var r = new Float64Array(2);
+    r[0] = a[0] * k;
+    r[1] = a[1] * k;
+    return r;
+});
+
+var _MJS_v2dot = F2(function(a, b) {
+    return a[0] * b[0] + a[1] * b[1];
+});
+
+// Vector3
+
+var _MJS_v3temp1Local = new Float64Array(3);
+var _MJS_v3temp2Local = new Float64Array(3);
+var _MJS_v3temp3Local = new Float64Array(3);
+
+var _MJS_v3 = F3(function(x, y, z) {
+    return new Float64Array([x, y, z]);
+});
+
+var _MJS_v3getX = function(a) {
+    return a[0];
+};
+
+var _MJS_v3getY = function(a) {
+    return a[1];
+};
+
+var _MJS_v3getZ = function(a) {
+    return a[2];
+};
+
+var _MJS_v3setX = F2(function(x, a) {
+    return new Float64Array([x, a[1], a[2]]);
+});
+
+var _MJS_v3setY = F2(function(y, a) {
+    return new Float64Array([a[0], y, a[2]]);
+});
+
+var _MJS_v3setZ = F2(function(z, a) {
+    return new Float64Array([a[0], a[1], z]);
+});
+
+var _MJS_v3toRecord = function(a) {
+    return { bo: a[0], bp: a[1], W: a[2] };
+};
+
+var _MJS_v3fromRecord = function(r) {
+    return new Float64Array([r.bo, r.bp, r.W]);
+};
+
+var _MJS_v3add = F2(function(a, b) {
+    var r = new Float64Array(3);
+    r[0] = a[0] + b[0];
+    r[1] = a[1] + b[1];
+    r[2] = a[2] + b[2];
+    return r;
+});
+
+function _MJS_v3subLocal(a, b, r) {
+    if (r === undefined) {
+        r = new Float64Array(3);
+    }
+    r[0] = a[0] - b[0];
+    r[1] = a[1] - b[1];
+    r[2] = a[2] - b[2];
+    return r;
+}
+var _MJS_v3sub = F2(_MJS_v3subLocal);
+
+var _MJS_v3negate = function(a) {
+    var r = new Float64Array(3);
+    r[0] = -a[0];
+    r[1] = -a[1];
+    r[2] = -a[2];
+    return r;
+};
+
+function _MJS_v3directionLocal(a, b, r) {
+    if (r === undefined) {
+        r = new Float64Array(3);
+    }
+    return _MJS_v3normalizeLocal(_MJS_v3subLocal(a, b, r), r);
+}
+var _MJS_v3direction = F2(_MJS_v3directionLocal);
+
+function _MJS_v3lengthLocal(a) {
+    return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2]);
+}
+var _MJS_v3length = _MJS_v3lengthLocal;
+
+var _MJS_v3lengthSquared = function(a) {
+    return a[0] * a[0] + a[1] * a[1] + a[2] * a[2];
+};
+
+var _MJS_v3distance = F2(function(a, b) {
+    var dx = a[0] - b[0];
+    var dy = a[1] - b[1];
+    var dz = a[2] - b[2];
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+});
+
+var _MJS_v3distanceSquared = F2(function(a, b) {
+    var dx = a[0] - b[0];
+    var dy = a[1] - b[1];
+    var dz = a[2] - b[2];
+    return dx * dx + dy * dy + dz * dz;
+});
+
+function _MJS_v3normalizeLocal(a, r) {
+    if (r === undefined) {
+        r = new Float64Array(3);
+    }
+    var im = 1.0 / _MJS_v3lengthLocal(a);
+    r[0] = a[0] * im;
+    r[1] = a[1] * im;
+    r[2] = a[2] * im;
+    return r;
+}
+var _MJS_v3normalize = _MJS_v3normalizeLocal;
+
+var _MJS_v3scale = F2(function(k, a) {
+    return new Float64Array([a[0] * k, a[1] * k, a[2] * k]);
+});
+
+var _MJS_v3dotLocal = function(a, b) {
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+};
+var _MJS_v3dot = F2(_MJS_v3dotLocal);
+
+function _MJS_v3crossLocal(a, b, r) {
+    if (r === undefined) {
+        r = new Float64Array(3);
+    }
+    r[0] = a[1] * b[2] - a[2] * b[1];
+    r[1] = a[2] * b[0] - a[0] * b[2];
+    r[2] = a[0] * b[1] - a[1] * b[0];
+    return r;
+}
+var _MJS_v3cross = F2(_MJS_v3crossLocal);
+
+var _MJS_v3mul4x4 = F2(function(m, v) {
+    var w;
+    var tmp = _MJS_v3temp1Local;
+    var r = new Float64Array(3);
+
+    tmp[0] = m[3];
+    tmp[1] = m[7];
+    tmp[2] = m[11];
+    w = _MJS_v3dotLocal(v, tmp) + m[15];
+    tmp[0] = m[0];
+    tmp[1] = m[4];
+    tmp[2] = m[8];
+    r[0] = (_MJS_v3dotLocal(v, tmp) + m[12]) / w;
+    tmp[0] = m[1];
+    tmp[1] = m[5];
+    tmp[2] = m[9];
+    r[1] = (_MJS_v3dotLocal(v, tmp) + m[13]) / w;
+    tmp[0] = m[2];
+    tmp[1] = m[6];
+    tmp[2] = m[10];
+    r[2] = (_MJS_v3dotLocal(v, tmp) + m[14]) / w;
+    return r;
+});
+
+// Vector4
+
+var _MJS_v4 = F4(function(x, y, z, w) {
+    return new Float64Array([x, y, z, w]);
+});
+
+var _MJS_v4getX = function(a) {
+    return a[0];
+};
+
+var _MJS_v4getY = function(a) {
+    return a[1];
+};
+
+var _MJS_v4getZ = function(a) {
+    return a[2];
+};
+
+var _MJS_v4getW = function(a) {
+    return a[3];
+};
+
+var _MJS_v4setX = F2(function(x, a) {
+    return new Float64Array([x, a[1], a[2], a[3]]);
+});
+
+var _MJS_v4setY = F2(function(y, a) {
+    return new Float64Array([a[0], y, a[2], a[3]]);
+});
+
+var _MJS_v4setZ = F2(function(z, a) {
+    return new Float64Array([a[0], a[1], z, a[3]]);
+});
+
+var _MJS_v4setW = F2(function(w, a) {
+    return new Float64Array([a[0], a[1], a[2], w]);
+});
+
+var _MJS_v4toRecord = function(a) {
+    return { bo: a[0], bp: a[1], W: a[2], ai: a[3] };
+};
+
+var _MJS_v4fromRecord = function(r) {
+    return new Float64Array([r.bo, r.bp, r.W, r.ai]);
+};
+
+var _MJS_v4add = F2(function(a, b) {
+    var r = new Float64Array(4);
+    r[0] = a[0] + b[0];
+    r[1] = a[1] + b[1];
+    r[2] = a[2] + b[2];
+    r[3] = a[3] + b[3];
+    return r;
+});
+
+var _MJS_v4sub = F2(function(a, b) {
+    var r = new Float64Array(4);
+    r[0] = a[0] - b[0];
+    r[1] = a[1] - b[1];
+    r[2] = a[2] - b[2];
+    r[3] = a[3] - b[3];
+    return r;
+});
+
+var _MJS_v4negate = function(a) {
+    var r = new Float64Array(4);
+    r[0] = -a[0];
+    r[1] = -a[1];
+    r[2] = -a[2];
+    r[3] = -a[3];
+    return r;
+};
+
+var _MJS_v4direction = F2(function(a, b) {
+    var r = new Float64Array(4);
+    r[0] = a[0] - b[0];
+    r[1] = a[1] - b[1];
+    r[2] = a[2] - b[2];
+    r[3] = a[3] - b[3];
+    var im = 1.0 / _MJS_v4lengthLocal(r);
+    r[0] = r[0] * im;
+    r[1] = r[1] * im;
+    r[2] = r[2] * im;
+    r[3] = r[3] * im;
+    return r;
+});
+
+function _MJS_v4lengthLocal(a) {
+    return Math.sqrt(a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3]);
+}
+var _MJS_v4length = _MJS_v4lengthLocal;
+
+var _MJS_v4lengthSquared = function(a) {
+    return a[0] * a[0] + a[1] * a[1] + a[2] * a[2] + a[3] * a[3];
+};
+
+var _MJS_v4distance = F2(function(a, b) {
+    var dx = a[0] - b[0];
+    var dy = a[1] - b[1];
+    var dz = a[2] - b[2];
+    var dw = a[3] - b[3];
+    return Math.sqrt(dx * dx + dy * dy + dz * dz + dw * dw);
+});
+
+var _MJS_v4distanceSquared = F2(function(a, b) {
+    var dx = a[0] - b[0];
+    var dy = a[1] - b[1];
+    var dz = a[2] - b[2];
+    var dw = a[3] - b[3];
+    return dx * dx + dy * dy + dz * dz + dw * dw;
+});
+
+var _MJS_v4normalize = function(a) {
+    var r = new Float64Array(4);
+    var im = 1.0 / _MJS_v4lengthLocal(a);
+    r[0] = a[0] * im;
+    r[1] = a[1] * im;
+    r[2] = a[2] * im;
+    r[3] = a[3] * im;
+    return r;
+};
+
+var _MJS_v4scale = F2(function(k, a) {
+    var r = new Float64Array(4);
+    r[0] = a[0] * k;
+    r[1] = a[1] * k;
+    r[2] = a[2] * k;
+    r[3] = a[3] * k;
+    return r;
+});
+
+var _MJS_v4dot = F2(function(a, b) {
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
+});
+
+// Matrix4
+
+var _MJS_m4x4temp1Local = new Float64Array(16);
+var _MJS_m4x4temp2Local = new Float64Array(16);
+
+var _MJS_m4x4identity = new Float64Array([
+    1.0, 0.0, 0.0, 0.0,
+    0.0, 1.0, 0.0, 0.0,
+    0.0, 0.0, 1.0, 0.0,
+    0.0, 0.0, 0.0, 1.0
+]);
+
+var _MJS_m4x4fromRecord = function(r) {
+    var m = new Float64Array(16);
+    m[0] = r.aI;
+    m[1] = r.aM;
+    m[2] = r.aQ;
+    m[3] = r.aU;
+    m[4] = r.aJ;
+    m[5] = r.aN;
+    m[6] = r.aR;
+    m[7] = r.aV;
+    m[8] = r.aK;
+    m[9] = r.aO;
+    m[10] = r.aS;
+    m[11] = r.aW;
+    m[12] = r.aL;
+    m[13] = r.aP;
+    m[14] = r.aT;
+    m[15] = r.aX;
+    return m;
+};
+
+var _MJS_m4x4toRecord = function(m) {
+    return {
+        aI: m[0], aM: m[1], aQ: m[2], aU: m[3],
+        aJ: m[4], aN: m[5], aR: m[6], aV: m[7],
+        aK: m[8], aO: m[9], aS: m[10], aW: m[11],
+        aL: m[12], aP: m[13], aT: m[14], aX: m[15]
+    };
+};
+
+var _MJS_m4x4inverse = function(m) {
+    var r = new Float64Array(16);
+
+    r[0] = m[5] * m[10] * m[15] - m[5] * m[11] * m[14] - m[9] * m[6] * m[15] +
+        m[9] * m[7] * m[14] + m[13] * m[6] * m[11] - m[13] * m[7] * m[10];
+    r[4] = -m[4] * m[10] * m[15] + m[4] * m[11] * m[14] + m[8] * m[6] * m[15] -
+        m[8] * m[7] * m[14] - m[12] * m[6] * m[11] + m[12] * m[7] * m[10];
+    r[8] = m[4] * m[9] * m[15] - m[4] * m[11] * m[13] - m[8] * m[5] * m[15] +
+        m[8] * m[7] * m[13] + m[12] * m[5] * m[11] - m[12] * m[7] * m[9];
+    r[12] = -m[4] * m[9] * m[14] + m[4] * m[10] * m[13] + m[8] * m[5] * m[14] -
+        m[8] * m[6] * m[13] - m[12] * m[5] * m[10] + m[12] * m[6] * m[9];
+    r[1] = -m[1] * m[10] * m[15] + m[1] * m[11] * m[14] + m[9] * m[2] * m[15] -
+        m[9] * m[3] * m[14] - m[13] * m[2] * m[11] + m[13] * m[3] * m[10];
+    r[5] = m[0] * m[10] * m[15] - m[0] * m[11] * m[14] - m[8] * m[2] * m[15] +
+        m[8] * m[3] * m[14] + m[12] * m[2] * m[11] - m[12] * m[3] * m[10];
+    r[9] = -m[0] * m[9] * m[15] + m[0] * m[11] * m[13] + m[8] * m[1] * m[15] -
+        m[8] * m[3] * m[13] - m[12] * m[1] * m[11] + m[12] * m[3] * m[9];
+    r[13] = m[0] * m[9] * m[14] - m[0] * m[10] * m[13] - m[8] * m[1] * m[14] +
+        m[8] * m[2] * m[13] + m[12] * m[1] * m[10] - m[12] * m[2] * m[9];
+    r[2] = m[1] * m[6] * m[15] - m[1] * m[7] * m[14] - m[5] * m[2] * m[15] +
+        m[5] * m[3] * m[14] + m[13] * m[2] * m[7] - m[13] * m[3] * m[6];
+    r[6] = -m[0] * m[6] * m[15] + m[0] * m[7] * m[14] + m[4] * m[2] * m[15] -
+        m[4] * m[3] * m[14] - m[12] * m[2] * m[7] + m[12] * m[3] * m[6];
+    r[10] = m[0] * m[5] * m[15] - m[0] * m[7] * m[13] - m[4] * m[1] * m[15] +
+        m[4] * m[3] * m[13] + m[12] * m[1] * m[7] - m[12] * m[3] * m[5];
+    r[14] = -m[0] * m[5] * m[14] + m[0] * m[6] * m[13] + m[4] * m[1] * m[14] -
+        m[4] * m[2] * m[13] - m[12] * m[1] * m[6] + m[12] * m[2] * m[5];
+    r[3] = -m[1] * m[6] * m[11] + m[1] * m[7] * m[10] + m[5] * m[2] * m[11] -
+        m[5] * m[3] * m[10] - m[9] * m[2] * m[7] + m[9] * m[3] * m[6];
+    r[7] = m[0] * m[6] * m[11] - m[0] * m[7] * m[10] - m[4] * m[2] * m[11] +
+        m[4] * m[3] * m[10] + m[8] * m[2] * m[7] - m[8] * m[3] * m[6];
+    r[11] = -m[0] * m[5] * m[11] + m[0] * m[7] * m[9] + m[4] * m[1] * m[11] -
+        m[4] * m[3] * m[9] - m[8] * m[1] * m[7] + m[8] * m[3] * m[5];
+    r[15] = m[0] * m[5] * m[10] - m[0] * m[6] * m[9] - m[4] * m[1] * m[10] +
+        m[4] * m[2] * m[9] + m[8] * m[1] * m[6] - m[8] * m[2] * m[5];
+
+    var det = m[0] * r[0] + m[1] * r[4] + m[2] * r[8] + m[3] * r[12];
+
+    if (det === 0) {
+        return $elm$core$Maybe$Nothing;
+    }
+
+    det = 1.0 / det;
+
+    for (var i = 0; i < 16; i = i + 1) {
+        r[i] = r[i] * det;
+    }
+
+    return $elm$core$Maybe$Just(r);
+};
+
+var _MJS_m4x4inverseOrthonormal = function(m) {
+    var r = _MJS_m4x4transposeLocal(m);
+    var t = [m[12], m[13], m[14]];
+    r[3] = r[7] = r[11] = 0;
+    r[12] = -_MJS_v3dotLocal([r[0], r[4], r[8]], t);
+    r[13] = -_MJS_v3dotLocal([r[1], r[5], r[9]], t);
+    r[14] = -_MJS_v3dotLocal([r[2], r[6], r[10]], t);
+    return r;
+};
+
+function _MJS_m4x4makeFrustumLocal(left, right, bottom, top, znear, zfar) {
+    var r = new Float64Array(16);
+
+    r[0] = 2 * znear / (right - left);
+    r[1] = 0;
+    r[2] = 0;
+    r[3] = 0;
+    r[4] = 0;
+    r[5] = 2 * znear / (top - bottom);
+    r[6] = 0;
+    r[7] = 0;
+    r[8] = (right + left) / (right - left);
+    r[9] = (top + bottom) / (top - bottom);
+    r[10] = -(zfar + znear) / (zfar - znear);
+    r[11] = -1;
+    r[12] = 0;
+    r[13] = 0;
+    r[14] = -2 * zfar * znear / (zfar - znear);
+    r[15] = 0;
+
+    return r;
+}
+var _MJS_m4x4makeFrustum = F6(_MJS_m4x4makeFrustumLocal);
+
+var _MJS_m4x4makePerspective = F4(function(fovy, aspect, znear, zfar) {
+    var ymax = znear * Math.tan(fovy * Math.PI / 360.0);
+    var ymin = -ymax;
+    var xmin = ymin * aspect;
+    var xmax = ymax * aspect;
+
+    return _MJS_m4x4makeFrustumLocal(xmin, xmax, ymin, ymax, znear, zfar);
+});
+
+function _MJS_m4x4makeOrthoLocal(left, right, bottom, top, znear, zfar) {
+    var r = new Float64Array(16);
+
+    r[0] = 2 / (right - left);
+    r[1] = 0;
+    r[2] = 0;
+    r[3] = 0;
+    r[4] = 0;
+    r[5] = 2 / (top - bottom);
+    r[6] = 0;
+    r[7] = 0;
+    r[8] = 0;
+    r[9] = 0;
+    r[10] = -2 / (zfar - znear);
+    r[11] = 0;
+    r[12] = -(right + left) / (right - left);
+    r[13] = -(top + bottom) / (top - bottom);
+    r[14] = -(zfar + znear) / (zfar - znear);
+    r[15] = 1;
+
+    return r;
+}
+var _MJS_m4x4makeOrtho = F6(_MJS_m4x4makeOrthoLocal);
+
+var _MJS_m4x4makeOrtho2D = F4(function(left, right, bottom, top) {
+    return _MJS_m4x4makeOrthoLocal(left, right, bottom, top, -1, 1);
+});
+
+function _MJS_m4x4mulLocal(a, b) {
+    var r = new Float64Array(16);
+    var a11 = a[0];
+    var a21 = a[1];
+    var a31 = a[2];
+    var a41 = a[3];
+    var a12 = a[4];
+    var a22 = a[5];
+    var a32 = a[6];
+    var a42 = a[7];
+    var a13 = a[8];
+    var a23 = a[9];
+    var a33 = a[10];
+    var a43 = a[11];
+    var a14 = a[12];
+    var a24 = a[13];
+    var a34 = a[14];
+    var a44 = a[15];
+    var b11 = b[0];
+    var b21 = b[1];
+    var b31 = b[2];
+    var b41 = b[3];
+    var b12 = b[4];
+    var b22 = b[5];
+    var b32 = b[6];
+    var b42 = b[7];
+    var b13 = b[8];
+    var b23 = b[9];
+    var b33 = b[10];
+    var b43 = b[11];
+    var b14 = b[12];
+    var b24 = b[13];
+    var b34 = b[14];
+    var b44 = b[15];
+
+    r[0] = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
+    r[1] = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
+    r[2] = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
+    r[3] = a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41;
+    r[4] = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
+    r[5] = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
+    r[6] = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
+    r[7] = a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42;
+    r[8] = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
+    r[9] = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
+    r[10] = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
+    r[11] = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
+    r[12] = a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44;
+    r[13] = a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44;
+    r[14] = a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44;
+    r[15] = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
+
+    return r;
+}
+var _MJS_m4x4mul = F2(_MJS_m4x4mulLocal);
+
+var _MJS_m4x4mulAffine = F2(function(a, b) {
+    var r = new Float64Array(16);
+    var a11 = a[0];
+    var a21 = a[1];
+    var a31 = a[2];
+    var a12 = a[4];
+    var a22 = a[5];
+    var a32 = a[6];
+    var a13 = a[8];
+    var a23 = a[9];
+    var a33 = a[10];
+    var a14 = a[12];
+    var a24 = a[13];
+    var a34 = a[14];
+
+    var b11 = b[0];
+    var b21 = b[1];
+    var b31 = b[2];
+    var b12 = b[4];
+    var b22 = b[5];
+    var b32 = b[6];
+    var b13 = b[8];
+    var b23 = b[9];
+    var b33 = b[10];
+    var b14 = b[12];
+    var b24 = b[13];
+    var b34 = b[14];
+
+    r[0] = a11 * b11 + a12 * b21 + a13 * b31;
+    r[1] = a21 * b11 + a22 * b21 + a23 * b31;
+    r[2] = a31 * b11 + a32 * b21 + a33 * b31;
+    r[3] = 0;
+    r[4] = a11 * b12 + a12 * b22 + a13 * b32;
+    r[5] = a21 * b12 + a22 * b22 + a23 * b32;
+    r[6] = a31 * b12 + a32 * b22 + a33 * b32;
+    r[7] = 0;
+    r[8] = a11 * b13 + a12 * b23 + a13 * b33;
+    r[9] = a21 * b13 + a22 * b23 + a23 * b33;
+    r[10] = a31 * b13 + a32 * b23 + a33 * b33;
+    r[11] = 0;
+    r[12] = a11 * b14 + a12 * b24 + a13 * b34 + a14;
+    r[13] = a21 * b14 + a22 * b24 + a23 * b34 + a24;
+    r[14] = a31 * b14 + a32 * b24 + a33 * b34 + a34;
+    r[15] = 1;
+
+    return r;
+});
+
+var _MJS_m4x4makeRotate = F2(function(angle, axis) {
+    var r = new Float64Array(16);
+    axis = _MJS_v3normalizeLocal(axis, _MJS_v3temp1Local);
+    var x = axis[0];
+    var y = axis[1];
+    var z = axis[2];
+    var c = Math.cos(angle);
+    var c1 = 1 - c;
+    var s = Math.sin(angle);
+
+    r[0] = x * x * c1 + c;
+    r[1] = y * x * c1 + z * s;
+    r[2] = z * x * c1 - y * s;
+    r[3] = 0;
+    r[4] = x * y * c1 - z * s;
+    r[5] = y * y * c1 + c;
+    r[6] = y * z * c1 + x * s;
+    r[7] = 0;
+    r[8] = x * z * c1 + y * s;
+    r[9] = y * z * c1 - x * s;
+    r[10] = z * z * c1 + c;
+    r[11] = 0;
+    r[12] = 0;
+    r[13] = 0;
+    r[14] = 0;
+    r[15] = 1;
+
+    return r;
+});
+
+var _MJS_m4x4rotate = F3(function(angle, axis, m) {
+    var r = new Float64Array(16);
+    var im = 1.0 / _MJS_v3lengthLocal(axis);
+    var x = axis[0] * im;
+    var y = axis[1] * im;
+    var z = axis[2] * im;
+    var c = Math.cos(angle);
+    var c1 = 1 - c;
+    var s = Math.sin(angle);
+    var xs = x * s;
+    var ys = y * s;
+    var zs = z * s;
+    var xyc1 = x * y * c1;
+    var xzc1 = x * z * c1;
+    var yzc1 = y * z * c1;
+    var t11 = x * x * c1 + c;
+    var t21 = xyc1 + zs;
+    var t31 = xzc1 - ys;
+    var t12 = xyc1 - zs;
+    var t22 = y * y * c1 + c;
+    var t32 = yzc1 + xs;
+    var t13 = xzc1 + ys;
+    var t23 = yzc1 - xs;
+    var t33 = z * z * c1 + c;
+    var m11 = m[0], m21 = m[1], m31 = m[2], m41 = m[3];
+    var m12 = m[4], m22 = m[5], m32 = m[6], m42 = m[7];
+    var m13 = m[8], m23 = m[9], m33 = m[10], m43 = m[11];
+    var m14 = m[12], m24 = m[13], m34 = m[14], m44 = m[15];
+
+    r[0] = m11 * t11 + m12 * t21 + m13 * t31;
+    r[1] = m21 * t11 + m22 * t21 + m23 * t31;
+    r[2] = m31 * t11 + m32 * t21 + m33 * t31;
+    r[3] = m41 * t11 + m42 * t21 + m43 * t31;
+    r[4] = m11 * t12 + m12 * t22 + m13 * t32;
+    r[5] = m21 * t12 + m22 * t22 + m23 * t32;
+    r[6] = m31 * t12 + m32 * t22 + m33 * t32;
+    r[7] = m41 * t12 + m42 * t22 + m43 * t32;
+    r[8] = m11 * t13 + m12 * t23 + m13 * t33;
+    r[9] = m21 * t13 + m22 * t23 + m23 * t33;
+    r[10] = m31 * t13 + m32 * t23 + m33 * t33;
+    r[11] = m41 * t13 + m42 * t23 + m43 * t33;
+    r[12] = m14,
+    r[13] = m24;
+    r[14] = m34;
+    r[15] = m44;
+
+    return r;
+});
+
+function _MJS_m4x4makeScale3Local(x, y, z) {
+    var r = new Float64Array(16);
+
+    r[0] = x;
+    r[1] = 0;
+    r[2] = 0;
+    r[3] = 0;
+    r[4] = 0;
+    r[5] = y;
+    r[6] = 0;
+    r[7] = 0;
+    r[8] = 0;
+    r[9] = 0;
+    r[10] = z;
+    r[11] = 0;
+    r[12] = 0;
+    r[13] = 0;
+    r[14] = 0;
+    r[15] = 1;
+
+    return r;
+}
+var _MJS_m4x4makeScale3 = F3(_MJS_m4x4makeScale3Local);
+
+var _MJS_m4x4makeScale = function(v) {
+    return _MJS_m4x4makeScale3Local(v[0], v[1], v[2]);
+};
+
+var _MJS_m4x4scale3 = F4(function(x, y, z, m) {
+    var r = new Float64Array(16);
+
+    r[0] = m[0] * x;
+    r[1] = m[1] * x;
+    r[2] = m[2] * x;
+    r[3] = m[3] * x;
+    r[4] = m[4] * y;
+    r[5] = m[5] * y;
+    r[6] = m[6] * y;
+    r[7] = m[7] * y;
+    r[8] = m[8] * z;
+    r[9] = m[9] * z;
+    r[10] = m[10] * z;
+    r[11] = m[11] * z;
+    r[12] = m[12];
+    r[13] = m[13];
+    r[14] = m[14];
+    r[15] = m[15];
+
+    return r;
+});
+
+var _MJS_m4x4scale = F2(function(v, m) {
+    var r = new Float64Array(16);
+    var x = v[0];
+    var y = v[1];
+    var z = v[2];
+
+    r[0] = m[0] * x;
+    r[1] = m[1] * x;
+    r[2] = m[2] * x;
+    r[3] = m[3] * x;
+    r[4] = m[4] * y;
+    r[5] = m[5] * y;
+    r[6] = m[6] * y;
+    r[7] = m[7] * y;
+    r[8] = m[8] * z;
+    r[9] = m[9] * z;
+    r[10] = m[10] * z;
+    r[11] = m[11] * z;
+    r[12] = m[12];
+    r[13] = m[13];
+    r[14] = m[14];
+    r[15] = m[15];
+
+    return r;
+});
+
+function _MJS_m4x4makeTranslate3Local(x, y, z) {
+    var r = new Float64Array(16);
+
+    r[0] = 1;
+    r[1] = 0;
+    r[2] = 0;
+    r[3] = 0;
+    r[4] = 0;
+    r[5] = 1;
+    r[6] = 0;
+    r[7] = 0;
+    r[8] = 0;
+    r[9] = 0;
+    r[10] = 1;
+    r[11] = 0;
+    r[12] = x;
+    r[13] = y;
+    r[14] = z;
+    r[15] = 1;
+
+    return r;
+}
+var _MJS_m4x4makeTranslate3 = F3(_MJS_m4x4makeTranslate3Local);
+
+var _MJS_m4x4makeTranslate = function(v) {
+    return _MJS_m4x4makeTranslate3Local(v[0], v[1], v[2]);
+};
+
+var _MJS_m4x4translate3 = F4(function(x, y, z, m) {
+    var r = new Float64Array(16);
+    var m11 = m[0];
+    var m21 = m[1];
+    var m31 = m[2];
+    var m41 = m[3];
+    var m12 = m[4];
+    var m22 = m[5];
+    var m32 = m[6];
+    var m42 = m[7];
+    var m13 = m[8];
+    var m23 = m[9];
+    var m33 = m[10];
+    var m43 = m[11];
+
+    r[0] = m11;
+    r[1] = m21;
+    r[2] = m31;
+    r[3] = m41;
+    r[4] = m12;
+    r[5] = m22;
+    r[6] = m32;
+    r[7] = m42;
+    r[8] = m13;
+    r[9] = m23;
+    r[10] = m33;
+    r[11] = m43;
+    r[12] = m11 * x + m12 * y + m13 * z + m[12];
+    r[13] = m21 * x + m22 * y + m23 * z + m[13];
+    r[14] = m31 * x + m32 * y + m33 * z + m[14];
+    r[15] = m41 * x + m42 * y + m43 * z + m[15];
+
+    return r;
+});
+
+var _MJS_m4x4translate = F2(function(v, m) {
+    var r = new Float64Array(16);
+    var x = v[0];
+    var y = v[1];
+    var z = v[2];
+    var m11 = m[0];
+    var m21 = m[1];
+    var m31 = m[2];
+    var m41 = m[3];
+    var m12 = m[4];
+    var m22 = m[5];
+    var m32 = m[6];
+    var m42 = m[7];
+    var m13 = m[8];
+    var m23 = m[9];
+    var m33 = m[10];
+    var m43 = m[11];
+
+    r[0] = m11;
+    r[1] = m21;
+    r[2] = m31;
+    r[3] = m41;
+    r[4] = m12;
+    r[5] = m22;
+    r[6] = m32;
+    r[7] = m42;
+    r[8] = m13;
+    r[9] = m23;
+    r[10] = m33;
+    r[11] = m43;
+    r[12] = m11 * x + m12 * y + m13 * z + m[12];
+    r[13] = m21 * x + m22 * y + m23 * z + m[13];
+    r[14] = m31 * x + m32 * y + m33 * z + m[14];
+    r[15] = m41 * x + m42 * y + m43 * z + m[15];
+
+    return r;
+});
+
+var _MJS_m4x4makeLookAt = F3(function(eye, center, up) {
+    var z = _MJS_v3directionLocal(eye, center, _MJS_v3temp1Local);
+    var x = _MJS_v3normalizeLocal(_MJS_v3crossLocal(up, z, _MJS_v3temp2Local), _MJS_v3temp2Local);
+    var y = _MJS_v3normalizeLocal(_MJS_v3crossLocal(z, x, _MJS_v3temp3Local), _MJS_v3temp3Local);
+    var tm1 = _MJS_m4x4temp1Local;
+    var tm2 = _MJS_m4x4temp2Local;
+
+    tm1[0] = x[0];
+    tm1[1] = y[0];
+    tm1[2] = z[0];
+    tm1[3] = 0;
+    tm1[4] = x[1];
+    tm1[5] = y[1];
+    tm1[6] = z[1];
+    tm1[7] = 0;
+    tm1[8] = x[2];
+    tm1[9] = y[2];
+    tm1[10] = z[2];
+    tm1[11] = 0;
+    tm1[12] = 0;
+    tm1[13] = 0;
+    tm1[14] = 0;
+    tm1[15] = 1;
+
+    tm2[0] = 1; tm2[1] = 0; tm2[2] = 0; tm2[3] = 0;
+    tm2[4] = 0; tm2[5] = 1; tm2[6] = 0; tm2[7] = 0;
+    tm2[8] = 0; tm2[9] = 0; tm2[10] = 1; tm2[11] = 0;
+    tm2[12] = -eye[0]; tm2[13] = -eye[1]; tm2[14] = -eye[2]; tm2[15] = 1;
+
+    return _MJS_m4x4mulLocal(tm1, tm2);
+});
+
+
+function _MJS_m4x4transposeLocal(m) {
+    var r = new Float64Array(16);
+
+    r[0] = m[0]; r[1] = m[4]; r[2] = m[8]; r[3] = m[12];
+    r[4] = m[1]; r[5] = m[5]; r[6] = m[9]; r[7] = m[13];
+    r[8] = m[2]; r[9] = m[6]; r[10] = m[10]; r[11] = m[14];
+    r[12] = m[3]; r[13] = m[7]; r[14] = m[11]; r[15] = m[15];
+
+    return r;
+}
+var _MJS_m4x4transpose = _MJS_m4x4transposeLocal;
+
+var _MJS_m4x4makeBasis = F3(function(vx, vy, vz) {
+    var r = new Float64Array(16);
+
+    r[0] = vx[0];
+    r[1] = vx[1];
+    r[2] = vx[2];
+    r[3] = 0;
+    r[4] = vy[0];
+    r[5] = vy[1];
+    r[6] = vy[2];
+    r[7] = 0;
+    r[8] = vz[0];
+    r[9] = vz[1];
+    r[10] = vz[2];
+    r[11] = 0;
+    r[12] = 0;
+    r[13] = 0;
+    r[14] = 0;
+    r[15] = 1;
+
+    return r;
+});
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
@@ -4973,7 +5987,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {ap: fragment, at: host, aD: path, aF: port_, aJ: protocol, aK: query};
+		return {ax: fragment, aB: host, a0: path, a2: port_, a6: protocol, a7: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5256,7 +6270,14 @@ var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2(
-		{},
+		{
+			A: _List_fromArray(
+				[
+					$elm$core$Maybe$Nothing,
+					$elm$core$Maybe$Just(0),
+					$elm$core$Maybe$Just(0)
+				])
+		},
 		$elm$core$Platform$Cmd$none);
 };
 var $elm$core$Platform$Sub$batch = _Platform_batch;
@@ -5264,9 +6285,257 @@ var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
+var $elm$core$List$drop = F2(
+	function (n, list) {
+		drop:
+		while (true) {
+			if (n <= 0) {
+				return list;
+			} else {
+				if (!list.b) {
+					return list;
+				} else {
+					var x = list.a;
+					var xs = list.b;
+					var $temp$n = n - 1,
+						$temp$list = xs;
+					n = $temp$n;
+					list = $temp$list;
+					continue drop;
+				}
+			}
+		}
+	});
+var $elm$core$List$head = function (list) {
+	if (list.b) {
+		var x = list.a;
+		var xs = list.b;
+		return $elm$core$Maybe$Just(x);
+	} else {
+		return $elm$core$Maybe$Nothing;
+	}
+};
+var $elm_community$list_extra$List$Extra$getAt = F2(
+	function (idx, xs) {
+		return (idx < 0) ? $elm$core$Maybe$Nothing : $elm$core$List$head(
+			A2($elm$core$List$drop, idx, xs));
+	});
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(0),
+			pairs));
+};
+var $author$project$Main$render = _Platform_outgoingPort(
+	'render',
+	function ($) {
+		return $elm$json$Json$Encode$object(_List_Nil);
+	});
+var $elm$core$Basics$always = F2(
+	function (a, _v0) {
+		return a;
+	});
+var $elm$core$List$takeReverse = F3(
+	function (n, list, kept) {
+		takeReverse:
+		while (true) {
+			if (n <= 0) {
+				return kept;
+			} else {
+				if (!list.b) {
+					return kept;
+				} else {
+					var x = list.a;
+					var xs = list.b;
+					var $temp$n = n - 1,
+						$temp$list = xs,
+						$temp$kept = A2($elm$core$List$cons, x, kept);
+					n = $temp$n;
+					list = $temp$list;
+					kept = $temp$kept;
+					continue takeReverse;
+				}
+			}
+		}
+	});
+var $elm$core$List$takeTailRec = F2(
+	function (n, list) {
+		return $elm$core$List$reverse(
+			A3($elm$core$List$takeReverse, n, list, _List_Nil));
+	});
+var $elm$core$List$takeFast = F3(
+	function (ctr, n, list) {
+		if (n <= 0) {
+			return _List_Nil;
+		} else {
+			var _v0 = _Utils_Tuple2(n, list);
+			_v0$1:
+			while (true) {
+				_v0$5:
+				while (true) {
+					if (!_v0.b.b) {
+						return list;
+					} else {
+						if (_v0.b.b.b) {
+							switch (_v0.a) {
+								case 1:
+									break _v0$1;
+								case 2:
+									var _v2 = _v0.b;
+									var x = _v2.a;
+									var _v3 = _v2.b;
+									var y = _v3.a;
+									return _List_fromArray(
+										[x, y]);
+								case 3:
+									if (_v0.b.b.b.b) {
+										var _v4 = _v0.b;
+										var x = _v4.a;
+										var _v5 = _v4.b;
+										var y = _v5.a;
+										var _v6 = _v5.b;
+										var z = _v6.a;
+										return _List_fromArray(
+											[x, y, z]);
+									} else {
+										break _v0$5;
+									}
+								default:
+									if (_v0.b.b.b.b && _v0.b.b.b.b.b) {
+										var _v7 = _v0.b;
+										var x = _v7.a;
+										var _v8 = _v7.b;
+										var y = _v8.a;
+										var _v9 = _v8.b;
+										var z = _v9.a;
+										var _v10 = _v9.b;
+										var w = _v10.a;
+										var tl = _v10.b;
+										return (ctr > 1000) ? A2(
+											$elm$core$List$cons,
+											x,
+											A2(
+												$elm$core$List$cons,
+												y,
+												A2(
+													$elm$core$List$cons,
+													z,
+													A2(
+														$elm$core$List$cons,
+														w,
+														A2($elm$core$List$takeTailRec, n - 4, tl))))) : A2(
+											$elm$core$List$cons,
+											x,
+											A2(
+												$elm$core$List$cons,
+												y,
+												A2(
+													$elm$core$List$cons,
+													z,
+													A2(
+														$elm$core$List$cons,
+														w,
+														A3($elm$core$List$takeFast, ctr + 1, n - 4, tl)))));
+									} else {
+										break _v0$5;
+									}
+							}
+						} else {
+							if (_v0.a === 1) {
+								break _v0$1;
+							} else {
+								break _v0$5;
+							}
+						}
+					}
+				}
+				return list;
+			}
+			var _v1 = _v0.b;
+			var x = _v1.a;
+			return _List_fromArray(
+				[x]);
+		}
+	});
+var $elm$core$List$take = F2(
+	function (n, list) {
+		return A3($elm$core$List$takeFast, 0, n, list);
+	});
+var $elm_community$list_extra$List$Extra$updateAt = F3(
+	function (index, fn, list) {
+		if (index < 0) {
+			return list;
+		} else {
+			var tail = A2($elm$core$List$drop, index, list);
+			if (tail.b) {
+				var x = tail.a;
+				var xs = tail.b;
+				return _Utils_ap(
+					A2($elm$core$List$take, index, list),
+					A2(
+						$elm$core$List$cons,
+						fn(x),
+						xs));
+			} else {
+				return list;
+			}
+		}
+	});
+var $elm_community$list_extra$List$Extra$setAt = F2(
+	function (index, value) {
+		return A2(
+			$elm_community$list_extra$List$Extra$updateAt,
+			index,
+			$elm$core$Basics$always(value));
+	});
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
 var $author$project$Main$update = F2(
-	function (_v0, m) {
-		return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
+	function (msg, m) {
+		if (!msg.$) {
+			var _v1 = msg.a;
+			var i = _v1.a;
+			var o = _v1.b;
+			return _Utils_Tuple2(
+				_Utils_update(
+					m,
+					{
+						A: A3($elm_community$list_extra$List$Extra$setAt, i, o, m.A)
+					}),
+				$elm$core$Platform$Cmd$none);
+		} else {
+			var i = msg.a;
+			return _Utils_Tuple2(
+				_Utils_update(
+					m,
+					{
+						A: A2(
+							$elm$core$List$map,
+							function (k) {
+								return A2(
+									$elm$core$Maybe$withDefault,
+									$elm$core$Maybe$Nothing,
+									A2($elm_community$list_extra$List$Extra$getAt, k, m.A));
+							},
+							A2($elm$core$List$range, 0, i - 1))
+					}),
+				$author$project$Main$render(
+					{}));
+		}
 	});
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$json$Json$Encode$string = _Json_wrap;
@@ -5292,11 +6561,11 @@ var $elm$html$Html$Attributes$href = function (url) {
 };
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm_explorations$markdown$Markdown$defaultOptions = {
-	ak: $elm$core$Maybe$Nothing,
-	bh: $elm$core$Maybe$Just(
-		{a4: false, bK: false}),
-	bG: true,
-	bH: false
+	ar: $elm$core$Maybe$Nothing,
+	bH: $elm$core$Maybe$Just(
+		{bu: false, b8: false}),
+	b4: true,
+	b5: false
 };
 var $elm$core$Maybe$isJust = function (maybe) {
 	if (!maybe.$) {
@@ -5443,7 +6712,7 @@ var $author$project$Main$berlekamp = A2(
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Main$md('\n# Berlekamp\'s Algorithm\n\nLet $\\F_p$ be the finite field of order prime $p$, and suppose that $f \\in \\F_p[x]$ is a squarefree polynomial. How can we find the factors of $f$?\n\nA traditional answer to this question was given by Elwyn Berlekamp, in his well known 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. In my honours thesis I implemented his algorithm, but I wasn\'t able to find any fantastic resources on it. So, here\'s my shot at explaining it.\n\nWe\'re going to think about our problem, *factoring a polynomial over a finite field*, and chip away at it until we run into Berlekamp\'s algorithm.\n\nFor our first foothold, we\'ll notice that any algorithm doesn\'t really need to find *every* irreducible factor of $f$. Or at least, it doesn\'t need to find every factor in one go. If an algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then we can repeatedly apply the algorithm until we\'ve found every factor. Code that does that might look something like this:\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing -> \n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two *meaningful* parts - two parts both containing some of the factors of $f$. '),
+			$author$project$Main$md('\n# Berlekamp\'s Algorithm\n\nLet $\\F_p$ be the finite field of order prime $p$, and suppose that $f \\in \\F_p[x]$ is a squarefree polynomial. How can we find the factors of $f$?\n\nAn answer to this question was given by Elwyn Berlekamp in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. In my honours thesis I implemented his algorithm, though I couldn\'t find any fantastic resources on it. Here\'s my shot at explaining it — I hope you find his algorithm as interesting as I did.\n\nWe\'re going to think about our problem, *factoring a polynomial over a finite field*, and chip away at it until we run into Berlekamp\'s algorithm.\n\nFor our first foothold, we\'ll notice that any factorization algorithm doesn\'t really need to find *every* irreducible factor of $f$. Or at least, it doesn\'t need to find every factor in one go. If an algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then we can repeatedly apply the algorithm until we\'ve found every factor. Code that does that might look something like this:\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing -> \n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two *meaningful* parts - two parts both containing some of the factors of $f$. '),
 			A2(
 			$elm$html$Html$iframe,
 			_List_fromArray(
@@ -5452,7 +6721,7 @@ var $author$project$Main$berlekamp = A2(
 					$elm$html$Html$Attributes$src('https://q.uiver.app/#q=WzAsMyxbMSwwLCJmPShmXzFmXzJmXzMpKGZfNFxcbGRvdHMgZl9uKSJdLFswLDIsImdfMT0oZl8xZl8yZl8zKSJdLFsyLDIsImdfMj0oZl80XFxsZG90cyBmX24pIl0sWzAsMiwiIiwyLHsiY3VydmUiOi0yfV0sWzAsMSwiIiwwLHsiY3VydmUiOjJ9XV0=&embed')
 				]),
 			_List_Nil),
-			$author$project$Main$md('\nAnd once we\'ve found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it\'s natural to express what we want of $g_1$ as follows:\n\n- We require that $g_1$ divides $f$\n- We require that at least one factor of $f$ divides $g_1$\n- We require that at least one factor of $f$ doesn\'t divide $g_1$\n\nBetter still, we can throw away the first requirement; the map $g \\mapsto \\gcd{(f,\\,g)}$, when applied to a polynomial satisfying (2) and (3), will produce a polynomial satisfying all three requirements. This is obvious, given a couple seconds thought. Alright, so now we\'re trying to find a polynomial $g_1$ such that:\n\n- At least one factor of $f$ divides $g_1$\n- At least one factor of $f$ doesn\'t divide $g_1$\n\nLet\'s turn our attention to the set we\'re searching over - currently, it\'s $\\F_p[x]$, which is pretty big, so it\'d be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)\n\n$$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$\n\nBefore we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yeilds a ring isomorphism\n\n$$ \\begin{align\\*} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times \\F_p[x]/ \\ideal{f_2} \\times \\cdots \\times \\F_p[x]/ \\ideal{f_n} \\\\\\\\\n    \\\\\\\\\n    g \\; \\mapsto& \\;\\; (r_1,\\,r_2,\\,\\ldots,\\,r_n)\n\\end{align\\*}$$\n\nWe consider how $\\phi$ acts on the factors of $f$. It\'s clear (given a seconds thought) that $\\phi(f_i)$ is zero in it\'s $i^{\\text{th}}$ component, and (given a couple seconds thought) that it is non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We\'re trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is non-zero, but is zero in at least one component.\n\nCan we find an even smaller set to search? One thing to consider is that in $A_f$ the factors of $f$ are all fixed under exponentiation by positive integers. So we might think about limiting our set to only points fixed under exponentiation - but exponentiation to what power? Well if we try any old value, say two, we\'ll run into a hiccup; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are such that $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, we can try exponentiation to the $p^{\\text{th}}$ power. Consider the map\n\n$$ \\begin{align\\*} Q_f : A_f \\; \\to& \\;\\; A_f \\\\\\\\\n    g \\; \\mapsto& \\;\\; g^{\\, p}\n\\end{align\\*} $$\n\nWe can apply the freshman\'s dream to see that the fixed points of $Q_f$ form a ring.\n\n$$ \\begin{align\\*}\n    \\forall \\, g,h \\in \\text{fix} (Q_f) \\quad\\quad& Q_f(gh) = (gh)^p = g^ph^p = gh\\\\\\\\\n    &Q_f(g + h) = (g + h)^p = g^p + h^p = g + h\n\\end{align\\*} $$\n\nThe fixed points of $Q_f$ turn out to be pretty useful, so we\'re going to give them a name.\n\n$$ B_f \\;\\defeq\\; \\text{fix} (Q_f)$$\n\nThis is called the Berlekamp subalgebra of $A_f$. Now, it follows from Fermat\'s little theorem that $Q_f$ is linear, check this out:\n\n$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad Q_f(tu + v) = {(tu + v)}^p = t^p u^p + v^p = tQ_f(u) + Q_f(v) $$\n\nThis is a pretty major win for us - it gives a fast method to produce elements of $B_f$. Watch this:\n\n$$B_f = \\text{fix} (Q_f) = \\ker(Q_f - \\text{id})$$\n\nWe can encode $(Q_f - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we\'re not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:\n\n$$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$\n\nI plan to write another post to prove this equality, which involves an interesting application of combinatorics and group theory. For now, however, we\'ll take it as given. That $h^p - h$ is just screaming $B_f$, so sure enough we\'ll sub in any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)\n\n$$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$\n\nSomewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$! \n\n```hs\nfindNonTrivialDivisor :: Polynomial -> Maybe Polynomial\nfindNonTrivialDivisor f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> Nothing\n    basis -> do\n        let h = head basis                   \n        find ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        -- don\'t forget to apply that ^^^ gcd we talked about earlier!\n```\n\nBut we can do better. What if we lift the $\\text{gcd}$ into the product?\n\n$$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nAll we\'ve really done is remove some factors from the product - precisely the factors that aren\'t in $f$ - so the product as a whole must still be a multiple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:\n\nSuppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn\'t a unit, this is impossible. \n\nSo we get the following equality:\n\n$$f = \\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nUsing this equality we can improve our algorithm:\n\n```hs\nfactorBerlekamp :: Polynomial -> Set Polynomial\nfactorBerlekamp f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> do\n        return $ basis\n    basis -> do\n        let h = head basis\n        let terms = filter ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        return $ Set.unionMap factorBerlekamp terms\n```\n\nSo that\'s the general gist of Berlekamp\'s algoritm. Thanks for reading!\n\n*I\'ll leave the following note without proof: the vector space dimension of $B_f$ is equal to the number of factors of $f$, which I think that is pretty dang cool.*\n')
+			$author$project$Main$md('\nAnd once we\'ve found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it\'s natural to express what we want of $g_1$ as follows:\n\n- We require that $g_1$ divides $f$\n- We require that at least one factor of $f$ divides $g_1$\n- We require that at least one factor of $f$ doesn\'t divide $g_1$\n\nBetter still, we can throw away the first requirement; the map $g \\mapsto \\gcd{(f,\\,g)}$, when applied to a polynomial satisfying (2) and (3), will produce a polynomial satisfying all three requirements. This is obvious, given a couple seconds thought. Alright, so now we\'re trying to find a polynomial $g_1$ such that:\n\n- At least one factor of $f$ divides $g_1$\n- At least one factor of $f$ doesn\'t divide $g_1$\n\nLet\'s turn our attention to the set we\'re searching over - currently, it\'s $\\F_p[x]$, which is pretty big, so it\'d be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)\n\n$$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$\n\nBefore we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yeilds a ring isomorphism\n\n$$ \\begin{aligned} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times \\F_p[x]/ \\ideal{f_2} \\times \\cdots \\times \\F_p[x]/ \\ideal{f_n} \\\\\\\\\n    \\\\\\\\\n    g \\; \\mapsto& \\;\\; (r_1,\\,r_2,\\,\\ldots,\\,r_n)\n\\end{aligned}$$\n\nWe consider how $\\phi$ acts on the factors of $f$. It\'s clear (given a seconds thought) that $\\phi(f_i)$ is zero in it\'s $i^{\\text{th}}$ component, and (given a couple seconds thought) that it is non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We\'re trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is non-zero, but is zero in at least one component.\n\nCan we find an even smaller set to search? One thing to consider is that in $A_f$ the factors of $f$ are all fixed under exponentiation by positive integers. So we might think about limiting our set to only points fixed under exponentiation — but exponentiation to what power? Well if we try any old value, say two, we\'ll run into a hiccup; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are such that $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, we can try exponentiation to the $p^{\\text{th}}$ power. Consider the map\n\n$$ \\begin{aligned} Q_f : A_f \\; \\to& \\;\\; A_f \\\\\\\\\n    g \\; \\mapsto& \\;\\; g^{\\, p}\n\\end{aligned} $$\n\nWe can apply the freshman\'s dream to see that the fixed points of $Q_f$ form a ring.\n\n$$ \\begin{aligned}\n    \\forall \\, g,h \\in \\text{fix} (Q_f) \\quad\\quad& Q_f(gh) = (gh)^p = g^ph^p = gh\\\\\\\\\n    &Q_f(g + h) = (g + h)^p = g^p + h^p = g + h\n\\end{aligned} $$\n\nThe fixed points of $Q_f$ turn out to be pretty useful, so we\'re going to give them a name.\n\n$$ B_f \\;\\defeq\\; \\text{fix} (Q_f)$$\n\nThis is called the Berlekamp subalgebra of $A_f$. Now, it follows from Fermat\'s little theorem that $Q_f$ is linear, check this out:\n\n$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad Q_f(tu + v) = {(tu + v)}^p = t^p u^p + v^p = tQ_f(u) + Q_f(v) $$\n\nThis is a pretty major win for us - it gives a fast method to produce elements of $B_f$. Watch this:\n\n$$B_f = \\text{fix} (Q_f) = \\ker(Q_f - \\text{id})$$\n\nWe can encode $(Q_f - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we\'re not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:\n\n$$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$\n\nI plan to write another post to prove this equality, which involves an interesting application of combinatorics and group theory. For now, however, we\'ll take it as given. That $h^p - h$ is just screaming $B_f$, so sure enough we\'ll sub in any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)\n\n$$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$\n\nSomewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$! \n\n```hs\nfindNonTrivialDivisor :: Polynomial -> Maybe Polynomial\nfindNonTrivialDivisor f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> Nothing\n    basis -> do\n        let h = head basis                   \n        find ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        -- don\'t forget to apply that ^^^ gcd we talked about earlier!\n```\n\nBut we can do better. What if we lift the $\\text{gcd}$ into the product?\n\n$$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nAll we\'ve really done is remove some factors from the product - precisely the factors that aren\'t in $f$ - so the product as a whole must still be a multiple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:\n\nSuppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn\'t a unit, this is impossible. \n\nSo we get the following equality:\n\n$$f = \\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nUsing this equality we can improve our algorithm:\n\n```hs\nfactorBerlekamp :: Polynomial -> Set Polynomial\nfactorBerlekamp f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> do\n        return $ basis\n    basis -> do\n        let h = head basis\n        let terms = filter ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        return $ Set.unionMap factorBerlekamp terms\n```\n\nSo that\'s the general gist of Berlekamp\'s algoritm. Thanks for reading!\n\n*I\'ll leave the following note without proof: the vector space dimension of $B_f$ is equal to the number of factors of $f$. I think this is pretty dang cool.*\n')
 		]));
 var $elm$core$List$append = F2(
 	function (xs, ys) {
@@ -5464,6 +6733,1745 @@ var $elm$core$List$append = F2(
 	});
 var $elm$core$List$concat = function (lists) {
 	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $author$project$Main$SetBijection = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$SetBijectionPrime = function (a) {
+	return {$: 1, a: a};
+};
+var $elm$core$List$concatMap = F2(
+	function (f, list) {
+		return $elm$core$List$concat(
+			A2($elm$core$List$map, f, list));
+	});
+var $elm_community$list_extra$List$Extra$count = function (predicate) {
+	return A2(
+		$elm$core$List$foldl,
+		F2(
+			function (x, acc) {
+				return predicate(x) ? (acc + 1) : acc;
+			}),
+		0);
+};
+var $elm_community$list_extra$List$Extra$andThen = $elm$core$List$concatMap;
+var $elm_community$list_extra$List$Extra$lift2 = F3(
+	function (f, la, lb) {
+		return A2(
+			$elm_community$list_extra$List$Extra$andThen,
+			function (a) {
+				return A2(
+					$elm_community$list_extra$List$Extra$andThen,
+					function (b) {
+						return _List_fromArray(
+							[
+								A2(f, a, b)
+							]);
+					},
+					lb);
+			},
+			la);
+	});
+var $elm_community$list_extra$List$Extra$cartesianProduct = function (ll) {
+	if (!ll.b) {
+		return _List_fromArray(
+			[_List_Nil]);
+	} else {
+		var xs = ll.a;
+		var xss = ll.b;
+		return A3(
+			$elm_community$list_extra$List$Extra$lift2,
+			$elm$core$List$cons,
+			xs,
+			$elm_community$list_extra$List$Extra$cartesianProduct(xss));
+	}
+};
+var $elm$core$List$repeatHelp = F3(
+	function (result, n, value) {
+		repeatHelp:
+		while (true) {
+			if (n <= 0) {
+				return result;
+			} else {
+				var $temp$result = A2($elm$core$List$cons, value, result),
+					$temp$n = n - 1,
+					$temp$value = value;
+				result = $temp$result;
+				n = $temp$n;
+				value = $temp$value;
+				continue repeatHelp;
+			}
+		}
+	});
+var $elm$core$List$repeat = F2(
+	function (n, value) {
+		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
+	});
+var $elm$core$List$sum = function (numbers) {
+	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
+};
+var $author$project$Main$expand = function (p) {
+	return function (lst) {
+		return A2(
+			$elm$core$List$map,
+			function (i) {
+				return _Utils_Tuple2(
+					A2(
+						$elm_community$list_extra$List$Extra$count,
+						$elm$core$Basics$eq(i),
+						lst),
+					i);
+			},
+			A2($elm$core$List$range, 1, p));
+	}(
+		A2(
+			$elm$core$List$map,
+			$elm$core$List$sum,
+			$elm_community$list_extra$List$Extra$cartesianProduct(
+				A2(
+					$elm$core$List$map,
+					function (x) {
+						return A2(
+							$elm$core$List$cons,
+							1,
+							A2($elm$core$List$repeat, x, 0));
+					},
+					A2($elm$core$List$range, 0, p - 1)))));
+};
+var $author$project$Main$mapFirst = F2(
+	function (f, lst) {
+		if (lst.b) {
+			var h = lst.a;
+			var t = lst.b;
+			return A2(
+				$elm$core$List$cons,
+				f(h),
+				t);
+		} else {
+			return _List_Nil;
+		}
+	});
+var $elm$core$Basics$negate = function (n) {
+	return -n;
+};
+var $elm_community$list_extra$List$Extra$removeAt = F2(
+	function (index, l) {
+		if (index < 0) {
+			return l;
+		} else {
+			var _v0 = A2($elm$core$List$drop, index, l);
+			if (!_v0.b) {
+				return l;
+			} else {
+				var rest = _v0.b;
+				return _Utils_ap(
+					A2($elm$core$List$take, index, l),
+					rest);
+			}
+		}
+	});
+var $author$project$Main$makeBijection = F2(
+	function (objects, inlst) {
+		if (inlst.b) {
+			if (!inlst.a.$) {
+				var h = inlst.a.a;
+				var t = inlst.b;
+				return A2(
+					$author$project$Main$mapFirst,
+					$elm$core$List$cons(
+						A2(
+							$elm$core$Maybe$withDefault,
+							-1,
+							A2($elm_community$list_extra$List$Extra$getAt, h, objects))),
+					A2(
+						$author$project$Main$makeBijection,
+						A2($elm_community$list_extra$List$Extra$removeAt, h, objects),
+						t));
+			} else {
+				var _v1 = inlst.a;
+				var t = inlst.b;
+				return function (l) {
+					return A2($elm$core$List$cons, _List_Nil, l);
+				}(
+					A2(
+						$author$project$Main$mapFirst,
+						$elm$core$List$cons(
+							A2(
+								$elm$core$Maybe$withDefault,
+								-1,
+								A2($elm_community$list_extra$List$Extra$getAt, 0, objects))),
+						A2(
+							$author$project$Main$makeBijection,
+							A2($elm_community$list_extra$List$Extra$removeAt, 0, objects),
+							t)));
+			}
+		} else {
+			return _List_fromArray(
+				[_List_Nil]);
+		}
+	});
+var $elm_community$list_extra$List$Extra$last = function (items) {
+	last:
+	while (true) {
+		if (!items.b) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			if (!items.b.b) {
+				var x = items.a;
+				return $elm$core$Maybe$Just(x);
+			} else {
+				var rest = items.b;
+				var $temp$items = rest;
+				items = $temp$items;
+				continue last;
+			}
+		}
+	}
+};
+var $elm$core$Maybe$map2 = F3(
+	function (func, ma, mb) {
+		if (ma.$ === 1) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var a = ma.a;
+			if (mb.$ === 1) {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var b = mb.a;
+				return $elm$core$Maybe$Just(
+					A2(func, a, b));
+			}
+		}
+	});
+var $author$project$Main$pairs_ = function (lst) {
+	if (lst.b && lst.b.b) {
+		var h1 = lst.a;
+		var _v1 = lst.b;
+		var h2 = _v1.a;
+		var t = _v1.b;
+		return A2(
+			$elm$core$List$cons,
+			_Utils_Tuple2(h1, h2),
+			$author$project$Main$pairs_(
+				A2($elm$core$List$cons, h2, t)));
+	} else {
+		return _List_Nil;
+	}
+};
+var $author$project$Main$pairs = function (lst) {
+	return _Utils_ap(
+		$author$project$Main$pairs_(lst),
+		A2(
+			$elm$core$Maybe$withDefault,
+			_List_Nil,
+			A3(
+				$elm$core$Maybe$map2,
+				F2(
+					function (a, b) {
+						return _List_fromArray(
+							[
+								_Utils_Tuple2(b, a)
+							]);
+					}),
+				$elm$core$List$head(lst),
+				$elm_community$list_extra$List$Extra$last(lst))));
+};
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $elm_explorations$linear_algebra$Math$Vector2$add = _MJS_v2add;
+var $elm$svg$Svg$Attributes$d = _VirtualDom_attribute('d');
+var $author$project$Graph$lerppos = F2(
+	function (_v0, v) {
+		var bot = _v0.a;
+		var top = _v0.b;
+		return bot + ((top - bot) * v);
+	});
+var $elm$core$Basics$round = _Basics_round;
+var $author$project$Graph$xpos = F2(
+	function (_v0, a) {
+		var w = _v0.ai;
+		var h = _v0.Z;
+		return $elm$core$String$fromInt(
+			$elm$core$Basics$round(
+				A2($author$project$Graph$lerppos, w, a)));
+	});
+var $author$project$Graph$ypos = F2(
+	function (_v0, a) {
+		var w = _v0.ai;
+		var h = _v0.Z;
+		return $elm$core$String$fromInt(
+			$elm$core$Basics$round(
+				A2($author$project$Graph$lerppos, h, a)));
+	});
+var $author$project$Graph$toStringTuple = F2(
+	function (b, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return A2($author$project$Graph$xpos, b, x) + (' ' + A2($author$project$Graph$ypos, b, y));
+	});
+var $elm_explorations$linear_algebra$Math$Vector2$toRecord = _MJS_v2toRecord;
+var $author$project$Graph$toTuple = function (v) {
+	return function (_v0) {
+		var x = _v0.bo;
+		var y = _v0.bp;
+		return _Utils_Tuple2(x, y);
+	}(
+		$elm_explorations$linear_algebra$Math$Vector2$toRecord(v));
+};
+var $author$project$Graph$describePath = F5(
+	function (b, s, start, end, control) {
+		return (!s) ? ('M' + (A2(
+			$author$project$Graph$toStringTuple,
+			b,
+			$author$project$Graph$toTuple(start)) + (' L' + A2(
+			$author$project$Graph$toStringTuple,
+			b,
+			$author$project$Graph$toTuple(end))))) : ('M' + (A2(
+			$author$project$Graph$toStringTuple,
+			b,
+			$author$project$Graph$toTuple(start)) + (' Q' + (A2($author$project$Graph$toStringTuple, b, control) + (' ' + A2(
+			$author$project$Graph$toStringTuple,
+			b,
+			$author$project$Graph$toTuple(end)))))));
+	});
+var $elm_explorations$linear_algebra$Math$Vector2$distance = _MJS_v2distance;
+var $elm$svg$Svg$Attributes$fill = _VirtualDom_attribute('fill');
+var $elm_explorations$linear_algebra$Math$Vector2$fromRecord = _MJS_v2fromRecord;
+var $author$project$Graph$fromTuple = function (_v0) {
+	var x = _v0.a;
+	var y = _v0.b;
+	return $elm_explorations$linear_algebra$Math$Vector2$fromRecord(
+		{bo: x, bp: y});
+};
+var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
+var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
+var $elm$svg$Svg$Attributes$markerEnd = _VirtualDom_attribute('marker-end');
+var $elm_explorations$linear_algebra$Math$Vector2$normalize = _MJS_v2normalize;
+var $elm$svg$Svg$path = $elm$svg$Svg$trustedNode('path');
+var $elm_explorations$linear_algebra$Math$Vector2$scale = _MJS_v2scale;
+var $elm$svg$Svg$Attributes$stroke = _VirtualDom_attribute('stroke');
+var $elm$svg$Svg$Attributes$strokeWidth = _VirtualDom_attribute('stroke-width');
+var $elm_explorations$linear_algebra$Math$Vector2$sub = _MJS_v2sub;
+var $author$project$Graph$arrowBetweenPoints = F4(
+	function (b, s, _v0, _v1) {
+		var x1 = _v0.a;
+		var y1 = _v0.b;
+		var x2 = _v1.a;
+		var y2 = _v1.b;
+		var start = $author$project$Graph$fromTuple(
+			_Utils_Tuple2(x1, y1));
+		var midpoint = F2(
+			function (start_, end_) {
+				return A2(
+					$elm_explorations$linear_algebra$Math$Vector2$scale,
+					0.5,
+					A2($elm_explorations$linear_algebra$Math$Vector2$add, start_, end_));
+			});
+		var makeNormal = F2(
+			function (start_, end_) {
+				return $author$project$Graph$fromTuple(
+					function (_v2) {
+						var x = _v2.a;
+						var y = _v2.b;
+						return _Utils_Tuple2(-y, x);
+					}(
+						$author$project$Graph$toTuple(
+							$elm_explorations$linear_algebra$Math$Vector2$normalize(
+								A2($elm_explorations$linear_algebra$Math$Vector2$sub, end_, start_)))));
+			});
+		var end = $author$project$Graph$fromTuple(
+			_Utils_Tuple2(x2, y2));
+		var length = A2($elm_explorations$linear_algebra$Math$Vector2$distance, start, end);
+		var normal = A2(makeNormal, start, end);
+		var curvemidpoint = A2(
+			$elm_explorations$linear_algebra$Math$Vector2$add,
+			A2(midpoint, start, end),
+			A2($elm_explorations$linear_algebra$Math$Vector2$scale, (0.5 * s) * length, normal));
+		var control = F2(
+			function (start_, end_) {
+				return $author$project$Graph$toTuple(
+					A2(
+						$elm_explorations$linear_algebra$Math$Vector2$add,
+						A2(midpoint, start_, end_),
+						A2(
+							$elm_explorations$linear_algebra$Math$Vector2$scale,
+							(s * A2($elm_explorations$linear_algebra$Math$Vector2$distance, start_, end_)) / 2,
+							A2(makeNormal, start_, end_))));
+			});
+		return A2(
+			$elm$svg$Svg$g,
+			_List_Nil,
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$path,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$d(
+							A5(
+								$author$project$Graph$describePath,
+								b,
+								s,
+								start,
+								curvemidpoint,
+								A2(control, start, curvemidpoint))),
+							$elm$svg$Svg$Attributes$fill('none'),
+							$elm$svg$Svg$Attributes$stroke('black'),
+							$elm$svg$Svg$Attributes$strokeWidth('2'),
+							$elm$svg$Svg$Attributes$markerEnd('url(#arrow)')
+						]),
+					_List_Nil),
+					A2(
+					$elm$svg$Svg$path,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$d(
+							A5(
+								$author$project$Graph$describePath,
+								b,
+								s,
+								curvemidpoint,
+								end,
+								A2(control, curvemidpoint, end))),
+							$elm$svg$Svg$Attributes$fill('none'),
+							$elm$svg$Svg$Attributes$stroke('black'),
+							$elm$svg$Svg$Attributes$strokeWidth('2')
+						]),
+					_List_Nil)
+				]));
+	});
+var $elm$svg$Svg$defs = $elm$svg$Svg$trustedNode('defs');
+var $elm$svg$Svg$Attributes$id = _VirtualDom_attribute('id');
+var $elm$svg$Svg$marker = $elm$svg$Svg$trustedNode('marker');
+var $elm$svg$Svg$Attributes$markerHeight = _VirtualDom_attribute('markerHeight');
+var $elm$svg$Svg$Attributes$markerWidth = _VirtualDom_attribute('markerWidth');
+var $elm$svg$Svg$Attributes$orient = _VirtualDom_attribute('orient');
+var $elm$svg$Svg$Attributes$refX = _VirtualDom_attribute('refX');
+var $elm$svg$Svg$Attributes$refY = _VirtualDom_attribute('refY');
+var $elm$svg$Svg$Attributes$viewBox = _VirtualDom_attribute('viewBox');
+var $author$project$Graph$arrowheadMarker = A2(
+	$elm$svg$Svg$defs,
+	_List_Nil,
+	_List_fromArray(
+		[
+			A2(
+			$elm$svg$Svg$marker,
+			_List_fromArray(
+				[
+					$elm$svg$Svg$Attributes$id('arrow'),
+					$elm$svg$Svg$Attributes$viewBox('0 0 15 15'),
+					$elm$svg$Svg$Attributes$refX('5'),
+					$elm$svg$Svg$Attributes$refY('5'),
+					$elm$svg$Svg$Attributes$markerWidth('6'),
+					$elm$svg$Svg$Attributes$markerHeight('6'),
+					$elm$svg$Svg$Attributes$orient('auto-start-reverse')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$svg$Svg$path,
+					_List_fromArray(
+						[
+							$elm$svg$Svg$Attributes$d('M 0 0 L 10 5 L 0 10 z'),
+							$elm$svg$Svg$Attributes$fill('black')
+						]),
+					_List_Nil)
+				]))
+		]));
+var $elm$svg$Svg$circle = $elm$svg$Svg$trustedNode('circle');
+var $elm$svg$Svg$Attributes$cx = _VirtualDom_attribute('cx');
+var $elm$svg$Svg$Attributes$cy = _VirtualDom_attribute('cy');
+var $author$project$Graph$flip = F3(
+	function (f, b, a) {
+		return A2(f, a, b);
+	});
+var $elm$svg$Svg$foreignObject = $elm$svg$Svg$trustedNode('foreignObject');
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
+var $elm$core$Dict$Black = 1;
+var $elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: -1, a: a, b: b, c: c, d: d, e: e};
+	});
+var $elm$core$Dict$Red = 0;
+var $elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === -1) && (!right.a)) {
+			var _v1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === -1) && (!left.a)) {
+				var _v3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					0,
+					key,
+					value,
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
+				var _v5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _v6 = left.d;
+				var _v7 = _v6.a;
+				var llK = _v6.b;
+				var llV = _v6.c;
+				var llLeft = _v6.d;
+				var llRight = _v6.e;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					0,
+					lK,
+					lV,
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
+			} else {
+				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === -2) {
+			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _v1 = A2($elm$core$Basics$compare, key, nKey);
+			switch (_v1) {
+				case 0:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3($elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 1:
+					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3($elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var $elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
+		if ((_v0.$ === -1) && (!_v0.a)) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === -2) {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1) {
+					case 0:
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 1:
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
+var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
+var $elm$core$Maybe$map = F2(
+	function (f, maybe) {
+		if (!maybe.$) {
+			var value = maybe.a;
+			return $elm$core$Maybe$Just(
+				f(value));
+		} else {
+			return $elm$core$Maybe$Nothing;
+		}
+	});
+var $elm$core$Tuple$mapBoth = F3(
+	function (funcA, funcB, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			funcA(x),
+			funcB(y));
+	});
+var $elm$svg$Svg$Attributes$overflow = _VirtualDom_attribute('overflow');
+var $elm$svg$Svg$Attributes$preserveAspectRatio = _VirtualDom_attribute('preserveAspectRatio');
+var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $elm$svg$Svg$svg = $elm$svg$Svg$trustedNode('svg');
+var $elm$core$Dict$values = function (dict) {
+	return A3(
+		$elm$core$Dict$foldr,
+		F3(
+			function (key, value, valueList) {
+				return A2($elm$core$List$cons, value, valueList);
+			}),
+		_List_Nil,
+		dict);
+};
+var $elm$svg$Svg$Attributes$width = _VirtualDom_attribute('width');
+var $elm$svg$Svg$Attributes$x = _VirtualDom_attribute('x');
+var $elm$svg$Svg$Attributes$y = _VirtualDom_attribute('y');
+var $author$project$Graph$view = function (g) {
+	var nodes = $elm$core$Dict$fromList(
+		A2(
+			$elm$core$List$map,
+			function (n) {
+				return _Utils_Tuple2(
+					n,
+					g.bl(n));
+			},
+			g.a_));
+	var edges = A2(
+		function (f) {
+			return $elm$core$List$map(
+				A2($elm$core$Tuple$mapBoth, f, f));
+		},
+		A2(
+			$elm$core$Basics$composeR,
+			A2($author$project$Graph$flip, $elm$core$Dict$get, nodes),
+			A2(
+				$elm$core$Basics$composeR,
+				$elm$core$Maybe$map($elm$core$Tuple$second),
+				$elm$core$Maybe$withDefault(
+					_Utils_Tuple2(0.5, 0.5)))),
+		g.as);
+	return A2(
+		$elm$svg$Svg$svg,
+		_List_fromArray(
+			[
+				$elm$svg$Svg$Attributes$width('100%'),
+				$elm$svg$Svg$Attributes$height('100%'),
+				$elm$svg$Svg$Attributes$preserveAspectRatio('xMidYMid slice'),
+				$elm$svg$Svg$Attributes$viewBox(
+				A2($author$project$Graph$xpos, g.u, 0) + (' ' + (A2($author$project$Graph$ypos, g.u, 0) + (' ' + (A2($author$project$Graph$xpos, g.u, 1) + (' ' + A2($author$project$Graph$ypos, g.u, 1)))))))
+			]),
+		$elm$core$List$concat(
+			_List_fromArray(
+				[
+					A2(
+					$elm$core$List$map,
+					function (_v0) {
+						var p1 = _v0.a;
+						var p2 = _v0.b;
+						return A4($author$project$Graph$arrowBetweenPoints, g.u, -0.6, p1, p2);
+					},
+					edges),
+					_List_fromArray(
+					[$author$project$Graph$arrowheadMarker]),
+					A2(
+					$elm$core$List$concatMap,
+					function (_v1) {
+						var h = _v1.a;
+						var _v2 = _v1.b;
+						var px = _v2.a;
+						var py = _v2.b;
+						return _List_fromArray(
+							[
+								A2(
+								$elm$svg$Svg$circle,
+								_List_fromArray(
+									[
+										$elm$svg$Svg$Attributes$cx(
+										A2($author$project$Graph$xpos, g.u, px)),
+										$elm$svg$Svg$Attributes$cy(
+										A2($author$project$Graph$ypos, g.u, py)),
+										$elm$svg$Svg$Attributes$overflow('visible'),
+										$elm$svg$Svg$Attributes$fill('white'),
+										$elm$svg$Svg$Attributes$r('10')
+									]),
+								_List_Nil),
+								A2(
+								$elm$svg$Svg$foreignObject,
+								_List_fromArray(
+									[
+										$elm$svg$Svg$Attributes$overflow('visible'),
+										$elm$svg$Svg$Attributes$x(
+										A2($author$project$Graph$xpos, g.u, px)),
+										$elm$svg$Svg$Attributes$y(
+										A2($author$project$Graph$ypos, g.u, py))
+									]),
+								_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$div,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('overflow-visible grid place-items-center w-[25px] h-[25px] -translate-y-1/2 -translate-x-1/2')
+											]),
+										_List_fromArray(
+											[h]))
+									]))
+							]);
+					},
+					$elm$core$Dict$values(nodes))
+				])));
+};
+var $author$project$Main$funnyBijection_ = F3(
+	function (h, f, lst) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('flex w-max flex-row'),
+					A2(
+					$elm$html$Html$Attributes$style,
+					'height',
+					$elm$core$String$fromInt(h) + 'px')
+				]),
+			_List_fromArray(
+				[
+					function () {
+					var p = $elm$core$List$length(lst);
+					var nodes = A2($elm$core$List$range, 1, p);
+					return $author$project$Graph$view(
+						{
+							u: {
+								Z: _Utils_Tuple2(0, 200),
+								ai: _Utils_Tuple2(0, 300)
+							},
+							as: A2(
+								$elm$core$List$concatMap,
+								$author$project$Main$pairs,
+								A2($author$project$Main$makeBijection, nodes, lst)),
+							a_: nodes,
+							bl: function (i) {
+								return _Utils_Tuple2(
+									f(i - 1),
+									_Utils_Tuple2(i / (p + 1), 0.5));
+							}
+						});
+				}()
+				]));
+	});
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $elm$core$Char$fromCode = _Char_fromCode;
+var $author$project$Main$math = function (str) {
+	return A2(
+		$elm_explorations$markdown$Markdown$toHtml,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('md-math')
+			]),
+		'$' + (str + '$'));
+};
+var $author$project$Main$mathchar = function (i) {
+	return $author$project$Main$math(
+		$elm$core$String$fromChar(
+			$elm$core$Char$fromCode(97 + i)));
+};
+var $author$project$Main$funnyBijection = A2($author$project$Main$funnyBijection_, 150, $author$project$Main$mathchar);
+var $author$project$Main$ifThenElse = F3(
+	function (c, a, b) {
+		return c ? a : b;
+	});
+var $elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
+var $elm$core$List$intersperse = F2(
+	function (sep, xs) {
+		if (!xs.b) {
+			return _List_Nil;
+		} else {
+			var hd = xs.a;
+			var tl = xs.b;
+			var step = F2(
+				function (x, rest) {
+					return A2(
+						$elm$core$List$cons,
+						sep,
+						A2($elm$core$List$cons, x, rest));
+				});
+			var spersed = A3($elm$core$List$foldr, step, _List_Nil, tl);
+			return A2($elm$core$List$cons, hd, spersed);
+		}
+	});
+var $elm_community$list_extra$List$Extra$intercalate = function (xs) {
+	return A2(
+		$elm$core$Basics$composeL,
+		$elm$core$List$concat,
+		$elm$core$List$intersperse(xs));
+};
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $author$project$Main$showInt = function (i) {
+	if (i === 1) {
+		return '';
+	} else {
+		return $elm$core$String$fromInt(i);
+	}
+};
+var $elm$core$List$sortBy = _List_sortBy;
+var $author$project$Main$funnyBicjectionPanel = function (opts) {
+	var xc = A2(
+		$elm_community$list_extra$List$Extra$count,
+		$elm$core$Basics$eq($elm$core$Maybe$Nothing),
+		opts);
+	var p = $elm$core$List$length(opts);
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('flex flex-col items-center justify-center max-w-[800px] mx-auto my-4 py-4 px-8')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('flex flex-row items-stretch justify-center w-full')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('flex flex-col min-w-1/3 overflow-clip rounded-lg border border-flu-200 p-4 justify-center pointer-events-none')
+							]),
+						A2(
+							$elm$core$List$map,
+							function (i) {
+								return A2(
+									$elm$html$Html$div,
+									_List_fromArray(
+										[
+											$elm$html$Html$Attributes$class('relative flex flex-row items-center')
+										]),
+									function () {
+										var curr = A2(
+											$elm$core$Maybe$withDefault,
+											$elm$core$Maybe$Nothing,
+											A2($elm_community$list_extra$List$Extra$getAt, i, opts));
+										return $elm$core$List$concat(
+											_List_fromArray(
+												[
+													_List_fromArray(
+													[
+														$author$project$Main$math('(')
+													]),
+													_List_fromArray(
+													[
+														A2(
+														$elm$html$Html$div,
+														_List_fromArray(
+															[
+																$elm$html$Html$Attributes$class('cursor-pointer rounded-md pointer-events-auto'),
+																$elm$html$Html$Attributes$class(
+																A3(
+																	$author$project$Main$ifThenElse,
+																	_Utils_eq(curr, $elm$core$Maybe$Nothing),
+																	'bg-hl-1',
+																	'hover:bg-hl-11')),
+																$elm$html$Html$Events$onClick(
+																_Utils_Tuple2(i, $elm$core$Maybe$Nothing))
+															]),
+														_List_fromArray(
+															[
+																$author$project$Main$math('\\large \\,x\\,')
+															]))
+													]),
+													A2(
+													$elm$core$List$concatMap,
+													function (k) {
+														return _List_fromArray(
+															[
+																$author$project$Main$math('\\large +'),
+																A2(
+																$elm$html$Html$div,
+																_List_fromArray(
+																	[
+																		$elm$html$Html$Attributes$class('cursor-pointer rounded-md pointer-events-auto'),
+																		$elm$html$Html$Attributes$class(
+																		A3(
+																			$author$project$Main$ifThenElse,
+																			_Utils_eq(
+																				curr,
+																				$elm$core$Maybe$Just(k)),
+																			'bg-hl-1',
+																			'hover:bg-hl-11')),
+																		$elm$html$Html$Events$onClick(
+																		_Utils_Tuple2(
+																			i,
+																			$elm$core$Maybe$Just(k)))
+																	]),
+																_List_fromArray(
+																	[
+																		$author$project$Main$math('\\large \\,1\\,')
+																	]))
+															]);
+													},
+													A2(
+														$elm$core$List$range,
+														0,
+														(!i) ? (-1) : ((p - i) - 1))),
+													_List_fromArray(
+													[
+														$author$project$Main$math(')')
+													])
+												]));
+									}());
+							},
+							A2($elm$core$List$range, 0, p - 1))),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('p-8 my-auto')
+							]),
+						_List_fromArray(
+							[
+								$author$project$Main$math('\\overset{\\scriptsize f}{\\longmapsto}')
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('w-min px-4 rounded-lg border border-flu-200 flex flex-col justify-center items-center')
+							]),
+						_List_fromArray(
+							[
+								$author$project$Main$funnyBijection(opts)
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('flex flex-row items-center justify-center gap-1')
+					]),
+				$elm$core$List$concat(
+					_List_fromArray(
+						[
+							_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class(' pt-5 ')
+									]),
+								_List_fromArray(
+									[
+										$author$project$Main$math(
+										'$\\large P(' + ($elm$core$String$fromInt(p) + (') = \\prod_{ 0\\leq i < ' + ($elm$core$String$fromInt(p) + '} (x + i) = \\,$'))))
+									]))
+							]),
+							A2(
+							$elm_community$list_extra$List$Extra$intercalate,
+							_List_fromArray(
+								[
+									$author$project$Main$math('\\large + ')
+								]),
+							A2(
+								$elm$core$List$map,
+								function (_v0) {
+									var a = _v0.a;
+									var i = _v0.b;
+									return _List_fromArray(
+										[
+											A2(
+											$elm$html$Html$div,
+											_List_fromArray(
+												[
+													$elm$html$Html$Attributes$class(
+													A3(
+														$author$project$Main$ifThenElse,
+														_Utils_eq(i, xc),
+														'bg-hl-1',
+														''))
+												]),
+											_List_fromArray(
+												[
+													$author$project$Main$math(
+													'\\large ' + ($author$project$Main$showInt(a) + ('x^{' + ($author$project$Main$showInt(i) + '}'))))
+												]))
+										]);
+								},
+								$elm$core$List$reverse(
+									A2(
+										$elm$core$List$sortBy,
+										$elm$core$Tuple$second,
+										$author$project$Main$expand(p)))))
+						])))
+			]));
+};
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$core$Basics$modBy = _Basics_modBy;
+var $author$project$Main$nice = function (m) {
+	return A2(
+		$elm$html$Html$div,
+		_List_Nil,
+		_List_fromArray(
+			[
+				$author$project$Main$md('\n# Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is free. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned} \n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$ \n\n$$ \\begin{aligned} \n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned} \n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$ \n\nIt\'s pretty easy figure $a_1$ out. Specifically, we see\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. The reader may show that every term but $1$ and $p-1 \\equiv -1$ is cancelled by its inverse. This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nBut what about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion buisness going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product.\n\n$$ C(S) \\; \\defeq \\; \\prod\\_{A \\,\\in\\, S} A $$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x) \n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(S)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{A \\,\\in\\, S} \\sum\\_{a \\,\\in\\, A} a \\; = \\; \\sum\\_{c \\,\\in\\, C(S)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |S|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory. \n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" buisness going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned} \n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, although we do need to redefine $P_p$, indexing the ones.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times. \n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned} \n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \n\\end{aligned}$$\n\nThis is cool, but it\'s a bit still tricky to think about. Can we come up another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned} \n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just to find a way understand a choice of $x$. At every step each $1$ represents choosing a distinct object, and we want $x$ to be meaningfully different a $1$ — shouldn\'t be just another card. In my imagination, I order a scrambled mess of cards by placing them one at a time onto a deck. What if picking $x$ means starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned} \n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x+0$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... that sounds a lot like a cycle. Quick recap: a cycle of set $A$ is a collection of pairs $Q \\in \\mathcal{P}(S^2)$ of size equal to $A$ such that\n\n$$ \\bigcup\\_{(a,b) \\,\\in\\, Q} a \\; = \\; A \\; = \\; \\bigcup\\_{(a,b) \\,\\in\\, Q} b $$\n\nFor instance if $A = \\set{a,\\,b,\\,c}$ then the set $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. We can visualize any cycle as a directed graph.'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-full flex justify-center items-center pt-4 h-[120px]')
+					]),
+				_List_fromArray(
+					[
+						A3(
+						$author$project$Main$funnyBijection_,
+						200,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Just(0)
+							]))
+					])),
+				$author$project$Main$md('\nIs our correspondence, call it $f$, a bijective map from a choice in $C(P_p)$ to an arrangement of $p$ objects into a set of cycles? It\'s not hard to construct its inverse. Suppose $f(c)$ is any set of cycles. We start with the cycle containing ${\\textbf K}$ and walk through it. Each subsequent term in the cycle corresponds to the next compontent of our choice $c$ in the obvious way. Once we return to ${\\textbf K}$, add an $x$ as the next component of $c$, and move onto the cycle that contains the largest remaining element. We repeat until we\'ve exhausted every cycle. Let\'s look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ corresponds to the set of three $3$ one-cycles, each containing an element of $\\set{a,\\,b,\\,c}$\n'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-full mx-auto my-1 flex flex-row justify-center items-center')
+					]),
+				_List_fromArray(
+					[
+						$author$project$Main$math('\\hl{x}(\\hl{x} + 1 + 1)(\\hl{x} + 1)'),
+						$author$project$Main$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
+						$author$project$Main$funnyBijection(
+						_List_fromArray(
+							[$elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing]))
+					])),
+				$author$project$Main$md('The choice $(x,\\, 1\\_1,\\, x)$ corresponds to the following set containing a two-cycle and a one-cycle.'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-full mx-auto my-1 flex flex-row justify-center items-center')
+					]),
+				_List_fromArray(
+					[
+						$author$project$Main$math('\\hl{x}(x + \\hl{1} + 1)(\\hl{x} + 1)'),
+						$author$project$Main$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
+						$author$project$Main$funnyBijection(
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing
+							]))
+					])),
+				$author$project$Main$md('The choice $(x,\\, 1\\_2,\\, x)$ corresponds to another set of cycles.'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-full mx-auto my-1 flex flex-row justify-center items-center')
+					]),
+				_List_fromArray(
+					[
+						$author$project$Main$math('\\hl{x}(x + 1 + \\hl{1})(\\hl{x} + 1)'),
+						$author$project$Main$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
+						$author$project$Main$funnyBijection(
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing
+							]))
+					])),
+				$author$project$Main$md('The following tool allows for the exploration of arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class(' pt-8 pb-4 flex flex-row gap-8 justify-center items-center w-full')
+					]),
+				A2(
+					$elm$core$List$map,
+					function (i) {
+						return A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Events$onClick(
+									$author$project$Main$SetBijectionPrime(i)),
+									$elm$html$Html$Attributes$class(
+									'rounded-md py-2 px-3 cursor-pointer hover:bg-flu-200 ' + A3(
+										$author$project$Main$ifThenElse,
+										_Utils_eq(
+											$elm$core$List$length(m.A),
+											i),
+										' bg-flu-200 ',
+										''))
+								]),
+							_List_fromArray(
+								[
+									$author$project$Main$math(
+									'P(' + ($author$project$Main$showInt(i) + ')'))
+								]));
+					},
+					_List_fromArray(
+						[3, 5, 7]))),
+				A2(
+				$elm$html$Html$map,
+				$author$project$Main$SetBijection,
+				$author$project$Main$funnyBicjectionPanel(m.A)),
+				$author$project$Main$md('\nGetting back to our original point, we have that $a_i$ is equal to the number of ways to arrage $p$ objects into an $i$-set of cycles. \n\n$$ a\\_i \\,=\\, \\Big| \\set{ c \\in C(P_p) \\,:\\, |f(c)| = i } \\Big| $$\n\nWe wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of ways to arrage $p$ objects into an $i$-set of cycles" is a multiple of $p$. Let\'s denote\n\n$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |c| = i } $$\n\nNow that we\'re working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don\'t actually need to divide it. Let\'s look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we\'re trying to split this into (two) disjoint subsets of size five. \n'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('flex flex-row w-full gap-3 pt-6 px-6 place-center justify-center')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge \\Bigg\\{$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0)
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('flex flex-row w-full gap-3 pb-6 px-6 place-center justify-center')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge \\;$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(2),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(2),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(3),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge \\Bigg\\}$$')
+							]))
+					])),
+				$author$project$Main$md('\nPerhaps, you have some ideas, perhaps you don\'t. I claim that, even in writing out our set, we\'ve stumbled into a hint. The trick is to think about *how many elements each arrow skips*. Look at the order we wrote the elements in. We naturally put first the sets with cycles *skipping no elements*, then those *skipping one element*, and so on. Let\'s rewrite our set in a way that these *element skips* easier to compare. The order of our labels, $a,\\, b ,\\, c ,\\, \\ldots$, is arbitrary; let\'s shift them around to place the label that\'s projecting an arrow first.'),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('flex flex-row w-full gap-3 pt-6 px-6 place-center justify-center')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge \\Bigg\\{$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(1),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(2),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(3),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						$author$project$Main$mathchar,
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							]))
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('flex flex-row w-full gap-3 pb-6 px-6 place-center justify-center')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge \\;$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(1),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(2),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(3),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(4),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(1),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge ,$$')
+							])),
+						A3(
+						$author$project$Main$funnyBijection_,
+						130,
+						A2(
+							$elm$core$Basics$composeR,
+							$elm$core$Basics$add(4),
+							A2(
+								$elm$core$Basics$composeR,
+								$elm$core$Basics$modBy(5),
+								$author$project$Main$mathchar)),
+						_List_fromArray(
+							[
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Just(0),
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing,
+								$elm$core$Maybe$Nothing
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('my-auto')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('$$\\huge \\Bigg\\}$$')
+							]))
+					])),
+				$author$project$Main$md('\nAh-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* buisness. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after element shifting". So let\'s formalize element shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function (applications to each label in each cycle).\n\n$$ \\varphi \\;:\\; j \\; \\longmapsto \\; j + 1 \\mod p$$  \n\nNow "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\varphi$. Notice that every orbit of $\\varphi$ (in $A\\_{p,\\,i}$) has size at most $p$ because $\\varphi^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\varphi$ into at least two orbits. Now, if we can show that every $\\varphi$ orbit has size exactly $p$, we\'ll be done. We will have solved our whole problem. Consider how $\\varphi$ acts on $c \\in A\\_{p,\\,i}$ with $1 < i < p$. First we ought to verify that $\\varphi(c)$ is actually an element of $A\\_{p,\\,i}$. Luckily, this follows immediately from the bijectivity of $\\varphi$. It only remains to show that $\\varphi^k(c) \\neq c$ for $0 < k < p$. This part is a little trickier. \n\nSuppose, for the sake of contradiction, that $\\varphi^k(c) = c$. It must be that $\\varphi^k$ is a bijection on the cycles in $c$. Indeed, to say that $\\varphi^k(c) = c$ is to say that $\\varphi^k$ is a bijection on $c$. Moreover, it\'s clear that $\\varphi^k$ isn\'t the identity — indeed, $k$ is neither zero nor $p$. Hmm. It\'s a bit unclear where to go from here. I suppose, for lack of a more insightful claim, since $\\varphi^k$ is a bijection on $c$ it has an inverse which is is also a bijection on $c$. Can we find more bijections? Obviously $\\varphi^p$ (i.e. the identity function) is one. Moreover, the composition of two bijections is a bijection. So, with function composition, $\\varphi^k$, and $\\varphi^p$, we can generate a set (call it $B$) of bijections. What are the elements of this set? Suppose $\\varphi^m$ is an element of $B$, then:\n\n$$ \\underbrace{\\, \\varphi^m \\,\\circ\\, \\varphi^m \\,\\circ\\, \\cdots \\,\\circ\\, \\varphi^m \\,}\\_{n \\text{ times}} \\; = \\; \\varphi^{nm}$$\n\nSo $B$ contains each $\\varphi^{nk}$. Next we consider the effect of $\\varphi^p$.\n\n$$\\varphi^m \\; = \\; \\varphi^m \\,\\circ \\underbrace{ \\, \\varphi^p \\,\\circ\\, \\varphi^p \\,\\circ\\, \\cdots \\,\\circ\\, \\varphi^p \\, }\\_{n \\text{ times}} \\; = \\; \\varphi^{m + np}$$\n\nCombining these facts we find that $ B \\,=\\, \\set{ \\varphi^{ nk \\text{ mod } p } \\;|\\; n \\in \\N } $. Now this is a bit interesting. Taking $n = k^{-1} \\ \\text{ mod } p$ we find that $\\varphi$ is an element of $B$. \n\n$$B = \\set{ 1,\\, \\varphi,\\, \\varphi^2,\\, \\ldots,\\, \\varphi^{p-1}}$$\n\nSurely this is impossible! Let\'s think about how $\\varphi$ acts on $j \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$. Denote by $\\chi(j)$ the cycle in $c$ that contains $j$. It follows from the bijectivity of $\\varphi$ that all of the elements in one cycle of $c$ map into the same other cycle in $c$. Stated formally, \n\n$$ (\\varphi \\circ \\chi)(j) \\; = \\; (\\chi \\circ \\varphi)(j) $$\n\nIt follows that the size of cycles in $c$ is invariant under $\\varphi$: \n\n$$\\begin{aligned}\n\\big| \\chi(j) \\big| \\; &= \\; \\big| (\\varphi \\circ \\chi)(j) \\big| \\\\\\\\\n&=\\; \\big| (\\chi \\circ \\varphi)(j) \\big| \\\\\\\\\n&= \\; \\big| \\chi(\\, j + 1 \\mod p \\,) \\big|\n\\end{aligned}$$\n\n$$\\big| \\chi(0) \\big| = \\big| \\chi(1) \\big| = \\big| \\chi(2) \\big| = \\cdots = \\big| \\chi(p-1) \\big|$$\n\nSo every cycle in $c$ has the same number of elements. Call it $q$. On the other hand, $c$ contains $i$ cycles, each of our $p$ objects appearing in exactly one.\n\n$$p \\;=\\; i\\,\\cdot\\, q$$\n\nBut $p$ is prime and $1 \\neq i \\neq p$; this is impossible. Thus the statement $\\varphi^k(c) = c$ is false, and every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$. \n\n$$P(p) \\;\\equiv\\; x^p - x \\mod p$$\n        ')
+			]));
 };
 var $author$project$Main$topBar = A2(
 	$elm$html$Html$div,
@@ -5493,19 +8501,9 @@ var $author$project$Main$topBar = A2(
 				[
 					$elm$html$Html$Attributes$class('grow')
 				]),
-			_List_Nil),
-			A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('w-0 h-0 overflow-clip')
-				]),
-			_List_fromArray(
-				[
-					$elm$html$Html$text('$\\newcommand{\\ideal}[1]{\\left\\langle\\,#1\\,\\right\\rangle}$ $\\renewcommand{\\deg}[1]{\\text{deg}\\left(#1\\right)}$ $\\newcommand{\\set}[1]{ \\left\\{ \\, #1 \\, \\right\\} }$ $\\newcommand{\\F}[0]{\\mathbb{F}}$ $\\renewcommand{\\leq}[0]{\\leqslant}$ $\\renewcommand{\\geq}[0]{\\geqslant}$ $\\newcommand{\\defeq}[0]{\\overset{\\scriptsize\\textnormal{def}}{=}}$')
-				]))
+			_List_Nil)
 		]));
-var $author$project$Main$view = function (_v0) {
+var $author$project$Main$view = function (m) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -5528,7 +8526,11 @@ var $author$project$Main$view = function (_v0) {
 									$elm$html$Html$Attributes$class('w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg')
 								]))),
 					_List_fromArray(
-						[$author$project$Main$about, $author$project$Main$berlekamp])),
+						[
+							$author$project$Main$about,
+							$author$project$Main$berlekamp,
+							$author$project$Main$nice(m)
+						])),
 					_List_fromArray(
 					[
 						A2(
@@ -5545,7 +8547,7 @@ var $author$project$Main$view = function (_v0) {
 				])));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{bl: $author$project$Main$init, bJ: $author$project$Main$subscriptions, bN: $author$project$Main$update, bO: $author$project$Main$view});
+	{bL: $author$project$Main$init, b7: $author$project$Main$subscriptions, cb: $author$project$Main$update, bl: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(
 		{}))(0)}});}(this));
