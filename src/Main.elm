@@ -282,13 +282,13 @@ In order to answer this question we'll have to figure out what's going on here. 
 
 $$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$ 
 
-It's pretty easy figure $a_1$ out. Specifically, we see
+It's pretty easy to figure $a_1$ out. Specifically, we see
 
 $$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$
 
 The terms of this product are exactly the non-zero elements of the field of integers modulo $p$. The reader may show that every term but $1$ and $p-1 \\equiv -1$ is cancelled by its inverse. This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$
 
-But what about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion buisness going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.
+But what about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.
 
 $$ \\begin{aligned}
     \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\
@@ -299,7 +299,7 @@ $$ \\begin{aligned}
 
 $$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$
 
-Despite the clunkiness of my explanation, I do think is a very natural idea. Indeed, I'd bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.
+Despite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I'd bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.
 
 $$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$
 
@@ -332,7 +332,7 @@ $$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$
 
 Let's recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we'd like to move further into combinatorics territory. 
 
-Now, it'd be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" buisness going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?
+Now, it'd be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?
 
 $$ \\begin{aligned} 
     P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\
@@ -357,14 +357,14 @@ $$\\begin{aligned}
     \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 
 \\end{aligned}$$
 
-This is cool, but it's a bit still tricky to think about. Can we come up another perspective on these choices? Let's say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let's give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.
+This is cool, but it's still a bit tricky to think about. Can we come up with another perspective on these choices? Let's say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let's give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.
 
 $$ \\begin{aligned} 
     x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\
     x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)
 \\end{aligned} $$
 
-So the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways order $2$ cards. Now we're pretty close to understanding our whole problem through a nice counting lense — we just to find a way understand a choice of $x$. At every step each $1$ represents choosing a distinct object, and we want $x$ to be meaningfully different a $1$ — shouldn't be just another card. In my imagination, I order a scrambled mess of cards by placing them one at a time onto a deck. What if picking $x$ means starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let's just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.
+So the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we're pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let's just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.
 
 $$ \\begin{aligned} 
     \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\
@@ -498,7 +498,7 @@ Perhaps, you have some ideas, perhaps you don't. I claim that, even in writing o
             , Html.div [ class "my-auto" ] [ Html.text "$$\\huge \\Bigg\\}$$" ]
             ]
         , md """
-Ah-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* buisness. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after element shifting". So let's formalize element shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function (applications to each label in each cycle).
+Ah-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after element shifting". So let's formalize element shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function (applications to each label in each cycle).
 
 $$ \\varphi \\;:\\; j \\; \\longmapsto \\; j + 1 \\mod p$$  
 
@@ -741,7 +741,7 @@ For a start,
 
 
 
-Now we can talk about each coefficient, and dig into that inclusion/exclusion buisness.
+Now we can talk about each coefficient, and dig into that inclusion/exclusion business.
 
 In the $P(5)$ we have
 
