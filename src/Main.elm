@@ -52,7 +52,7 @@ view m =
     Html.div [ class "flex flex-col place-items-center bg-flu-50 space-y-4 min-h-screen" ] <|
         List.concat
             [ [ topBar ]
-            , List.map (List.singleton >> Html.div [ class "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ]) [ about, berlekamp, nice m ]
+            , List.map (List.singleton >> Html.div [ class "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ]) [ about, nice m, berlekamp ]
             , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
             ]
 
@@ -104,11 +104,11 @@ berlekamp =
         [ md """
 # Berlekamp's Algorithm
 
-Let $\\F_p$ be the finite field of order prime $p$, and suppose that $f \\in \\F_p[x]$ is a squarefree polynomial. How can we find the factors of $f$?
+Suppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?
 
-An answer to this question was given by Elwyn Berlekamp in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. In my honours thesis I implemented his algorithm, though I couldn't find any fantastic resources on it. Here's my shot at explaining it — I hope you find his algorithm as interesting as I did.
+Elwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. I implemented his algorithm in my honours thesis, though I diddn't find any fantastic resources on it —  so here's my shot at explaining it. I hope you find his algorithm as interesting as I did.
 
-We're going to think about our problem, *factoring a polynomial over a finite field*, and chip away at it until we run into Berlekamp's algorithm.
+We're going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp's algorithm.
 
 For our first foothold, we'll notice that any factorization algorithm doesn't really need to find *every* irreducible factor of $f$. Or at least, it doesn't need to find every factor in one go. If an algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then we can repeatedly apply the algorithm until we've found every factor. Code that does that might look something like this:
 
@@ -282,13 +282,13 @@ In order to answer this question we'll have to figure out what's going on here. 
 
 $$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$ 
 
-It's pretty easy to figure $a_1$ out. Specifically, we see
+We're trying to figure out if it's always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let's get $a_1 \\equiv -1$ out of the way. Notice that
 
 $$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$
 
-The terms of this product are exactly the non-zero elements of the field of integers modulo $p$. The reader may show that every term but $1$ and $p-1 \\equiv -1$ is cancelled by its inverse. This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$
+The terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I'll not prove it here). This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$
 
-But what about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.
+How about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.
 
 $$ \\begin{aligned}
     \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\
