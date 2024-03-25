@@ -52,7 +52,7 @@ view m =
     Html.div [ class "flex flex-col place-items-center bg-flu-50 space-y-4 min-h-screen" ] <|
         List.concat
             [ [ topBar ]
-            , List.map (List.singleton >> Html.div [ class "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ]) [ about, nice m, berlekamp ]
+            , List.map (List.singleton >> Html.div [ class "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ]) [ about, berlekamp, nice m ]
             , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
             ]
 

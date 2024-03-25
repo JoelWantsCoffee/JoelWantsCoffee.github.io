@@ -8528,8 +8528,8 @@ var $author$project$Main$view = function (m) {
 					_List_fromArray(
 						[
 							$author$project$Main$about,
-							$author$project$Main$nice(m),
-							$author$project$Main$berlekamp
+							$author$project$Main$berlekamp,
+							$author$project$Main$nice(m)
 						])),
 					_List_fromArray(
 					[
