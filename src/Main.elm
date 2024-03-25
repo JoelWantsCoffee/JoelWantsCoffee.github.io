@@ -106,11 +106,9 @@ berlekamp =
 
 Suppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?
 
-Elwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*. I implemented his algorithm in my honours thesis, though I diddn't find any fantastic resources on it —  so here's my shot at explaining it. I hope you find his algorithm as interesting as I did.
+Elwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*, with what I think is a pretty sweet algorithm. Unfortunately, write-ups on his algorithm seem to fall helplessly into a "definition, proof, repeat" structure. These I find somewhat unmotivating — so here's my shot a more organic, hopefully more motivated, write up. We're going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp's algorithm. I hope you find it as interesting as I did.
 
-We're going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp's algorithm.
-
-For our first foothold, we'll notice that any factorization algorithm doesn't really need to find *every* irreducible factor of $f$. Or at least, it doesn't need to find every factor in one go. If an algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then we can repeatedly apply the algorithm until we've found every factor. Code that does that might look something like this:
+We start stating the obvious. We can, theoretically, find the factors of $f$ with a brute force search — though this is a rather terrible algorithm. Let's step back to see if we can find a better approach. Notice that any factorization algorithm doesn't really need to find *every* factor. At least, it doesn't need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.
 
 ```hs
 -- this code is pretty easy to verify using induction.
@@ -123,7 +121,7 @@ factor f = case findNonTrivialDivisor f of
         return $ Set.singleton f -- f is irreducible
 ```
 
-Perhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we're trying to split $f$ into two *meaningful* parts - two parts both containing some of the factors of $f$. """
+Perhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we're trying to split $f$ into two *meaningful* parts — two parts both containing some of the factors of $f$. """
         , Html.iframe [ class "quiver-embed w-full h-64 text-center", Attr.src "https://q.uiver.app/#q=WzAsMyxbMSwwLCJmPShmXzFmXzJmXzMpKGZfNFxcbGRvdHMgZl9uKSJdLFswLDIsImdfMT0oZl8xZl8yZl8zKSJdLFsyLDIsImdfMj0oZl80XFxsZG90cyBmX24pIl0sWzAsMiwiIiwyLHsiY3VydmUiOi0yfV0sWzAsMSwiIiwwLHsiY3VydmUiOjJ9XV0=&embed" ] []
         , md """
 And once we've found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it's natural to express what we want of $g_1$ as follows:
