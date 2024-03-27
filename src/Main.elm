@@ -20,7 +20,7 @@ port render : {} -> Cmd msg
 
 
 type alias Model =
-    { bijection : List (Maybe Int) }
+    { bijection : List (Maybe Int), open : List Bool }
 
 
 type alias Flags =
@@ -30,6 +30,7 @@ type alias Flags =
 type Msg
     = SetBijection ( Int, Maybe Int )
     | SetBijectionPrime Int
+    | ToggleArticleOpen Int
 
 
 main : Program Flags Model Msg
@@ -44,7 +45,7 @@ main =
 
 init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( { bijection = [ Nothing, Just 0, Just 0 ] }, Cmd.none )
+    ( { bijection = [ Nothing, Just 0, Just 0 ], open = [] }, Cmd.none )
 
 
 view : Model -> Html Msg
@@ -65,6 +66,9 @@ update msg m =
 
         SetBijectionPrime i ->
             ( { m | bijection = List.range 0 (i - 1) |> List.map (\k -> List.getAt k m.bijection |> Maybe.withDefault Nothing) }, render {} )
+
+        ToggleArticleOpen _ ->
+            ( m, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -305,13 +309,13 @@ This is all a bit vague. We need to formalize. Let's start by turning our produc
 
 $$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$
 
-Now we can restate $P(p)$
+Now we can restate $P(p)$ in terms of $P_p$
 
 $$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$
 
-Next, we'll use the cartesian product.
+Next, we'll use the cartesian product. Let $A$ be a set of sets (as above).
 
-$$ C(S) \\; \\defeq \\; \\prod\\_{A \\,\\in\\, S} A $$
+$$ C(A) \\; \\defeq \\; \\prod\\_{B \\,\\in\\, A} B$$
 
 Now, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$
 
@@ -320,9 +324,9 @@ $$ \\begin{aligned}
     \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x) 
 \\end{aligned} $$
 
-We can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(S)$ with $c_i$. Our algorithm is as follows.
+We can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.
 
-$$ \\prod\\_{A \\,\\in\\, S} \\sum\\_{a \\,\\in\\, A} a \\; = \\; \\sum\\_{c \\,\\in\\, C(S)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |S|} \\; c_i $$
+$$ \\prod\\_{B \\,\\in\\, A} \\sum\\_{b \\,\\in\\, B} b \\; = \\; \\sum\\_{c \\,\\in\\, C(A)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |A|} \\; c_i $$
 
 Using $\\prod c$ to denote the product of the components of $c$, we can write
 
@@ -339,7 +343,7 @@ $$ \\begin{aligned}
     &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\
 \\end{aligned} $$
 
-We can still apply our algorithm, although we do need to redefine $P_p$, indexing the ones.
+We can still apply our algorithm, though we do need to differentiate between the many ones in each set of $P_p$.
 
 $$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$
 
@@ -349,7 +353,7 @@ $$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ co
 
 In our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.
 
-$$\\begin{aligned} 
+$$\\begin{aligned}
     \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\
     \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\
     \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 
@@ -370,43 +374,39 @@ $$ \\begin{aligned}
     \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\
 \\end{aligned} $$
 
-To recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we're inlcuding the $x+0$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let's simplify this a bit. "An ordered list modulo choice of first element"... that sounds a lot like a cycle. Quick recap: a cycle of set $A$ is a collection of pairs $Q \\in \\mathcal{P}(S^2)$ of size equal to $A$ such that
-
-$$ \\bigcup\\_{(a,b) \\,\\in\\, Q} a \\; = \\; A \\; = \\; \\bigcup\\_{(a,b) \\,\\in\\, Q} b $$
-
-For instance if $A = \\set{a,\\,b,\\,c}$ then the set $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. We can visualize any cycle as a directed graph."""
+To recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we're inlcuding the $x$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let's simplify this a bit. "An ordered list modulo choice of first element"... could each pile of cards correspond with a cycle? Quick recap on cycles: a cycle of set $A$ is a bijection on $A$ such that the orbit each point is $A$. For instance if $A = \\set{a,\\,b,\\,c}$ then the function $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. A cycle is exactly a connected directed graph such that every vertex has one incoming and one outgoing arrow. Using this fact, we can visualise our cycle as follows."""
         , Html.div [ class "w-full flex justify-center items-center pt-4 h-[120px]" ] [ funnyBijection_ 200 mathchar [ Nothing, Just 1, Just 0 ] ]
         , md """
-Is our correspondence, call it $f$, a bijective map from a choice in $C(P_p)$ to an arrangement of $p$ objects into a set of cycles? It's not hard to construct its inverse. Suppose $f(c)$ is any set of cycles. We start with the cycle containing ${\\textbf K}$ and walk through it. Each subsequent term in the cycle corresponds to the next compontent of our choice $c$ in the obvious way. Once we return to ${\\textbf K}$, add an $x$ as the next component of $c$, and move onto the cycle that contains the largest remaining element. We repeat until we've exhausted every cycle. Let's look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ corresponds to the set of three $3$ one-cycles, each containing an element of $\\set{a,\\,b,\\,c}$
+More generally, every permutation of $A$ can be uniquely decomposed into cycles of partitions of $A$. Maybe, then, $a_i$ is the number permutations in $S_p$ that decompose into $i$ cycles. To verify this, one must show that this correspondence we've established, call it $f$, is indeed a bijection from choices in $C(P_p)$ to permuations in $S_p$. It's not hard to construct $f^{-1}$, one can simply follow the algorithm that defines $f$, but in reverse. That in mind, let's look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ maps to the permuation that decomposes into the set of three $3$ one-cycles, each of which contain one element of $\\set{a,\\,b,\\,c}$
 """
         , Html.div [ class "w-full mx-auto my-1 flex flex-row justify-center items-center" ]
             [ math "\\hl{x}(\\hl{x} + 1 + 1)(\\hl{x} + 1)"
             , math "\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}"
             , funnyBijection [ Nothing, Nothing, Nothing ]
             ]
-        , md "The choice $(x,\\, 1\\_1,\\, x)$ corresponds to the following set containing a two-cycle and a one-cycle."
+        , md "The choice $(x,\\, 1\\_1,\\, x)$ maps to the following permuation; decomposing into a two-cycle and a one-cycle."
         , Html.div [ class "w-full mx-auto my-1 flex flex-row justify-center items-center" ]
             [ math "\\hl{x}(x + \\hl{1} + 1)(\\hl{x} + 1)"
             , math "\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}"
             , funnyBijection [ Nothing, Just 0, Nothing ]
             ]
-        , md "The choice $(x,\\, 1\\_2,\\, x)$ corresponds to another set of cycles."
+        , md "The choice $(x,\\, 1\\_2,\\, x)$ maps to another permuation."
         , Html.div [ class "w-full mx-auto my-1 flex flex-row justify-center items-center" ]
             [ math "\\hl{x}(x + 1 + \\hl{1})(\\hl{x} + 1)"
             , math "\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}"
             , funnyBijection [ Nothing, Just 1, Nothing ]
             ]
-        , md "The following tool allows for the exploration of arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*"
+        , md "The following tool visualizes arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*"
         , Html.div [ class " pt-8 pb-4 flex flex-row gap-8 justify-center items-center w-full" ] (List.map (\i -> Html.div [ Html.onClick (SetBijectionPrime i), class <| "rounded-md py-2 px-3 cursor-pointer hover:bg-flu-200 " ++ ifThenElse (List.length m.bijection == i) " bg-flu-200 " "" ] [ math <| "P(" ++ showInt i ++ ")" ]) [ 3, 5, 7 ])
         , Html.map SetBijection (funnyBicjectionPanel m.bijection)
         , md """
-Getting back to our original point, we have that $a_i$ is equal to the number of ways to arrage $p$ objects into an $i$-set of cycles. 
+Getting back to our original point, we have that $a_i$ is equal to the number of permuations of $p$ objects that decompose into an $i$ cycles. We wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of permuations of $p$ objects that decompose into an $i$ cycles" is a multiple of $p$. For $c \\in S\\_p$ denote the set of cycles $c$ decomposes into by $d(c)$. Take
 
-$$ a\\_i \\,=\\, \\Big| \\set{ c \\in C(P_p) \\,:\\, |f(c)| = i } \\Big| $$
+$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |d(c)| = i } $$
 
-We wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of ways to arrage $p$ objects into an $i$-set of cycles" is a multiple of $p$. Let's denote
+We have
 
-$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |c| = i } $$
+$$ a\\_i \\,=\\, \\big| A_{p,\\,i} \\big| $$
 
 Now that we're working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don't actually need to divide it. Let's look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we're trying to split this into (two) disjoint subsets of size five. 
 """
@@ -496,11 +496,35 @@ Perhaps, you have some ideas, perhaps you don't. I claim that, even in writing o
             , Html.div [ class "my-auto" ] [ Html.text "$$\\huge \\Bigg\\}$$" ]
             ]
         , md """
-Ah-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after element shifting". So let's formalize element shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function (applications to each label in each cycle).
+Ah-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after label shifting". So let's formalize label shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function.
 
-$$ \\varphi \\;:\\; j \\; \\longmapsto \\; j + 1 \\mod p$$  
+$$\\texttt{shift} \\, : \\, j \\; \\longmapsto \\; j + 1 \\mod p$$
 
-Now "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\varphi$. Notice that every orbit of $\\varphi$ (in $A\\_{p,\\,i}$) has size at most $p$ because $\\varphi^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\varphi$ into at least two orbits. Now, if we can show that every $\\varphi$ orbit has size exactly $p$, we'll be done. We will have solved our whole problem. Consider how $\\varphi$ acts on $c \\in A\\_{p,\\,i}$ with $1 < i < p$. First we ought to verify that $\\varphi(c)$ is actually an element of $A\\_{p,\\,i}$. Luckily, this follows immediately from the bijectivity of $\\varphi$. It only remains to show that $\\varphi^k(c) \\neq c$ for $0 < k < p$. This part is a little trickier. 
+This function is defined on our label, lift it to $A\\_{p,\\,i}$ by partially applying function. Now "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\circ\\,\\texttt{shift}$. Notice that every orbit of $\\circ\\,\\texttt{shift}$ has size at most $p$ because $\\texttt{shift}^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\circ\\,\\texttt{shift}$ into at least two orbits. Now, if we can show that every orbit has exactly $p$ elements, we'll be done — we will have solved our whole problem. The orbit-stabilizer theorem is practically calling to us, so let's redefine $\\circ\\,\\texttt{shift}$ as a group action on $A\\_{p,\\,i}$. Let $\\Z\\_p$ we the group of integers under addition.
+
+$$ \\begin{aligned}
+\\varphi \\;:\\; \\Z\\_p \\times A\\_{p,\\,i} \\;&\\longrightarrow\\; A\\_{p,\\,i} \\\\\\\\
+(j,\\,c) \\;&\\longmapsto\\; c \\,\\circ\\, \\texttt{shift}^{\\,j}
+\\end{aligned} $$
+
+First we ought to note that $\\varphi$ is well defined, following from the commutativity of the diagram:
+"""
+        , Html.iframe [ class "quiver-embed w-full h-64 mb-6 text-center", Attr.src "https://q.uiver.app/#q=WzAsNCxbMCwwLCJTX3AiXSxbMCwyLCJkKFNfcCkiXSxbMiwyLCJkKFNfcCkiXSxbMiwwLCJTX3AiXSxbMSwyLCJcXGNpcmNcXCxcXHRleHR0dHtzaGlmdH1cXFxcIFxcdGV4dHsoYXBwbGllZCBlbGVtZW50LXdpc2UpfSIsMl0sWzAsMSwiZCIsMl0sWzAsMywiXFxjaXJjXFwsXFx0ZXh0dHR7c2hpZnR9Il0sWzIsMywiZF57LTF9IiwyXV0=&embed" ] []
+        , md """
+Now suppose $c \\in A\\_{p,\\,i}$ with $1 < i < p$. The obrit stabilizer theorem implies that the size of the $\\varphi$ orbit of $c$ divides the size of $\\Z\\_p$. Because $p$ is prime, the size must be $p$ or $1$ — for the sake contradiction suppose it's $1$. Could it really be that $\\varphi\\_j(c) = c$ for every $j$? Surely this is impossible, let's investigate further. For every label $k \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$ it must be that
+
+$$ c(k) \\;=\\; (\\varphi\\_1(c))(k) \\; = \\; (c \\circ \\texttt{shift})(k) \\; = \\; c(k+1)$$
+
+This implies that $c$ isn't injective, but $c$ is a permuation — it is a bijection, so we've reached our contradiction. Instead, it must be that every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$. 
+
+$$P(p) \\;\\equiv\\; x^p - x \\mod p$$
+        """
+        ]
+
+
+bruh =
+    [ md """
+ verify that $\\phi(c)$ is actually an element of $A\\_{p,\\,i}$. Luckily, this follows immediately from the bijectivity of $\\varphi$. It only remains to show that $\\varphi^k(c) \\neq c$ for $0 < k < p$. This part is a little trickier. 
 
 Suppose, for the sake of contradiction, that $\\varphi^k(c) = c$. It must be that $\\varphi^k$ is a bijection on the cycles in $c$. Indeed, to say that $\\varphi^k(c) = c$ is to say that $\\varphi^k$ is a bijection on $c$. Moreover, it's clear that $\\varphi^k$ isn't the identity — indeed, $k$ is neither zero nor $p$. Hmm. It's a bit unclear where to go from here. I suppose, for lack of a more insightful claim, since $\\varphi^k$ is a bijection on $c$ it has an inverse which is is also a bijection on $c$. Can we find more bijections? Obviously $\\varphi^p$ (i.e. the identity function) is one. Moreover, the composition of two bijections is a bijection. So, with function composition, $\\varphi^k$, and $\\varphi^p$, we can generate a set (call it $B$) of bijections. What are the elements of this set? Suppose $\\varphi^m$ is an element of $B$, then:
 
@@ -536,7 +560,7 @@ But $p$ is prime and $1 \\neq i \\neq p$; this is impossible. Thus the statement
 
 $$P(p) \\;\\equiv\\; x^p - x \\mod p$$
         """
-        ]
+    ]
 
 
 
@@ -863,7 +887,7 @@ Here's what I've been up to recently:
                         , [ md "**2022 - 2024**", md "Developed **compilers** and **programming languages** for *[Planwisely](https://www.planwisely.io/)*, at Veitch Lister Consulting" ]
                         , [ md "**2023**", md "Completed an **honours thesis** about polynomial factoring, under the supervision of *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*" ]
                         ]
-            , Html.div [ class "mt-3" ] [ Html.text "When I'm not up to those things, I like to sing, draw, write, and play volleyball." ]
+            , Html.div [ class "mt-3" ] [ Html.text "I also like to sing, draw, and write." ]
             , Html.div [ class "mt-3" ] [ Html.text "A full copy of my cv is available ", Html.a [ Attr.href "./Joel_Richardson_website_cv.pdf", class "italic underline" ] [ Html.text "here" ] ]
             ]
         , Html.div [ class "w-1/3" ] [ Html.img [ Attr.src "https://lh3.googleusercontent.com/pw/AP1GczMnZRMJyUz8-gdOuBLBCwntJRTblbN-y-H7YyRUmyOMc2n_a64JLnaFWxhezYTngmWhKoxBhNeoDAm-3neJzX2iC1vYu7auvlX7qjOHwSbWKbvmJsTNjkbm_DmJN84qqaOzlpkxg8nu7vyO0Rkblyh_rQ=w2076-h1576-s-no-gm", class "h-full rounded-lg border border-flu-300 object-cover" ] [] ]

@@ -1857,7 +1857,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bL,
+		impl.bM,
 		impl.cb,
 		impl.b7,
 		function() { return function() {} }
@@ -3943,11 +3943,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bL,
+		impl.bM,
 		impl.cb,
 		impl.b7,
 		function(sendToApp, initialModel) {
-			var view = impl.bl;
+			var view = impl.bm;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3979,12 +3979,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bL,
+		impl.bM,
 		impl.cb,
 		impl.b7,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.ad && impl.ad(sendToApp)
-			var view = impl.bl;
+			var view = impl.bm;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3992,7 +3992,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bt);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bu);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -4053,8 +4053,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.b_;
-	var onUrlRequest = impl.b$;
+	var onUrlChange = impl.b$;
+	var onUrlRequest = impl.b0;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.a6 === next.a6
+							&& curr.a7 === next.a7
 							&& curr.aB === next.aB
-							&& curr.a2.a === next.a2.a
+							&& curr.a3.a === next.a3.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4084,11 +4084,11 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bL: function(flags)
+		bM: function(flags)
 		{
-			return A3(impl.bL, flags, _Browser_getUrl(), key);
+			return A3(impl.bM, flags, _Browser_getUrl(), key);
 		},
-		bl: impl.bl,
+		bm: impl.bm,
 		cb: impl.cb,
 		b7: impl.b7
 	});
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bI: 'hidden', bw: 'visibilitychange' }
+		? { bJ: 'hidden', bx: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bI: 'mozHidden', bw: 'mozvisibilitychange' }
+		? { bJ: 'mozHidden', bx: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bI: 'msHidden', bw: 'msvisibilitychange' }
+		? { bJ: 'msHidden', bx: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bI: 'webkitHidden', bw: 'webkitvisibilitychange' }
-		: { bI: 'hidden', bw: 'visibilitychange' };
+		? { bJ: 'webkitHidden', bx: 'webkitvisibilitychange' }
+		: { bJ: 'hidden', bx: 'visibilitychange' };
 }
 
 
@@ -4247,11 +4247,11 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		bd: _Browser_getScene(),
-		bm: {
-			bo: _Browser_window.pageXOffset,
-			bp: _Browser_window.pageYOffset,
-			bn: _Browser_doc.documentElement.clientWidth,
+		be: _Browser_getScene(),
+		bn: {
+			bp: _Browser_window.pageXOffset,
+			bq: _Browser_window.pageYOffset,
+			bo: _Browser_doc.documentElement.clientWidth,
 			az: _Browser_doc.documentElement.clientHeight
 		}
 	};
@@ -4262,7 +4262,7 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		bn: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		bo: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
 		az: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
@@ -4286,14 +4286,14 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			bd: {
-				bn: node.scrollWidth,
+			be: {
+				bo: node.scrollWidth,
 				az: node.scrollHeight
 			},
-			bm: {
-				bo: node.scrollLeft,
-				bp: node.scrollTop,
-				bn: node.clientWidth,
+			bn: {
+				bp: node.scrollLeft,
+				bq: node.scrollTop,
+				bo: node.clientWidth,
 				az: node.clientHeight
 			}
 		};
@@ -4324,17 +4324,17 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			bd: _Browser_getScene(),
-			bm: {
-				bo: x,
-				bp: y,
-				bn: _Browser_doc.documentElement.clientWidth,
+			be: _Browser_getScene(),
+			bn: {
+				bp: x,
+				bq: y,
+				bo: _Browser_doc.documentElement.clientWidth,
 				az: _Browser_doc.documentElement.clientHeight
 			},
-			bB: {
-				bo: x + rect.left,
-				bp: y + rect.top,
-				bn: rect.width,
+			bC: {
+				bp: x + rect.left,
+				bq: y + rect.top,
+				bo: rect.width,
 				az: rect.height
 			}
 		};
@@ -4458,13 +4458,13 @@ function _Markdown_formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.bH.a;
+	var gfm = options.bI.a;
 
 	return {
 		highlight: toHighlight,
 		gfm: gfm,
 		tables: gfm && gfm.b8,
-		breaks: gfm && gfm.bu,
+		breaks: gfm && gfm.bv,
 		sanitize: options.b4,
 		smartypants: options.b5
 	};
@@ -4522,11 +4522,11 @@ var _MJS_v2setY = F2(function(y, a) {
 });
 
 var _MJS_v2toRecord = function(a) {
-    return { bo: a[0], bp: a[1] };
+    return { bp: a[0], bq: a[1] };
 };
 
 var _MJS_v2fromRecord = function(r) {
-    return new Float64Array([r.bo, r.bp]);
+    return new Float64Array([r.bp, r.bq]);
 };
 
 var _MJS_v2add = F2(function(a, b) {
@@ -4635,11 +4635,11 @@ var _MJS_v3setZ = F2(function(z, a) {
 });
 
 var _MJS_v3toRecord = function(a) {
-    return { bo: a[0], bp: a[1], W: a[2] };
+    return { bp: a[0], bq: a[1], W: a[2] };
 };
 
 var _MJS_v3fromRecord = function(r) {
-    return new Float64Array([r.bo, r.bp, r.W]);
+    return new Float64Array([r.bp, r.bq, r.W]);
 };
 
 var _MJS_v3add = F2(function(a, b) {
@@ -4795,11 +4795,11 @@ var _MJS_v4setW = F2(function(w, a) {
 });
 
 var _MJS_v4toRecord = function(a) {
-    return { bo: a[0], bp: a[1], W: a[2], ai: a[3] };
+    return { bp: a[0], bq: a[1], W: a[2], ai: a[3] };
 };
 
 var _MJS_v4fromRecord = function(r) {
-    return new Float64Array([r.bo, r.bp, r.W, r.ai]);
+    return new Float64Array([r.bp, r.bq, r.W, r.ai]);
 };
 
 var _MJS_v4add = F2(function(a, b) {
@@ -5987,7 +5987,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {ax: fragment, aB: host, a0: path, a2: port_, a6: protocol, a7: query};
+		return {ax: fragment, aB: host, a1: path, a3: port_, a7: protocol, a8: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -6276,7 +6276,8 @@ var $author$project$Main$init = function (_v0) {
 					$elm$core$Maybe$Nothing,
 					$elm$core$Maybe$Just(0),
 					$elm$core$Maybe$Just(0)
-				])
+				]),
+			a0: _List_Nil
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -6506,35 +6507,38 @@ var $elm$core$Maybe$withDefault = F2(
 	});
 var $author$project$Main$update = F2(
 	function (msg, m) {
-		if (!msg.$) {
-			var _v1 = msg.a;
-			var i = _v1.a;
-			var o = _v1.b;
-			return _Utils_Tuple2(
-				_Utils_update(
-					m,
-					{
-						A: A3($elm_community$list_extra$List$Extra$setAt, i, o, m.A)
-					}),
-				$elm$core$Platform$Cmd$none);
-		} else {
-			var i = msg.a;
-			return _Utils_Tuple2(
-				_Utils_update(
-					m,
-					{
-						A: A2(
-							$elm$core$List$map,
-							function (k) {
-								return A2(
-									$elm$core$Maybe$withDefault,
-									$elm$core$Maybe$Nothing,
-									A2($elm_community$list_extra$List$Extra$getAt, k, m.A));
-							},
-							A2($elm$core$List$range, 0, i - 1))
-					}),
-				$author$project$Main$render(
-					{}));
+		switch (msg.$) {
+			case 0:
+				var _v1 = msg.a;
+				var i = _v1.a;
+				var o = _v1.b;
+				return _Utils_Tuple2(
+					_Utils_update(
+						m,
+						{
+							A: A3($elm_community$list_extra$List$Extra$setAt, i, o, m.A)
+						}),
+					$elm$core$Platform$Cmd$none);
+			case 1:
+				var i = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						m,
+						{
+							A: A2(
+								$elm$core$List$map,
+								function (k) {
+									return A2(
+										$elm$core$Maybe$withDefault,
+										$elm$core$Maybe$Nothing,
+										A2($elm_community$list_extra$List$Extra$getAt, k, m.A));
+								},
+								A2($elm$core$List$range, 0, i - 1))
+						}),
+					$author$project$Main$render(
+						{}));
+			default:
+				return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
 		}
 	});
 var $elm$html$Html$a = _VirtualDom_node('a');
@@ -6562,8 +6566,8 @@ var $elm$html$Html$Attributes$href = function (url) {
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm_explorations$markdown$Markdown$defaultOptions = {
 	ar: $elm$core$Maybe$Nothing,
-	bH: $elm$core$Maybe$Just(
-		{bu: false, b8: false}),
+	bI: $elm$core$Maybe$Just(
+		{bv: false, b8: false}),
 	b4: true,
 	b5: false
 };
@@ -6664,7 +6668,7 @@ var $author$project$Main$about = A2(
 						]),
 					_List_fromArray(
 						[
-							$elm$html$Html$text('When I\'m not up to those things, I like to sing, draw, write, and play volleyball.')
+							$elm$html$Html$text('I also like to sing, draw, and write.')
 						])),
 					A2(
 					$elm$html$Html$div,
@@ -7012,8 +7016,8 @@ var $author$project$Graph$toStringTuple = F2(
 var $elm_explorations$linear_algebra$Math$Vector2$toRecord = _MJS_v2toRecord;
 var $author$project$Graph$toTuple = function (v) {
 	return function (_v0) {
-		var x = _v0.bo;
-		var y = _v0.bp;
+		var x = _v0.bp;
+		var y = _v0.bq;
 		return _Utils_Tuple2(x, y);
 	}(
 		$elm_explorations$linear_algebra$Math$Vector2$toRecord(v));
@@ -7041,7 +7045,7 @@ var $author$project$Graph$fromTuple = function (_v0) {
 	var x = _v0.a;
 	var y = _v0.b;
 	return $elm_explorations$linear_algebra$Math$Vector2$fromRecord(
-		{bo: x, bp: y});
+		{bp: x, bq: y});
 };
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
@@ -7387,7 +7391,7 @@ var $author$project$Graph$view = function (g) {
 			function (n) {
 				return _Utils_Tuple2(
 					n,
-					g.bl(n));
+					g.bm(n));
 			},
 			g.a_));
 	var edges = A2(
@@ -7503,7 +7507,7 @@ var $author$project$Main$funnyBijection_ = F3(
 								$author$project$Main$pairs,
 								A2($author$project$Main$makeBijection, nodes, lst)),
 							a_: nodes,
-							bl: function (i) {
+							bm: function (i) {
 								return _Utils_Tuple2(
 									f(i - 1),
 									_Utils_Tuple2(i / (p + 1), 0.5));
@@ -7794,7 +7798,7 @@ var $author$project$Main$nice = function (m) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				$author$project$Main$md('\n# Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is free. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned} \n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$ \n\n$$ \\begin{aligned} \n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned} \n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$ \n\nWe\'re trying to figure out if it\'s always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let\'s get $a_1 \\equiv -1$ out of the way. Notice that\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I\'ll not prove it here). This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nHow about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product.\n\n$$ C(S) \\; \\defeq \\; \\prod\\_{A \\,\\in\\, S} A $$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x) \n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(S)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{A \\,\\in\\, S} \\sum\\_{a \\,\\in\\, A} a \\; = \\; \\sum\\_{c \\,\\in\\, C(S)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |S|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory. \n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned} \n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, although we do need to redefine $P_p$, indexing the ones.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times. \n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned} \n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \n\\end{aligned}$$\n\nThis is cool, but it\'s still a bit tricky to think about. Can we come up with another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned} \n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned} \n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x+0$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... that sounds a lot like a cycle. Quick recap: a cycle of set $A$ is a collection of pairs $Q \\in \\mathcal{P}(S^2)$ of size equal to $A$ such that\n\n$$ \\bigcup\\_{(a,b) \\,\\in\\, Q} a \\; = \\; A \\; = \\; \\bigcup\\_{(a,b) \\,\\in\\, Q} b $$\n\nFor instance if $A = \\set{a,\\,b,\\,c}$ then the set $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. We can visualize any cycle as a directed graph.'),
+				$author$project$Main$md('\n# Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is free. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned} \n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$ \n\n$$ \\begin{aligned} \n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned} \n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$ \n\nWe\'re trying to figure out if it\'s always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let\'s get $a_1 \\equiv -1$ out of the way. Notice that\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I\'ll not prove it here). This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nHow about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$ in terms of $P_p$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product. Let $A$ be a set of sets (as above).\n\n$$ C(A) \\; \\defeq \\; \\prod\\_{B \\,\\in\\, A} B$$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x) \n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{B \\,\\in\\, A} \\sum\\_{b \\,\\in\\, B} b \\; = \\; \\sum\\_{c \\,\\in\\, C(A)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |A|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory. \n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned} \n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, though we do need to differentiate between the many ones in each set of $P_p$.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times. \n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned}\n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \n\\end{aligned}$$\n\nThis is cool, but it\'s still a bit tricky to think about. Can we come up with another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned} \n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned} \n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... could each pile of cards correspond with a cycle? Quick recap on cycles: a cycle of set $A$ is a bijection on $A$ such that the orbit each point is $A$. For instance if $A = \\set{a,\\,b,\\,c}$ then the function $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. A cycle is exactly a connected directed graph such that every vertex has one incoming and one outgoing arrow. Using this fact, we can visualise our cycle as follows.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7814,7 +7818,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$core$Maybe$Just(0)
 							]))
 					])),
-				$author$project$Main$md('\nIs our correspondence, call it $f$, a bijective map from a choice in $C(P_p)$ to an arrangement of $p$ objects into a set of cycles? It\'s not hard to construct its inverse. Suppose $f(c)$ is any set of cycles. We start with the cycle containing ${\\textbf K}$ and walk through it. Each subsequent term in the cycle corresponds to the next compontent of our choice $c$ in the obvious way. Once we return to ${\\textbf K}$, add an $x$ as the next component of $c$, and move onto the cycle that contains the largest remaining element. We repeat until we\'ve exhausted every cycle. Let\'s look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ corresponds to the set of three $3$ one-cycles, each containing an element of $\\set{a,\\,b,\\,c}$\n'),
+				$author$project$Main$md('\nMore generally, every permutation of $A$ can be uniquely decomposed into cycles of partitions of $A$. Maybe, then, $a_i$ is the number permutations in $S_p$ that decompose into $i$ cycles. To verify this, one must show that this correspondence we\'ve established, call it $f$, is indeed a bijection from choices in $C(P_p)$ to permuations in $S_p$. It\'s not hard to construct $f^{-1}$, one can simply follow the algorithm that defines $f$, but in reverse. That in mind, let\'s look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ maps to the permuation that decomposes into the set of three $3$ one-cycles, each of which contain one element of $\\set{a,\\,b,\\,c}$\n'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7829,7 +7833,7 @@ var $author$project$Main$nice = function (m) {
 						_List_fromArray(
 							[$elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing]))
 					])),
-				$author$project$Main$md('The choice $(x,\\, 1\\_1,\\, x)$ corresponds to the following set containing a two-cycle and a one-cycle.'),
+				$author$project$Main$md('The choice $(x,\\, 1\\_1,\\, x)$ maps to the following permuation; decomposing into a two-cycle and a one-cycle.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7848,7 +7852,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$core$Maybe$Nothing
 							]))
 					])),
-				$author$project$Main$md('The choice $(x,\\, 1\\_2,\\, x)$ corresponds to another set of cycles.'),
+				$author$project$Main$md('The choice $(x,\\, 1\\_2,\\, x)$ maps to another permuation.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7867,7 +7871,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$core$Maybe$Nothing
 							]))
 					])),
-				$author$project$Main$md('The following tool allows for the exploration of arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*'),
+				$author$project$Main$md('The following tool visualizes arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7904,7 +7908,7 @@ var $author$project$Main$nice = function (m) {
 				$elm$html$Html$map,
 				$author$project$Main$SetBijection,
 				$author$project$Main$funnyBicjectionPanel(m.A)),
-				$author$project$Main$md('\nGetting back to our original point, we have that $a_i$ is equal to the number of ways to arrage $p$ objects into an $i$-set of cycles. \n\n$$ a\\_i \\,=\\, \\Big| \\set{ c \\in C(P_p) \\,:\\, |f(c)| = i } \\Big| $$\n\nWe wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of ways to arrage $p$ objects into an $i$-set of cycles" is a multiple of $p$. Let\'s denote\n\n$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |c| = i } $$\n\nNow that we\'re working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don\'t actually need to divide it. Let\'s look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we\'re trying to split this into (two) disjoint subsets of size five. \n'),
+				$author$project$Main$md('\nGetting back to our original point, we have that $a_i$ is equal to the number of permuations of $p$ objects that decompose into an $i$ cycles. We wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of permuations of $p$ objects that decompose into an $i$ cycles" is a multiple of $p$. For $c \\in S\\_p$ denote the set of cycles $c$ decomposes into by $d(c)$. Take\n\n$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |d(c)| = i } $$\n\nWe have\n\n$$ a\\_i \\,=\\, \\big| A_{p,\\,i} \\big| $$\n\nNow that we\'re working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don\'t actually need to divide it. Let\'s look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we\'re trying to split this into (two) disjoint subsets of size five. \n'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -8470,7 +8474,16 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\Bigg\\}$$')
 							]))
 					])),
-				$author$project$Main$md('\nAh-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after element shifting". So let\'s formalize element shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function (applications to each label in each cycle).\n\n$$ \\varphi \\;:\\; j \\; \\longmapsto \\; j + 1 \\mod p$$  \n\nNow "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\varphi$. Notice that every orbit of $\\varphi$ (in $A\\_{p,\\,i}$) has size at most $p$ because $\\varphi^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\varphi$ into at least two orbits. Now, if we can show that every $\\varphi$ orbit has size exactly $p$, we\'ll be done. We will have solved our whole problem. Consider how $\\varphi$ acts on $c \\in A\\_{p,\\,i}$ with $1 < i < p$. First we ought to verify that $\\varphi(c)$ is actually an element of $A\\_{p,\\,i}$. Luckily, this follows immediately from the bijectivity of $\\varphi$. It only remains to show that $\\varphi^k(c) \\neq c$ for $0 < k < p$. This part is a little trickier. \n\nSuppose, for the sake of contradiction, that $\\varphi^k(c) = c$. It must be that $\\varphi^k$ is a bijection on the cycles in $c$. Indeed, to say that $\\varphi^k(c) = c$ is to say that $\\varphi^k$ is a bijection on $c$. Moreover, it\'s clear that $\\varphi^k$ isn\'t the identity — indeed, $k$ is neither zero nor $p$. Hmm. It\'s a bit unclear where to go from here. I suppose, for lack of a more insightful claim, since $\\varphi^k$ is a bijection on $c$ it has an inverse which is is also a bijection on $c$. Can we find more bijections? Obviously $\\varphi^p$ (i.e. the identity function) is one. Moreover, the composition of two bijections is a bijection. So, with function composition, $\\varphi^k$, and $\\varphi^p$, we can generate a set (call it $B$) of bijections. What are the elements of this set? Suppose $\\varphi^m$ is an element of $B$, then:\n\n$$ \\underbrace{\\, \\varphi^m \\,\\circ\\, \\varphi^m \\,\\circ\\, \\cdots \\,\\circ\\, \\varphi^m \\,}\\_{n \\text{ times}} \\; = \\; \\varphi^{nm}$$\n\nSo $B$ contains each $\\varphi^{nk}$. Next we consider the effect of $\\varphi^p$.\n\n$$\\varphi^m \\; = \\; \\varphi^m \\,\\circ \\underbrace{ \\, \\varphi^p \\,\\circ\\, \\varphi^p \\,\\circ\\, \\cdots \\,\\circ\\, \\varphi^p \\, }\\_{n \\text{ times}} \\; = \\; \\varphi^{m + np}$$\n\nCombining these facts we find that $ B \\,=\\, \\set{ \\varphi^{ nk \\text{ mod } p } \\;|\\; n \\in \\N } $. Now this is a bit interesting. Taking $n = k^{-1} \\ \\text{ mod } p$ we find that $\\varphi$ is an element of $B$. \n\n$$B = \\set{ 1,\\, \\varphi,\\, \\varphi^2,\\, \\ldots,\\, \\varphi^{p-1}}$$\n\nSurely this is impossible! Let\'s think about how $\\varphi$ acts on $j \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$. Denote by $\\chi(j)$ the cycle in $c$ that contains $j$. It follows from the bijectivity of $\\varphi$ that all of the elements in one cycle of $c$ map into the same other cycle in $c$. Stated formally, \n\n$$ (\\varphi \\circ \\chi)(j) \\; = \\; (\\chi \\circ \\varphi)(j) $$\n\nIt follows that the size of cycles in $c$ is invariant under $\\varphi$: \n\n$$\\begin{aligned}\n\\big| \\chi(j) \\big| \\; &= \\; \\big| (\\varphi \\circ \\chi)(j) \\big| \\\\\\\\\n&=\\; \\big| (\\chi \\circ \\varphi)(j) \\big| \\\\\\\\\n&= \\; \\big| \\chi(\\, j + 1 \\mod p \\,) \\big|\n\\end{aligned}$$\n\n$$\\big| \\chi(0) \\big| = \\big| \\chi(1) \\big| = \\big| \\chi(2) \\big| = \\cdots = \\big| \\chi(p-1) \\big|$$\n\nSo every cycle in $c$ has the same number of elements. Call it $q$. On the other hand, $c$ contains $i$ cycles, each of our $p$ objects appearing in exactly one.\n\n$$p \\;=\\; i\\,\\cdot\\, q$$\n\nBut $p$ is prime and $1 \\neq i \\neq p$; this is impossible. Thus the statement $\\varphi^k(c) = c$ is false, and every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$. \n\n$$P(p) \\;\\equiv\\; x^p - x \\mod p$$\n        ')
+				$author$project$Main$md('\nAh-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after label shifting". So let\'s formalize label shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function.\n\n$$\\texttt{shift} \\, : \\, j \\; \\longmapsto \\; j + 1 \\mod p$$\n\nThis function is defined on our label, lift it to $A\\_{p,\\,i}$ by partially applying function. Now "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\circ\\,\\texttt{shift}$. Notice that every orbit of $\\circ\\,\\texttt{shift}$ has size at most $p$ because $\\texttt{shift}^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\circ\\,\\texttt{shift}$ into at least two orbits. Now, if we can show that every orbit has exactly $p$ elements, we\'ll be done — we will have solved our whole problem. The orbit-stabilizer theorem is practically calling to us, so let\'s redefine $\\circ\\,\\texttt{shift}$ as a group action on $A\\_{p,\\,i}$. Let $\\Z\\_p$ we the group of integers under addition.\n\n$$ \\begin{aligned}\n\\varphi \\;:\\; \\Z\\_p \\times A\\_{p,\\,i} \\;&\\longrightarrow\\; A\\_{p,\\,i} \\\\\\\\\n(j,\\,c) \\;&\\longmapsto\\; c \\,\\circ\\, \\texttt{shift}^{\\,j}\n\\end{aligned} $$\n\nFirst we ought to note that $\\varphi$ is well defined, following from the commutativity of the diagram:\n'),
+				A2(
+				$elm$html$Html$iframe,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('quiver-embed w-full h-64 mb-6 text-center'),
+						$elm$html$Html$Attributes$src('https://q.uiver.app/#q=WzAsNCxbMCwwLCJTX3AiXSxbMCwyLCJkKFNfcCkiXSxbMiwyLCJkKFNfcCkiXSxbMiwwLCJTX3AiXSxbMSwyLCJcXGNpcmNcXCxcXHRleHR0dHtzaGlmdH1cXFxcIFxcdGV4dHsoYXBwbGllZCBlbGVtZW50LXdpc2UpfSIsMl0sWzAsMSwiZCIsMl0sWzAsMywiXFxjaXJjXFwsXFx0ZXh0dHR7c2hpZnR9Il0sWzIsMywiZF57LTF9IiwyXV0=&embed')
+					]),
+				_List_Nil),
+				$author$project$Main$md('\nNow suppose $c \\in A\\_{p,\\,i}$ with $1 < i < p$. The obrit stabilizer theorem implies that the size of the $\\varphi$ orbit of $c$ divides the size of $\\Z\\_p$. Because $p$ is prime, the size must be $p$ or $1$ — for the sake contradiction suppose it\'s $1$. Could it really be that $\\varphi\\_j(c) = c$ for every $j$? Surely this is impossible, let\'s investigate further. For every label $k \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$ it must be that\n\n$$ c(k) \\;=\\; (\\varphi\\_1(c))(k) \\; = \\; (c \\circ \\texttt{shift})(k) \\; = \\; c(k+1)$$\n\nThis implies that $c$ isn\'t injective, but $c$ is a permuation — it is a bijection, so we\'ve reached our contradiction. Instead, it must be that every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$. \n\n$$P(p) \\;\\equiv\\; x^p - x \\mod p$$\n        ')
 			]));
 };
 var $author$project$Main$topBar = A2(
@@ -8547,7 +8560,7 @@ var $author$project$Main$view = function (m) {
 				])));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
-	{bL: $author$project$Main$init, b7: $author$project$Main$subscriptions, cb: $author$project$Main$update, bl: $author$project$Main$view});
+	{bM: $author$project$Main$init, b7: $author$project$Main$subscriptions, cb: $author$project$Main$update, bm: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(
 		{}))(0)}});}(this));
