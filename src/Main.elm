@@ -112,7 +112,7 @@ Suppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is 
 
 Elwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*, with what I think is a pretty sweet algorithm. Unfortunately, write-ups on his algorithm seem to fall helplessly into a "definition, proof, repeat" structure. These I find somewhat unmotivating — so here's my shot a more organic, hopefully more motivated, write up. We're going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp's algorithm. I hope you find it as interesting as I did.
 
-We start stating the obvious. We can theoretically find the factors of $f$ with a brute force search — though this makes a rather terrible algorithm. Let's step back to see if we can find a better approach. Notice that any factorization algorithm doesn't really need to find *every* factor. At least, it doesn't need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.
+We start by stating the obvious — we can theoretically find the factors of $f$ with a brute force search — though this makes for a rather terrible algorithm. Let's step back to see if we can find a better approach. Notice that any factorization algorithm doesn't really need to find *every* factor. At least, it doesn't need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn't a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.
 
 ```hs
 -- this code is pretty easy to verify using induction.
@@ -121,11 +121,11 @@ factor f = case findNonTrivialDivisor f of
     Just g_1 -> do
         let g_2 = f / g_1
         return $ Set.union ( factor g_1 ) ( factor g_2 )
-    Nothing -> 
+    Nothing ->
         return $ Set.singleton f -- f is irreducible
 ```
 
-Perhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we're trying to split $f$ into two *meaningful* parts — two parts both containing some of the factors of $f$. """
+Perhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we're trying to split $f$ into two parts, *meaningfully* — into two parts both containing some of the factors of $f$. """
         , Html.iframe [ class "quiver-embed w-full h-64 text-center", Attr.src "https://q.uiver.app/#q=WzAsMyxbMSwwLCJmPShmXzFmXzJmXzMpKGZfNFxcbGRvdHMgZl9uKSJdLFswLDIsImdfMT0oZl8xZl8yZl8zKSJdLFsyLDIsImdfMj0oZl80XFxsZG90cyBmX24pIl0sWzAsMiwiIiwyLHsiY3VydmUiOi0yfV0sWzAsMSwiIiwwLHsiY3VydmUiOjJ9XV0=&embed" ] []
         , md """
 And once we've found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it's natural to express what we want of $g_1$ as follows:
@@ -143,56 +143,56 @@ Let's turn our attention to the set we're searching over - currently, it's $\\F_
 
 $$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$
 
-Before we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yeilds a ring isomorphism
+Before we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yields a ring isomorphism
 
 $$ \\begin{aligned} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times \\F_p[x]/ \\ideal{f_2} \\times \\cdots \\times \\F_p[x]/ \\ideal{f_n} \\\\\\\\
     \\\\\\\\
     g \\; \\mapsto& \\;\\; (r_1,\\,r_2,\\,\\ldots,\\,r_n)
 \\end{aligned}$$
 
-We consider how $\\phi$ acts on the factors of $f$. It's clear (given a seconds thought) that $\\phi(f_i)$ is zero in it's $i^{\\text{th}}$ component, and (given a couple seconds thought) that it is non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We're trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is non-zero, but is zero in at least one component.
+We consider how $\\phi$ acts on the factors of $f$. It's clear (given a seconds thought) that $\\phi(f_i)$ is zero in its $i^{\\text{th}}$ component and non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We're trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is zero in at least one, but not all, components.
 
-Can we find an even smaller set to search? One thing to consider is that in $A_f$ the factors of $f$ are all fixed under exponentiation by positive integers. So we might think about limiting our set to only points fixed under exponentiation — but exponentiation to what power? Well if we try any old value, say two, we'll run into a hiccup; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are such that $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, we can try exponentiation to the $p^{\\text{th}}$ power. Consider the map
+Can we find an even smaller set to search? One thing to consider is that this *"zero in at least one component"* property is preserved under exponentiation by positive integers — so we might think about limiting our set to only those points that are somehow fixed under exponentiation. Holding this thought, let's think about the effect of exponentiation different powers. If we think about the set of points fixed (in the normal sense) by exponentiation to any old power (say, two) we'll run into something a bit yucky; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are fixed under squaring: $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, try exponentiation to the $p^{\\text{th}}$ power. Consider the map
 
-$$ \\begin{aligned} Q_f : A_f \\; \\to& \\;\\; A_f \\\\\\\\
+$$ \\begin{aligned} \\sigma\\_p : A_f \\; \\to& \\;\\; A_f \\\\\\\\
     g \\; \\mapsto& \\;\\; g^{\\, p}
 \\end{aligned} $$
 
-We can apply the freshman's dream to see that the fixed points of $Q_f$ form a ring.
+We can apply the freshman's dream to see that the fixed points of $\\sigma\\_p$ form a ring.
 
 $$ \\begin{aligned}
-    \\forall \\, g,h \\in \\text{fix} (Q_f) \\quad\\quad& Q_f(gh) = (gh)^p = g^ph^p = gh\\\\\\\\
-    &Q_f(g + h) = (g + h)^p = g^p + h^p = g + h
+    \\forall \\, g,h \\in \\text{fix} (\\sigma\\_p) \\quad\\quad& \\sigma\\_p(gh) = (gh)^p = g^ph^p = gh\\\\\\\\
+    &\\sigma\\_p(g + h) = (g + h)^p = g^p + h^p = g + h
 \\end{aligned} $$
 
-The fixed points of $Q_f$ turn out to be pretty useful, so we're going to give them a name.
+The fixed points of $\\sigma\\_p$ turn out to be pretty useful, so we're going to give them a name.
 
-$$ B_f \\;\\defeq\\; \\text{fix} (Q_f)$$
+$$ B_f \\;\\defeq\\; \\text{fix} (\\sigma\\_p)$$
 
-This is called the Berlekamp subalgebra of $A_f$. Now, it follows from Fermat's little theorem that $Q_f$ is linear, check this out:
+This is called the Berlekamp subalgebra of $A\\_f$. At a first glance we can see that $B\\_f$ contains many of the points we care about, for instance $g$ with $\\phi(g) = (0, 1, 1, \\ldots, 1)$, but this probably shouldn't be enough to sell you on it's usefulness. Let's keep investigating. It follows from Fermat's little theorem that $\\sigma\\_p$ is linear:
 
-$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad Q_f(tu + v) = {(tu + v)}^p = t^p u^p + v^p = tQ_f(u) + Q_f(v) $$
+$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad \\sigma\\_p(tu + v) = {(tu + v)}^p = t^p u^p + v^p = t\\sigma\\_p(u) + \\sigma\\_p(v) $$
 
-This is a pretty major win for us - it gives a fast method to produce elements of $B_f$. Watch this:
+Which has potential to be a big win for us — it gives a fast method to produce elements of $B_f$. Indeed, watch this:
 
-$$B_f = \\text{fix} (Q_f) = \\ker(Q_f - \\text{id})$$
+$$B_f = \\text{fix} (\\sigma\\_p) = \\ker(\\sigma\\_p - \\text{id})$$
 
-We can encode $(Q_f - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we're not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:
+We can encode $(\\sigma\\_p - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we're not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:
 
 $$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$
 
-I plan to write another post to prove this equality, which involves an interesting application of combinatorics and group theory. For now, however, we'll take it as given. That $h^p - h$ is just screaming $B_f$, so sure enough we'll sub in any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)
+I plan to write another post to prove this equality (the proof involves an interesting application of combinatorics and of group theory), but for now we'll take it as given. To me the $h^p - h$ is just screaming $B_f$, so let's replace the dummy $h$ with any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)
 
 $$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$
 
-Somewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$! 
+Somewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$!
 
 ```hs
 findNonTrivialDivisor :: Polynomial -> Maybe Polynomial
 findNonTrivialDivisor f = case nullspaceBasis (berlekampMatrix f) of
     basis | length basis < 2 -> Nothing
     basis -> do
-        let h = head basis                   
+        let h = head basis
         find ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]
         -- don't forget to apply that ^^^ gcd we talked about earlier!
 ```
@@ -203,7 +203,7 @@ $$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$
 
 All we've really done is remove some factors from the product - precisely the factors that aren't in $f$ - so the product as a whole must still be a multiple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:
 
-Suppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn't a unit, this is impossible. 
+Suppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn't a unit, this is impossible.
 
 So we get the following equality:
 
@@ -241,7 +241,7 @@ $$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+
 
 Can we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn't obvious whether that structure will hand us any nice formulas. Let's try expanding a few examples.
 
-$$ \\begin{aligned} 
+$$ \\begin{aligned}
     P(1) \\; &= \\; x \\\\\\\\
     P(2) \\; &= \\; x^2 + x \\\\\\\\
     P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\
@@ -252,9 +252,9 @@ $$ \\begin{aligned}
     P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x
 \\end{aligned} $$
 
-That's a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let's take a look at $P(n)$ with coefficients modulo $n$ 
+That's a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let's take a look at $P(n)$ with coefficients modulo $n$
 
-$$ \\begin{aligned} 
+$$ \\begin{aligned}
     P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\
     P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\
     P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\
@@ -266,7 +266,7 @@ $$ \\begin{aligned}
 
 The cases in which $n$ is prime are all looking suspicious, so let's investigate further.
 
-$$ \\begin{aligned} 
+$$ \\begin{aligned}
     P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\
     P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\
     P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\
@@ -282,13 +282,13 @@ $$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\
 
 In order to answer this question we'll have to figure out what's going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write
 
-$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$ 
+$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$
 
 We're trying to figure out if it's always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let's get $a_1 \\equiv -1$ out of the way. Notice that
 
 $$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$
 
-The terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I'll not prove it here). This yeilds $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$
+The terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I'll not prove it here). This yields $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$
 
 How about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.
 
@@ -321,7 +321,7 @@ Now, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p
 
 $$ \\begin{aligned}
     \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\
-    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x) 
+    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x)
 \\end{aligned} $$
 
 We can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.
@@ -332,11 +332,11 @@ Using $\\prod c$ to denote the product of the components of $c$, we can write
 
 $$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$
 
-Let's recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we'd like to move further into combinatorics territory. 
+Let's recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we'd like to move further into combinatorics territory.
 
 Now, it'd be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?
 
-$$ \\begin{aligned} 
+$$ \\begin{aligned}
     P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\
     &= \\; (x^2+x)(x+1+1) \\\\\\\\
     &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\
@@ -347,7 +347,7 @@ We can still apply our algorithm, though we do need to differentiate between the
 
 $$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$
 
-Now suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times. 
+Now suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times.
 
 $$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$
 
@@ -356,19 +356,19 @@ In our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3
 $$\\begin{aligned}
     \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\
     \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\
-    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 
+    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2
 \\end{aligned}$$
 
 This is cool, but it's still a bit tricky to think about. Can we come up with another perspective on these choices? Let's say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let's give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.
 
-$$ \\begin{aligned} 
+$$ \\begin{aligned}
     x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\
     x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)
 \\end{aligned} $$
 
 So the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we're pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let's just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.
 
-$$ \\begin{aligned} 
+$$ \\begin{aligned}
     \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\
     \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\
     \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\
@@ -408,7 +408,7 @@ We have
 
 $$ a\\_i \\,=\\, \\big| A_{p,\\,i} \\big| $$
 
-Now that we're working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don't actually need to divide it. Let's look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we're trying to split this into (two) disjoint subsets of size five. 
+Now that we're working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don't actually need to divide it. Let's look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we're trying to split this into (two) disjoint subsets of size five.
 """
 
         -- , Html.div
@@ -515,7 +515,7 @@ Now suppose $c \\in A\\_{p,\\,i}$ with $1 < i < p$. The obrit stabilizer theorem
 
 $$ c(k) \\;=\\; (\\varphi\\_1(c))(k) \\; = \\; (c \\circ \\texttt{shift})(k) \\; = \\; c(k+1)$$
 
-This implies that $c$ isn't injective, but $c$ is a permuation — it is a bijection, so we've reached our contradiction. Instead, it must be that every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$. 
+This implies that $c$ isn't injective, but $c$ is a permuation — it's a bijection, so we've reached our contradiction. Instead, it must be that every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$.
 
 $$P(p) \\;\\equiv\\; x^p - x \\mod p$$
         """
@@ -524,7 +524,7 @@ $$P(p) \\;\\equiv\\; x^p - x \\mod p$$
 
 bruh =
     [ md """
- verify that $\\phi(c)$ is actually an element of $A\\_{p,\\,i}$. Luckily, this follows immediately from the bijectivity of $\\varphi$. It only remains to show that $\\varphi^k(c) \\neq c$ for $0 < k < p$. This part is a little trickier. 
+ verify that $\\phi(c)$ is actually an element of $A\\_{p,\\,i}$. Luckily, this follows immediately from the bijectivity of $\\varphi$. It only remains to show that $\\varphi^k(c) \\neq c$ for $0 < k < p$. This part is a little trickier.
 
 Suppose, for the sake of contradiction, that $\\varphi^k(c) = c$. It must be that $\\varphi^k$ is a bijection on the cycles in $c$. Indeed, to say that $\\varphi^k(c) = c$ is to say that $\\varphi^k$ is a bijection on $c$. Moreover, it's clear that $\\varphi^k$ isn't the identity — indeed, $k$ is neither zero nor $p$. Hmm. It's a bit unclear where to go from here. I suppose, for lack of a more insightful claim, since $\\varphi^k$ is a bijection on $c$ it has an inverse which is is also a bijection on $c$. Can we find more bijections? Obviously $\\varphi^p$ (i.e. the identity function) is one. Moreover, the composition of two bijections is a bijection. So, with function composition, $\\varphi^k$, and $\\varphi^p$, we can generate a set (call it $B$) of bijections. What are the elements of this set? Suppose $\\varphi^m$ is an element of $B$, then:
 
@@ -534,15 +534,15 @@ So $B$ contains each $\\varphi^{nk}$. Next we consider the effect of $\\varphi^p
 
 $$\\varphi^m \\; = \\; \\varphi^m \\,\\circ \\underbrace{ \\, \\varphi^p \\,\\circ\\, \\varphi^p \\,\\circ\\, \\cdots \\,\\circ\\, \\varphi^p \\, }\\_{n \\text{ times}} \\; = \\; \\varphi^{m + np}$$
 
-Combining these facts we find that $ B \\,=\\, \\set{ \\varphi^{ nk \\text{ mod } p } \\;|\\; n \\in \\N } $. Now this is a bit interesting. Taking $n = k^{-1} \\ \\text{ mod } p$ we find that $\\varphi$ is an element of $B$. 
+Combining these facts we find that $ B \\,=\\, \\set{ \\varphi^{ nk \\text{ mod } p } \\;|\\; n \\in \\N } $. Now this is a bit interesting. Taking $n = k^{-1} \\ \\text{ mod } p$ we find that $\\varphi$ is an element of $B$.
 
 $$B = \\set{ 1,\\, \\varphi,\\, \\varphi^2,\\, \\ldots,\\, \\varphi^{p-1}}$$
 
-Surely this is impossible! Let's think about how $\\varphi$ acts on $j \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$. Denote by $\\chi(j)$ the cycle in $c$ that contains $j$. It follows from the bijectivity of $\\varphi$ that all of the elements in one cycle of $c$ map into the same other cycle in $c$. Stated formally, 
+Surely this is impossible! Let's think about how $\\varphi$ acts on $j \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$. Denote by $\\chi(j)$ the cycle in $c$ that contains $j$. It follows from the bijectivity of $\\varphi$ that all of the elements in one cycle of $c$ map into the same other cycle in $c$. Stated formally,
 
 $$ (\\varphi \\circ \\chi)(j) \\; = \\; (\\chi \\circ \\varphi)(j) $$
 
-It follows that the size of cycles in $c$ is invariant under $\\varphi$: 
+It follows that the size of cycles in $c$ is invariant under $\\varphi$:
 
 $$\\begin{aligned}
 \\big| \\chi(j) \\big| \\; &= \\; \\big| (\\varphi \\circ \\chi)(j) \\big| \\\\\\\\
@@ -556,7 +556,7 @@ So every cycle in $c$ has the same number of elements. Call it $q$. On the other
 
 $$p \\;=\\; i\\,\\cdot\\, q$$
 
-But $p$ is prime and $1 \\neq i \\neq p$; this is impossible. Thus the statement $\\varphi^k(c) = c$ is false, and every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$. 
+But $p$ is prime and $1 \\neq i \\neq p$; this is impossible. Thus the statement $\\varphi^k(c) = c$ is false, and every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$.
 
 $$P(p) \\;\\equiv\\; x^p - x \\mod p$$
         """
@@ -757,9 +757,9 @@ lol =
 Thinking modulo $p$ it seems reasonable that most those should cancel out
 We know that multiplicative inverses moudlo $p$ are unique, and that $1^{-1} = 1$
 
-Perhaps walking through 
+Perhaps walking through
 
-For a start, 
+For a start,
 
 
 
@@ -771,10 +771,10 @@ $$a_2 = (1\\cdot 2\\cdot 3) + (1\\cdot 2\\cdot 4) + (1\\cdot 3\\cdot 4) + (2\\cd
 
 I recently came across this result. I think it's pretty sweet (and I reckon you'll enjoy it too), but before we can get into it we have to have a chat about polynomials. Specifically, we need to recall that ***a polynomial is not a function*** (at least, not to us).
 
-It's true that we do often think about polynomials as though they are functions. Indeed, it's natural to associate **polynomials** and **functions** using the evaluation homomorphism. 
+It's true that we do often think about polynomials as though they are functions. Indeed, it's natural to associate **polynomials** and **functions** using the evaluation homomorphism.
 
 $$ \\begin{aligned} eval \\; : R[\\alpha] \\; \\to& \\;\\; (\\, R \\; \\to \\; R \\,) \\\\\\\\
-    (\\, a\\_0 + a\\_1\\alpha + \\cdots + a\\_n\\alpha^n \\,) \\; \\mapsto& \\;\\; 
+    (\\, a\\_0 + a\\_1\\alpha + \\cdots + a\\_n\\alpha^n \\,) \\; \\mapsto& \\;\\;
     (\\, x \\; \\mapsto \\; a\\_0 + a\\_1x + \\cdots + a\\_nx^n \\,)
 \\end{aligned} $$
 
@@ -883,14 +883,15 @@ Here's what I've been up to recently:
             , Html.table [ class "mt-2 rounded-lg border border-flu-300 p-4" ] <|
                 List.reverse <|
                     List.map (List.map (List.singleton >> Html.td [ class "border border-flu-300 p-2 align-top" ]) >> Html.tr [])
-                        [ [ md "**2022**", md "Completed a dual **Bachelor of Mathematics** / **Bachelor of Computer Science** with majors in Pure Mathematics and Programming Languages" ]
+                        [ [ md "**2019 - 2022**", md "Completed a dual **Bachelor of Mathematics** / **Bachelor of Computer Science** with majors in Pure Mathematics and Programming Languages" ]
                         , [ md "**2022 - 2024**", md "Developed **compilers** and **programming languages** for *[Planwisely](https://www.planwisely.io/)*, at Veitch Lister Consulting" ]
-                        , [ md "**2023**", md "Completed an **honours thesis** about polynomial factoring, under the supervision of *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*" ]
+                        , [ md "**2023 - 2024**", md "Completed a **Bachelor of Computer Science (honours)** (first class) with a thesis about polynomial factoring, supervised by *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*" ]
+                        , [ md "**2024**", md "Tutoring mathematics at UQ" ]
                         ]
             , Html.div [ class "mt-3" ] [ Html.text "I also like to sing, draw, and write." ]
             , Html.div [ class "mt-3" ] [ Html.text "A full copy of my cv is available ", Html.a [ Attr.href "./Joel_Richardson_website_cv.pdf", class "italic underline" ] [ Html.text "here" ] ]
             ]
-        , Html.div [ class "w-1/3" ] [ Html.img [ Attr.src "https://lh3.googleusercontent.com/pw/AP1GczMnZRMJyUz8-gdOuBLBCwntJRTblbN-y-H7YyRUmyOMc2n_a64JLnaFWxhezYTngmWhKoxBhNeoDAm-3neJzX2iC1vYu7auvlX7qjOHwSbWKbvmJsTNjkbm_DmJN84qqaOzlpkxg8nu7vyO0Rkblyh_rQ=w2076-h1576-s-no-gm", class "h-full rounded-lg border border-flu-300 object-cover" ] [] ]
+        , Html.div [ class "w-1/3" ] [ Html.img [ Attr.src "https://pro2-bar-s3-cdn-cf1.myportfolio.com/de5c29b78c39a894f024941ae54357bd/9af54e77-e987-476b-bf77-a0ee145137d7_rw_1920.jpg?h=886925297f9582be1dceaa224acd9a42", class "h-full rounded-lg border border-flu-300 object-cover" ] [] ]
         ]
 
 
