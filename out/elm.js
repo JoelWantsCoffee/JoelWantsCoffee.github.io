@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.ae.M === region.at.M)
+	if (region.af.M === region.au.M)
 	{
-		return 'on line ' + region.ae.M;
+		return 'on line ' + region.af.M;
 	}
-	return 'on lines ' + region.ae.M + ' through ' + region.at.M;
+	return 'on lines ' + region.af.M + ' through ' + region.au.M;
 }
 
 
@@ -2720,8 +2720,8 @@ var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
 		B: func(record.B),
-		af: record.af,
-		ac: record.ac
+		ag: record.ag,
+		ad: record.ad
 	}
 });
 
@@ -2990,10 +2990,10 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 
 		var value = result.a;
 		var message = !tag ? value : tag < 3 ? value.a : value.B;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.af;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ag;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.ac) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.ad) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3983,7 +3983,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 		impl.cb,
 		impl.b7,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.ad && impl.ad(sendToApp)
+			var divertHrefToApp = impl.ae && impl.ae(sendToApp)
 			var view = impl.bm;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
@@ -4058,7 +4058,7 @@ function _Browser_application(impl)
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		ad: function(sendToApp)
+		ae: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4075,7 +4075,7 @@ function _Browser_application(impl)
 					sendToApp(onUrlRequest(
 						(next
 							&& curr.a7 === next.a7
-							&& curr.aB === next.aB
+							&& curr.aC === next.aC
 							&& curr.a3.a === next.a3.a
 						)
 							? $elm$browser$Browser$Internal(next)
@@ -4252,7 +4252,7 @@ function _Browser_getViewport()
 			bp: _Browser_window.pageXOffset,
 			bq: _Browser_window.pageYOffset,
 			bo: _Browser_doc.documentElement.clientWidth,
-			az: _Browser_doc.documentElement.clientHeight
+			aA: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4263,7 +4263,7 @@ function _Browser_getScene()
 	var elem = _Browser_doc.documentElement;
 	return {
 		bo: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		az: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		aA: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4288,13 +4288,13 @@ function _Browser_getViewportOf(id)
 		return {
 			be: {
 				bo: node.scrollWidth,
-				az: node.scrollHeight
+				aA: node.scrollHeight
 			},
 			bn: {
 				bp: node.scrollLeft,
 				bq: node.scrollTop,
 				bo: node.clientWidth,
-				az: node.clientHeight
+				aA: node.clientHeight
 			}
 		};
 	});
@@ -4329,13 +4329,13 @@ function _Browser_getElement(id)
 				bp: x,
 				bq: y,
 				bo: _Browser_doc.documentElement.clientWidth,
-				az: _Browser_doc.documentElement.clientHeight
+				aA: _Browser_doc.documentElement.clientHeight
 			},
 			bC: {
 				bp: x + rect.left,
 				bq: y + rect.top,
 				bo: rect.width,
-				az: rect.height
+				aA: rect.height
 			}
 		};
 	});
@@ -4445,9 +4445,9 @@ function _Markdown_formatOptions(options)
 {
 	function toHighlight(code, lang)
 	{
-		if (!lang && $elm$core$Maybe$isJust(options.ar))
+		if (!lang && $elm$core$Maybe$isJust(options.as))
 		{
-			lang = options.ar.a;
+			lang = options.as.a;
 		}
 
 		if (typeof hljs !== 'undefined' && lang && hljs.listLanguages().indexOf(lang) >= 0)
@@ -4635,11 +4635,11 @@ var _MJS_v3setZ = F2(function(z, a) {
 });
 
 var _MJS_v3toRecord = function(a) {
-    return { bp: a[0], bq: a[1], W: a[2] };
+    return { bp: a[0], bq: a[1], X: a[2] };
 };
 
 var _MJS_v3fromRecord = function(r) {
-    return new Float64Array([r.bp, r.bq, r.W]);
+    return new Float64Array([r.bp, r.bq, r.X]);
 };
 
 var _MJS_v3add = F2(function(a, b) {
@@ -4795,11 +4795,11 @@ var _MJS_v4setW = F2(function(w, a) {
 });
 
 var _MJS_v4toRecord = function(a) {
-    return { bp: a[0], bq: a[1], W: a[2], ai: a[3] };
+    return { bp: a[0], bq: a[1], X: a[2], aj: a[3] };
 };
 
 var _MJS_v4fromRecord = function(r) {
-    return new Float64Array([r.bp, r.bq, r.W, r.ai]);
+    return new Float64Array([r.bp, r.bq, r.X, r.aj]);
 };
 
 var _MJS_v4add = F2(function(a, b) {
@@ -4905,31 +4905,31 @@ var _MJS_m4x4identity = new Float64Array([
 
 var _MJS_m4x4fromRecord = function(r) {
     var m = new Float64Array(16);
-    m[0] = r.aI;
-    m[1] = r.aM;
-    m[2] = r.aQ;
-    m[3] = r.aU;
-    m[4] = r.aJ;
-    m[5] = r.aN;
-    m[6] = r.aR;
-    m[7] = r.aV;
-    m[8] = r.aK;
-    m[9] = r.aO;
-    m[10] = r.aS;
-    m[11] = r.aW;
-    m[12] = r.aL;
-    m[13] = r.aP;
-    m[14] = r.aT;
-    m[15] = r.aX;
+    m[0] = r.aJ;
+    m[1] = r.aN;
+    m[2] = r.aR;
+    m[3] = r.aV;
+    m[4] = r.aK;
+    m[5] = r.aO;
+    m[6] = r.aS;
+    m[7] = r.aW;
+    m[8] = r.aL;
+    m[9] = r.aP;
+    m[10] = r.aT;
+    m[11] = r.aX;
+    m[12] = r.aM;
+    m[13] = r.aQ;
+    m[14] = r.aU;
+    m[15] = r.aY;
     return m;
 };
 
 var _MJS_m4x4toRecord = function(m) {
     return {
-        aI: m[0], aM: m[1], aQ: m[2], aU: m[3],
-        aJ: m[4], aN: m[5], aR: m[6], aV: m[7],
-        aK: m[8], aO: m[9], aS: m[10], aW: m[11],
-        aL: m[12], aP: m[13], aT: m[14], aX: m[15]
+        aJ: m[0], aN: m[1], aR: m[2], aV: m[3],
+        aK: m[4], aO: m[5], aS: m[6], aW: m[7],
+        aL: m[8], aP: m[9], aT: m[10], aX: m[11],
+        aM: m[12], aQ: m[13], aU: m[14], aY: m[15]
     };
 };
 
@@ -5987,7 +5987,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {ax: fragment, aB: host, a1: path, a3: port_, a7: protocol, a8: query};
+		return {ay: fragment, aC: host, a1: path, a3: port_, a7: protocol, a8: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -6266,6 +6266,129 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
+var $elm$core$Dict$Black = 1;
+var $elm$core$Dict$RBNode_elm_builtin = F5(
+	function (a, b, c, d, e) {
+		return {$: -1, a: a, b: b, c: c, d: d, e: e};
+	});
+var $elm$core$Dict$Red = 0;
+var $elm$core$Dict$balance = F5(
+	function (color, key, value, left, right) {
+		if ((right.$ === -1) && (!right.a)) {
+			var _v1 = right.a;
+			var rK = right.b;
+			var rV = right.c;
+			var rLeft = right.d;
+			var rRight = right.e;
+			if ((left.$ === -1) && (!left.a)) {
+				var _v3 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var lLeft = left.d;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					0,
+					key,
+					value,
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					rK,
+					rV,
+					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
+					rRight);
+			}
+		} else {
+			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
+				var _v5 = left.a;
+				var lK = left.b;
+				var lV = left.c;
+				var _v6 = left.d;
+				var _v7 = _v6.a;
+				var llK = _v6.b;
+				var llV = _v6.c;
+				var llLeft = _v6.d;
+				var llRight = _v6.e;
+				var lRight = left.e;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					0,
+					lK,
+					lV,
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
+			} else {
+				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
+			}
+		}
+	});
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$insertHelp = F3(
+	function (key, value, dict) {
+		if (dict.$ === -2) {
+			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
+		} else {
+			var nColor = dict.a;
+			var nKey = dict.b;
+			var nValue = dict.c;
+			var nLeft = dict.d;
+			var nRight = dict.e;
+			var _v1 = A2($elm$core$Basics$compare, key, nKey);
+			switch (_v1) {
+				case 0:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						A3($elm$core$Dict$insertHelp, key, value, nLeft),
+						nRight);
+				case 1:
+					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
+				default:
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						nLeft,
+						A3($elm$core$Dict$insertHelp, key, value, nRight));
+			}
+		}
+	});
+var $elm$core$Dict$insert = F3(
+	function (key, value, dict) {
+		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
+		if ((_v0.$ === -1) && (!_v0.a)) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $elm$core$Dict$fromList = function (assocs) {
+	return A3(
+		$elm$core$List$foldl,
+		F2(
+			function (_v0, dict) {
+				var key = _v0.a;
+				var value = _v0.b;
+				return A3($elm$core$Dict$insert, key, value, dict);
+			}),
+		$elm$core$Dict$empty,
+		assocs);
+};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
@@ -6277,7 +6400,12 @@ var $author$project$Main$init = function (_v0) {
 					$elm$core$Maybe$Just(0),
 					$elm$core$Maybe$Just(0)
 				]),
-			a0: _List_Nil
+			N: $elm$core$Dict$fromList(
+				_List_fromArray(
+					[
+						_Utils_Tuple2('berlekamp', false),
+						_Utils_Tuple2('nice', true)
+					]))
 		},
 		$elm$core$Platform$Cmd$none);
 };
@@ -6321,6 +6449,30 @@ var $elm_community$list_extra$List$Extra$getAt = F2(
 		return (idx < 0) ? $elm$core$Maybe$Nothing : $elm$core$List$head(
 			A2($elm$core$List$drop, idx, xs));
 	});
+var $author$project$Main$ifThenElse = F3(
+	function (c, a, b) {
+		return c ? a : b;
+	});
+var $elm$core$Dict$map = F2(
+	function (func, dict) {
+		if (dict.$ === -2) {
+			return $elm$core$Dict$RBEmpty_elm_builtin;
+		} else {
+			var color = dict.a;
+			var key = dict.b;
+			var value = dict.c;
+			var left = dict.d;
+			var right = dict.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				color,
+				key,
+				A2(func, key, value),
+				A2($elm$core$Dict$map, func, left),
+				A2($elm$core$Dict$map, func, right));
+		}
+	});
+var $elm$core$Basics$not = _Basics_not;
 var $elm$json$Json$Encode$object = function (pairs) {
 	return _Json_wrap(
 		A3(
@@ -6538,7 +6690,24 @@ var $author$project$Main$update = F2(
 					$author$project$Main$render(
 						{}));
 			default:
-				return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
+				var str = msg.a;
+				return _Utils_Tuple2(
+					_Utils_update(
+						m,
+						{
+							N: A2(
+								$elm$core$Dict$map,
+								F2(
+									function (k, v) {
+										return A3(
+											$author$project$Main$ifThenElse,
+											_Utils_eq(k, str),
+											!v,
+											v);
+									}),
+								m.N)
+						}),
+					$elm$core$Platform$Cmd$none);
 		}
 	});
 var $elm$html$Html$a = _VirtualDom_node('a');
@@ -6565,7 +6734,7 @@ var $elm$html$Html$Attributes$href = function (url) {
 };
 var $elm$html$Html$img = _VirtualDom_node('img');
 var $elm_explorations$markdown$Markdown$defaultOptions = {
-	ar: $elm$core$Maybe$Nothing,
+	as: $elm$core$Maybe$Nothing,
 	bI: $elm$core$Maybe$Just(
 		{bv: false, b8: false}),
 	b4: true,
@@ -6715,13 +6884,81 @@ var $author$project$Main$about = A2(
 					_List_Nil)
 				]))
 		]));
+var $author$project$Main$ToggleArticleOpen = function (a) {
+	return {$: 2, a: a};
+};
+var $elm$virtual_dom$VirtualDom$Normal = function (a) {
+	return {$: 0, a: a};
+};
+var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
+var $elm$html$Html$Events$on = F2(
+	function (event, decoder) {
+		return A2(
+			$elm$virtual_dom$VirtualDom$on,
+			event,
+			$elm$virtual_dom$VirtualDom$Normal(decoder));
+	});
+var $elm$html$Html$Events$onClick = function (msg) {
+	return A2(
+		$elm$html$Html$Events$on,
+		'click',
+		$elm$json$Json$Decode$succeed(msg));
+};
+var $author$project$Main$article = F3(
+	function (name, open, art) {
+		if (open.$ === 1) {
+			return A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg')
+					]),
+				_List_fromArray(
+					[art]));
+		} else {
+			var o = open.a;
+			return A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class(
+						'w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg relative ' + A3($author$project$Main$ifThenElse, o, 'h-auto', 'h-16 overflow-y-clip'))
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('absolute m-4 top-[-1px] right-0 h-8 w-8 rounded-full border border-flu-300 grid place-items-center font-light text-flu-600 transition-all hover:bg-flu-50 cursor-pointer'),
+								$elm$html$Html$Events$onClick(
+								$author$project$Main$ToggleArticleOpen(name))
+							]),
+						_List_fromArray(
+							[
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('-translate-y-px pointer-events-none')
+									]),
+								_List_fromArray(
+									[
+										$elm$html$Html$text(
+										A3($author$project$Main$ifThenElse, o, '-', '+'))
+									]))
+							])),
+						art
+					]));
+		}
+	});
 var $elm$html$Html$iframe = _VirtualDom_node('iframe');
 var $author$project$Main$berlekamp = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Main$md('\n# Berlekamp\'s Algorithm\n\nSuppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?\n\nElwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*, with what I think is a pretty sweet algorithm. Unfortunately, write-ups on his algorithm seem to fall helplessly into a "definition, proof, repeat" structure. These I find somewhat unmotivating — so here\'s my shot a more organic, hopefully more motivated, write up. We\'re going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp\'s algorithm. I hope you find it as interesting as I did.\n\nWe start by stating the obvious — we can theoretically find the factors of $f$ with a brute force search — though this makes for a rather terrible algorithm. Let\'s step back to see if we can find a better approach. Notice that any factorization algorithm doesn\'t really need to find *every* factor. At least, it doesn\'t need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing ->\n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two parts, *meaningfully* — into two parts both containing some of the factors of $f$. '),
+			$author$project$Main$md('\n# Article: Berlekamp\'s Algorithm\n\nSuppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?\n\nElwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*, with what I think is a pretty sweet algorithm. Unfortunately, write-ups on his algorithm seem to fall helplessly into a "definition, proof, repeat" structure. These I find somewhat unmotivating — so here\'s my shot a more organic, hopefully more motivated, write up. We\'re going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp\'s algorithm. I hope you find it as interesting as I did.\n\nWe start by stating the obvious — we can theoretically find the factors of $f$ with a brute force search — though this makes for a rather terrible algorithm. Let\'s step back to see if we can find a better approach. Notice that any factorization algorithm doesn\'t really need to find *every* factor. At least, it doesn\'t need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing ->\n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two parts, *meaningfully* — into two parts both containing some of the factors of $f$. '),
 			A2(
 			$elm$html$Html$iframe,
 			_List_fromArray(
@@ -6743,6 +6980,37 @@ var $elm$core$List$append = F2(
 var $elm$core$List$concat = function (lists) {
 	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
 };
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === -2) {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1) {
+					case 0:
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 1:
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
 var $author$project$Main$SetBijection = function (a) {
 	return {$: 0, a: a};
 };
@@ -6998,16 +7266,16 @@ var $author$project$Graph$lerppos = F2(
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Graph$xpos = F2(
 	function (_v0, a) {
-		var w = _v0.ai;
-		var h = _v0.Z;
+		var w = _v0.aj;
+		var h = _v0._;
 		return $elm$core$String$fromInt(
 			$elm$core$Basics$round(
 				A2($author$project$Graph$lerppos, w, a)));
 	});
 var $author$project$Graph$ypos = F2(
 	function (_v0, a) {
-		var w = _v0.ai;
-		var h = _v0.Z;
+		var w = _v0.aj;
+		var h = _v0._;
 		return $elm$core$String$fromInt(
 			$elm$core$Basics$round(
 				A2($author$project$Graph$lerppos, h, a)));
@@ -7195,160 +7463,6 @@ var $author$project$Graph$flip = F3(
 		return A2(f, a, b);
 	});
 var $elm$svg$Svg$foreignObject = $elm$svg$Svg$trustedNode('foreignObject');
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $elm$core$Dict$Black = 1;
-var $elm$core$Dict$RBNode_elm_builtin = F5(
-	function (a, b, c, d, e) {
-		return {$: -1, a: a, b: b, c: c, d: d, e: e};
-	});
-var $elm$core$Dict$Red = 0;
-var $elm$core$Dict$balance = F5(
-	function (color, key, value, left, right) {
-		if ((right.$ === -1) && (!right.a)) {
-			var _v1 = right.a;
-			var rK = right.b;
-			var rV = right.c;
-			var rLeft = right.d;
-			var rRight = right.e;
-			if ((left.$ === -1) && (!left.a)) {
-				var _v3 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var lLeft = left.d;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					0,
-					key,
-					value,
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, lK, lV, lLeft, lRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, rK, rV, rLeft, rRight));
-			} else {
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					color,
-					rK,
-					rV,
-					A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, left, rLeft),
-					rRight);
-			}
-		} else {
-			if ((((left.$ === -1) && (!left.a)) && (left.d.$ === -1)) && (!left.d.a)) {
-				var _v5 = left.a;
-				var lK = left.b;
-				var lV = left.c;
-				var _v6 = left.d;
-				var _v7 = _v6.a;
-				var llK = _v6.b;
-				var llV = _v6.c;
-				var llLeft = _v6.d;
-				var llRight = _v6.e;
-				var lRight = left.e;
-				return A5(
-					$elm$core$Dict$RBNode_elm_builtin,
-					0,
-					lK,
-					lV,
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, llK, llV, llLeft, llRight),
-					A5($elm$core$Dict$RBNode_elm_builtin, 1, key, value, lRight, right));
-			} else {
-				return A5($elm$core$Dict$RBNode_elm_builtin, color, key, value, left, right);
-			}
-		}
-	});
-var $elm$core$Basics$compare = _Utils_compare;
-var $elm$core$Dict$insertHelp = F3(
-	function (key, value, dict) {
-		if (dict.$ === -2) {
-			return A5($elm$core$Dict$RBNode_elm_builtin, 0, key, value, $elm$core$Dict$RBEmpty_elm_builtin, $elm$core$Dict$RBEmpty_elm_builtin);
-		} else {
-			var nColor = dict.a;
-			var nKey = dict.b;
-			var nValue = dict.c;
-			var nLeft = dict.d;
-			var nRight = dict.e;
-			var _v1 = A2($elm$core$Basics$compare, key, nKey);
-			switch (_v1) {
-				case 0:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						A3($elm$core$Dict$insertHelp, key, value, nLeft),
-						nRight);
-				case 1:
-					return A5($elm$core$Dict$RBNode_elm_builtin, nColor, nKey, value, nLeft, nRight);
-				default:
-					return A5(
-						$elm$core$Dict$balance,
-						nColor,
-						nKey,
-						nValue,
-						nLeft,
-						A3($elm$core$Dict$insertHelp, key, value, nRight));
-			}
-		}
-	});
-var $elm$core$Dict$insert = F3(
-	function (key, value, dict) {
-		var _v0 = A3($elm$core$Dict$insertHelp, key, value, dict);
-		if ((_v0.$ === -1) && (!_v0.a)) {
-			var _v1 = _v0.a;
-			var k = _v0.b;
-			var v = _v0.c;
-			var l = _v0.d;
-			var r = _v0.e;
-			return A5($elm$core$Dict$RBNode_elm_builtin, 1, k, v, l, r);
-		} else {
-			var x = _v0;
-			return x;
-		}
-	});
-var $elm$core$Dict$fromList = function (assocs) {
-	return A3(
-		$elm$core$List$foldl,
-		F2(
-			function (_v0, dict) {
-				var key = _v0.a;
-				var value = _v0.b;
-				return A3($elm$core$Dict$insert, key, value, dict);
-			}),
-		$elm$core$Dict$empty,
-		assocs);
-};
-var $elm$core$Dict$get = F2(
-	function (targetKey, dict) {
-		get:
-		while (true) {
-			if (dict.$ === -2) {
-				return $elm$core$Maybe$Nothing;
-			} else {
-				var key = dict.b;
-				var value = dict.c;
-				var left = dict.d;
-				var right = dict.e;
-				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
-				switch (_v1) {
-					case 0:
-						var $temp$targetKey = targetKey,
-							$temp$dict = left;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-					case 1:
-						return $elm$core$Maybe$Just(value);
-					default:
-						var $temp$targetKey = targetKey,
-							$temp$dict = right;
-						targetKey = $temp$targetKey;
-						dict = $temp$dict;
-						continue get;
-				}
-			}
-		}
-	});
 var $elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
 var $elm$core$Maybe$map = F2(
 	function (f, maybe) {
@@ -7398,7 +7512,7 @@ var $author$project$Graph$view = function (g) {
 					n,
 					g.bm(n));
 			},
-			g.a_));
+			g.a$));
 	var edges = A2(
 		function (f) {
 			return $elm$core$List$map(
@@ -7412,7 +7526,7 @@ var $author$project$Graph$view = function (g) {
 				$elm$core$Maybe$map($elm$core$Tuple$second),
 				$elm$core$Maybe$withDefault(
 					_Utils_Tuple2(0.5, 0.5)))),
-		g.as);
+		g.at);
 	return A2(
 		$elm$svg$Svg$svg,
 		_List_fromArray(
@@ -7504,14 +7618,14 @@ var $author$project$Main$funnyBijection_ = F3(
 					return $author$project$Graph$view(
 						{
 							u: {
-								Z: _Utils_Tuple2(0, 200),
-								ai: _Utils_Tuple2(0, 300)
+								_: _Utils_Tuple2(0, 200),
+								aj: _Utils_Tuple2(0, 300)
 							},
-							as: A2(
+							at: A2(
 								$elm$core$List$concatMap,
 								$author$project$Main$pairs,
 								A2($author$project$Main$makeBijection, nodes, lst)),
-							a_: nodes,
+							a$: nodes,
 							bm: function (i) {
 								return _Utils_Tuple2(
 									f(i - 1),
@@ -7541,10 +7655,6 @@ var $author$project$Main$mathchar = function (i) {
 			$elm$core$Char$fromCode(97 + i)));
 };
 var $author$project$Main$funnyBijection = A2($author$project$Main$funnyBijection_, 150, $author$project$Main$mathchar);
-var $author$project$Main$ifThenElse = F3(
-	function (c, a, b) {
-		return c ? a : b;
-	});
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
@@ -7573,23 +7683,6 @@ var $elm_community$list_extra$List$Extra$intercalate = function (xs) {
 		$elm$core$Basics$composeL,
 		$elm$core$List$concat,
 		$elm$core$List$intersperse(xs));
-};
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 0, a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
 };
 var $author$project$Main$showInt = function (i) {
 	if (i === 1) {
@@ -7803,7 +7896,7 @@ var $author$project$Main$nice = function (m) {
 		_List_Nil,
 		_List_fromArray(
 			[
-				$author$project$Main$md('\n# Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is free. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned}\n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$\n\nWe\'re trying to figure out if it\'s always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let\'s get $a_1 \\equiv -1$ out of the way. Notice that\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I\'ll not prove it here). This yields $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nHow about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$ in terms of $P_p$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product. Let $A$ be a set of sets (as above).\n\n$$ C(A) \\; \\defeq \\; \\prod\\_{B \\,\\in\\, A} B$$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x)\n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{B \\,\\in\\, A} \\sum\\_{b \\,\\in\\, B} b \\; = \\; \\sum\\_{c \\,\\in\\, C(A)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |A|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory.\n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned}\n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, though we do need to differentiate between the many ones in each set of $P_p$.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times.\n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned}\n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2\n\\end{aligned}$$\n\nThis is cool, but it\'s still a bit tricky to think about. Can we come up with another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned}\n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned}\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... could each pile of cards correspond with a cycle? Quick recap on cycles: a cycle of set $A$ is a bijection on $A$ such that the orbit each point is $A$. For instance if $A = \\set{a,\\,b,\\,c}$ then the function $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. A cycle is exactly a connected directed graph such that every vertex has one incoming and one outgoing arrow. Using this fact, we can visualise our cycle as follows.'),
+				$author$project$Main$md('\n# Article: Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is free. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned}\n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$\n\nWe\'re trying to figure out if it\'s always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let\'s get $a_1 \\equiv -1$ out of the way. Notice that\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I\'ll not prove it here). This yields $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nHow about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$ in terms of $P_p$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product. Let $A$ be a set of sets (as above).\n\n$$ C(A) \\; \\defeq \\; \\prod\\_{B \\,\\in\\, A} B$$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x)\n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{B \\,\\in\\, A} \\sum\\_{b \\,\\in\\, B} b \\; = \\; \\sum\\_{c \\,\\in\\, C(A)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |A|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory.\n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned}\n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, though we do need to differentiate between the many ones in each set of $P_p$.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times.\n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned}\n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2\n\\end{aligned}$$\n\nThis is cool, but it\'s still a bit tricky to think about. Can we come up with another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned}\n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned}\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... could each pile of cards correspond with a cycle? Quick recap on cycles: a cycle of set $A$ is a bijection on $A$ such that the orbit each point is $A$. For instance if $A = \\set{a,\\,b,\\,c}$ then the function $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. A cycle is exactly a connected directed graph such that every vertex has one incoming and one outgoing arrow. Using this fact, we can visualise our cycle as follows.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -8535,19 +8628,22 @@ var $author$project$Main$view = function (m) {
 					[$author$project$Main$topBar]),
 					A2(
 					$elm$core$List$map,
-					A2(
-						$elm$core$Basics$composeR,
-						$elm$core$List$singleton,
-						$elm$html$Html$div(
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$class('w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg')
-								]))),
+					function (_v0) {
+						var k = _v0.a;
+						var v = _v0.b;
+						return A3(
+							$author$project$Main$article,
+							k,
+							A2($elm$core$Dict$get, k, m.N),
+							v);
+					},
 					_List_fromArray(
 						[
-							$author$project$Main$about,
-							$author$project$Main$berlekamp,
-							$author$project$Main$nice(m)
+							_Utils_Tuple2('', $author$project$Main$about),
+							_Utils_Tuple2('berlekamp', $author$project$Main$berlekamp),
+							_Utils_Tuple2(
+							'nice',
+							$author$project$Main$nice(m))
 						])),
 					_List_fromArray(
 					[

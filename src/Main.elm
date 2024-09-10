@@ -1,6 +1,7 @@
 port module Main exposing (main)
 
 import Browser
+import Dict exposing (Dict)
 import Graph
 import Html exposing (Html)
 import Html.Attributes as Attr exposing (class)
@@ -20,7 +21,7 @@ port render : {} -> Cmd msg
 
 
 type alias Model =
-    { bijection : List (Maybe Int), open : List Bool }
+    { bijection : List (Maybe Int), open : Dict String Bool }
 
 
 type alias Flags =
@@ -30,7 +31,7 @@ type alias Flags =
 type Msg
     = SetBijection ( Int, Maybe Int )
     | SetBijectionPrime Int
-    | ToggleArticleOpen Int
+    | ToggleArticleOpen String
 
 
 main : Program Flags Model Msg
@@ -45,7 +46,7 @@ main =
 
 init : Flags -> ( Model, Cmd Msg )
 init _ =
-    ( { bijection = [ Nothing, Just 0, Just 0 ], open = [] }, Cmd.none )
+    ( { bijection = [ Nothing, Just 0, Just 0 ], open = Dict.fromList [ ( "berlekamp", False ), ( "nice", True ) ] }, Cmd.none )
 
 
 view : Model -> Html Msg
@@ -53,9 +54,26 @@ view m =
     Html.div [ class "flex flex-col place-items-center bg-flu-50 space-y-4 min-h-screen" ] <|
         List.concat
             [ [ topBar ]
-            , List.map (List.singleton >> Html.div [ class "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ]) [ about, berlekamp, nice m ]
+            , List.map (\( k, v ) -> article k (Dict.get k m.open) v) [ ( "", about ), ( "berlekamp", berlekamp ), ( "nice", nice m ) ]
             , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
             ]
+
+
+article : String -> Maybe Bool -> Html Msg -> Html Msg
+article name open art =
+    case open of
+        Nothing ->
+            Html.div [ class "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ] [ art ]
+
+        Just o ->
+            Html.div [ class <| "w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg relative " ++ ifThenElse o "h-auto" "h-16 overflow-y-clip" ]
+                [ Html.div
+                    [ class "absolute m-4 top-[-1px] right-0 h-8 w-8 rounded-full border border-flu-300 grid place-items-center font-light text-flu-600 transition-all hover:bg-flu-50 cursor-pointer"
+                    , Html.onClick (ToggleArticleOpen name)
+                    ]
+                    [ Html.div [ class "-translate-y-px pointer-events-none" ] [ Html.text <| ifThenElse o "-" "+" ] ]
+                , art
+                ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -67,8 +85,8 @@ update msg m =
         SetBijectionPrime i ->
             ( { m | bijection = List.range 0 (i - 1) |> List.map (\k -> List.getAt k m.bijection |> Maybe.withDefault Nothing) }, render {} )
 
-        ToggleArticleOpen _ ->
-            ( m, Cmd.none )
+        ToggleArticleOpen str ->
+            ( { m | open = Dict.map (\k v -> ifThenElse (k == str) (not v) v) m.open }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -106,7 +124,7 @@ berlekamp : Html msg
 berlekamp =
     Html.div []
         [ md """
-# Berlekamp's Algorithm
+# Article: Berlekamp's Algorithm
 
 Suppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?
 
@@ -233,7 +251,7 @@ nice : Model -> Html Msg
 nice m =
     Html.div []
         [ md """
-# Nice Bijection
+# Article: Nice Bijection
 
 Suppose $n$ is a natural number and $x$ is free. Consider the following product.
 
