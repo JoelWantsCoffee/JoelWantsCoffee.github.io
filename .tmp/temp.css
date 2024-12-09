@@ -15,15 +15,50 @@
   @apply text-2xl font-bold mb-4;
 }
 .content h2 {
-  @apply text-lg font-bold mt-6 mb-4;
+  @apply text-lg font-bold;
 }
 .content li {
   @apply list-decimal ml-5;
 }
 .content code {
-  @apply rounded-md border border-flu-200 my-4;
+  @apply tracking-wide font-semibold rounded-md;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 .content .katex-display {
+  @apply my-6;
+}
+
+.content_codelike {
+  background: #272822;
+  color: #ddd;
+  @apply rounded-md border border-flu-200 p-4 pt-2;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.content_codelike strong {
+  color: #f92672;
+}
+.content_codelike em {
+  color: #a6e22e;
+}
+.content_codelike p {
+  @apply mt-2;
+}
+.content_codelike a {
+  @apply underline;
+}
+.content_codelike h1 {
+  @apply text-2xl font-bold mb-4;
+}
+.content_codelike h2 {
+  @apply text-lg font-bold mt-6 mb-4;
+}
+.content_codelike ul {
+  @apply ml-8;
+}
+.content_codelike li {
+  @apply list-disc;
+}
+.content_codelike .katex-display {
   @apply my-6;
 }
 

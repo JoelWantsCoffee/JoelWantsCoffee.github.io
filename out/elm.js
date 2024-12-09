@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.af.M === region.au.M)
+	if (region.ad.K === region.ar.K)
 	{
-		return 'on line ' + region.af.M;
+		return 'on line ' + region.ad.K;
 	}
-	return 'on lines ' + region.af.M + ' through ' + region.au.M;
+	return 'on lines ' + region.ad.K + ' through ' + region.ar.K;
 }
 
 
@@ -1857,7 +1857,7 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bM,
+		impl.bH,
 		impl.cb,
 		impl.b7,
 		function() { return function() {} }
@@ -2719,9 +2719,9 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		B: func(record.B),
-		ag: record.ag,
-		ad: record.ad
+		z: func(record.z),
+		ae: record.ae,
+		ab: record.ab
 	}
 });
 
@@ -2989,11 +2989,11 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.B;
-		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ag;
+		var message = !tag ? value : tag < 3 ? value.a : value.z;
+		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.ae;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
-			(tag == 2 ? value.b : tag == 3 && value.ad) && event.preventDefault(),
+			(tag == 2 ? value.b : tag == 3 && value.ab) && event.preventDefault(),
 			eventNode
 		);
 		var tagger;
@@ -3943,11 +3943,11 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bM,
+		impl.bH,
 		impl.cb,
 		impl.b7,
 		function(sendToApp, initialModel) {
-			var view = impl.bm;
+			var view = impl.bd;
 			/**/
 			var domNode = args['node'];
 			//*/
@@ -3979,12 +3979,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.bM,
+		impl.bH,
 		impl.cb,
 		impl.b7,
 		function(sendToApp, initialModel) {
-			var divertHrefToApp = impl.ae && impl.ae(sendToApp)
-			var view = impl.bm;
+			var divertHrefToApp = impl.ac && impl.ac(sendToApp)
+			var view = impl.bd;
 			var title = _VirtualDom_doc.title;
 			var bodyNode = _VirtualDom_doc.body;
 			var currNode = _VirtualDom_virtualize(bodyNode);
@@ -3992,7 +3992,7 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bu);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.bm);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
@@ -4053,12 +4053,12 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.b$;
-	var onUrlRequest = impl.b0;
+	var onUrlChange = impl.bX;
+	var onUrlRequest = impl.bY;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
-		ae: function(sendToApp)
+		ac: function(sendToApp)
 		{
 			key.a = sendToApp;
 			_Browser_window.addEventListener('popstate', key);
@@ -4074,9 +4074,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.a7 === next.a7
-							&& curr.aC === next.aC
-							&& curr.a3.a === next.a3.a
+							&& curr.b0 === next.b0
+							&& curr.bE === next.bE
+							&& curr.b$.a === next.b$.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4084,11 +4084,11 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		bM: function(flags)
+		bH: function(flags)
 		{
-			return A3(impl.bM, flags, _Browser_getUrl(), key);
+			return A3(impl.bH, flags, _Browser_getUrl(), key);
 		},
-		bm: impl.bm,
+		bd: impl.bd,
 		cb: impl.cb,
 		b7: impl.b7
 	});
@@ -4156,17 +4156,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { bJ: 'hidden', bx: 'visibilitychange' }
+		? { bD: 'hidden', bp: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { bJ: 'mozHidden', bx: 'mozvisibilitychange' }
+		? { bD: 'mozHidden', bp: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { bJ: 'msHidden', bx: 'msvisibilitychange' }
+		? { bD: 'msHidden', bp: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { bJ: 'webkitHidden', bx: 'webkitvisibilitychange' }
-		: { bJ: 'hidden', bx: 'visibilitychange' };
+		? { bD: 'webkitHidden', bp: 'webkitvisibilitychange' }
+		: { bD: 'hidden', bp: 'visibilitychange' };
 }
 
 
@@ -4247,12 +4247,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		be: _Browser_getScene(),
-		bn: {
-			bp: _Browser_window.pageXOffset,
-			bq: _Browser_window.pageYOffset,
-			bo: _Browser_doc.documentElement.clientWidth,
-			aA: _Browser_doc.documentElement.clientHeight
+		a5: _Browser_getScene(),
+		be: {
+			bg: _Browser_window.pageXOffset,
+			bh: _Browser_window.pageYOffset,
+			bf: _Browser_doc.documentElement.clientWidth,
+			ax: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4262,8 +4262,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		bo: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		aA: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		bf: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		ax: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4286,15 +4286,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			be: {
-				bo: node.scrollWidth,
-				aA: node.scrollHeight
+			a5: {
+				bf: node.scrollWidth,
+				ax: node.scrollHeight
 			},
-			bn: {
-				bp: node.scrollLeft,
-				bq: node.scrollTop,
-				bo: node.clientWidth,
-				aA: node.clientHeight
+			be: {
+				bg: node.scrollLeft,
+				bh: node.scrollTop,
+				bf: node.clientWidth,
+				ax: node.clientHeight
 			}
 		};
 	});
@@ -4324,18 +4324,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			be: _Browser_getScene(),
-			bn: {
-				bp: x,
-				bq: y,
-				bo: _Browser_doc.documentElement.clientWidth,
-				aA: _Browser_doc.documentElement.clientHeight
+			a5: _Browser_getScene(),
+			be: {
+				bg: x,
+				bh: y,
+				bf: _Browser_doc.documentElement.clientWidth,
+				ax: _Browser_doc.documentElement.clientHeight
 			},
-			bC: {
-				bp: x + rect.left,
-				bq: y + rect.top,
-				bo: rect.width,
-				aA: rect.height
+			bv: {
+				bg: x + rect.left,
+				bh: y + rect.top,
+				bf: rect.width,
+				ax: rect.height
 			}
 		};
 	});
@@ -4445,9 +4445,9 @@ function _Markdown_formatOptions(options)
 {
 	function toHighlight(code, lang)
 	{
-		if (!lang && $elm$core$Maybe$isJust(options.as))
+		if (!lang && $elm$core$Maybe$isJust(options.aq))
 		{
-			lang = options.as.a;
+			lang = options.aq.a;
 		}
 
 		if (typeof hljs !== 'undefined' && lang && hljs.listLanguages().indexOf(lang) >= 0)
@@ -4458,13 +4458,13 @@ function _Markdown_formatOptions(options)
 		return code;
 	}
 
-	var gfm = options.bI.a;
+	var gfm = options.bB.a;
 
 	return {
 		highlight: toHighlight,
 		gfm: gfm,
 		tables: gfm && gfm.b8,
-		breaks: gfm && gfm.bv,
+		breaks: gfm && gfm.bn,
 		sanitize: options.b4,
 		smartypants: options.b5
 	};
@@ -4522,11 +4522,11 @@ var _MJS_v2setY = F2(function(y, a) {
 });
 
 var _MJS_v2toRecord = function(a) {
-    return { bp: a[0], bq: a[1] };
+    return { bg: a[0], bh: a[1] };
 };
 
 var _MJS_v2fromRecord = function(r) {
-    return new Float64Array([r.bp, r.bq]);
+    return new Float64Array([r.bg, r.bh]);
 };
 
 var _MJS_v2add = F2(function(a, b) {
@@ -4635,11 +4635,11 @@ var _MJS_v3setZ = F2(function(z, a) {
 });
 
 var _MJS_v3toRecord = function(a) {
-    return { bp: a[0], bq: a[1], X: a[2] };
+    return { bg: a[0], bh: a[1], W: a[2] };
 };
 
 var _MJS_v3fromRecord = function(r) {
-    return new Float64Array([r.bp, r.bq, r.X]);
+    return new Float64Array([r.bg, r.bh, r.W]);
 };
 
 var _MJS_v3add = F2(function(a, b) {
@@ -4795,11 +4795,11 @@ var _MJS_v4setW = F2(function(w, a) {
 });
 
 var _MJS_v4toRecord = function(a) {
-    return { bp: a[0], bq: a[1], X: a[2], aj: a[3] };
+    return { bg: a[0], bh: a[1], W: a[2], cc: a[3] };
 };
 
 var _MJS_v4fromRecord = function(r) {
-    return new Float64Array([r.bp, r.bq, r.X, r.aj]);
+    return new Float64Array([r.bg, r.bh, r.W, r.cc]);
 };
 
 var _MJS_v4add = F2(function(a, b) {
@@ -4905,31 +4905,31 @@ var _MJS_m4x4identity = new Float64Array([
 
 var _MJS_m4x4fromRecord = function(r) {
     var m = new Float64Array(16);
-    m[0] = r.aJ;
-    m[1] = r.aN;
-    m[2] = r.aR;
-    m[3] = r.aV;
-    m[4] = r.aK;
-    m[5] = r.aO;
-    m[6] = r.aS;
-    m[7] = r.aW;
-    m[8] = r.aL;
-    m[9] = r.aP;
-    m[10] = r.aT;
-    m[11] = r.aX;
-    m[12] = r.aM;
-    m[13] = r.aQ;
-    m[14] = r.aU;
-    m[15] = r.aY;
+    m[0] = r.aF;
+    m[1] = r.aJ;
+    m[2] = r.aN;
+    m[3] = r.aR;
+    m[4] = r.aG;
+    m[5] = r.aK;
+    m[6] = r.aO;
+    m[7] = r.aS;
+    m[8] = r.aH;
+    m[9] = r.aL;
+    m[10] = r.aP;
+    m[11] = r.aT;
+    m[12] = r.aI;
+    m[13] = r.aM;
+    m[14] = r.aQ;
+    m[15] = r.aU;
     return m;
 };
 
 var _MJS_m4x4toRecord = function(m) {
     return {
-        aJ: m[0], aN: m[1], aR: m[2], aV: m[3],
-        aK: m[4], aO: m[5], aS: m[6], aW: m[7],
-        aL: m[8], aP: m[9], aT: m[10], aX: m[11],
-        aM: m[12], aQ: m[13], aU: m[14], aY: m[15]
+        aF: m[0], aJ: m[1], aN: m[2], aR: m[3],
+        aG: m[4], aK: m[5], aO: m[6], aS: m[7],
+        aH: m[8], aL: m[9], aP: m[10], aT: m[11],
+        aI: m[12], aM: m[13], aQ: m[14], aU: m[15]
     };
 };
 
@@ -5483,6 +5483,29 @@ var _MJS_m4x4makeBasis = F3(function(vx, vy, vz) {
 
     return r;
 });
+
+
+function _Url_percentEncode(string)
+{
+	return encodeURIComponent(string);
+}
+
+function _Url_percentDecode(string)
+{
+	try
+	{
+		return $elm$core$Maybe$Just(decodeURIComponent(string));
+	}
+	catch (e)
+	{
+		return $elm$core$Maybe$Nothing;
+	}
+}var $author$project$Main$LinkClicked = function (a) {
+	return {$: 4, a: a};
+};
+var $author$project$Main$Reset = function (a) {
+	return {$: 5, a: a};
+};
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
@@ -5987,7 +6010,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {ay: fragment, aC: host, a1: path, a3: port_, a7: protocol, a8: query};
+		return {av: fragment, bE: host, b_: path, b$: port_, b0: protocol, b1: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -6265,7 +6288,55 @@ var $elm$core$Task$perform = F2(
 		return $elm$core$Task$command(
 			A2($elm$core$Task$map, toMessage, task));
 	});
-var $elm$browser$Browser$element = _Browser_element;
+var $elm$browser$Browser$application = _Browser_application;
+var $author$project$Main$Article = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Main$ArticleMsg = function (a) {
+	return {$: 1, a: a};
+};
+var $author$project$Main$Empty = {$: 4};
+var $author$project$Main$Home = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$HomeMsg = function (a) {
+	return {$: 0, a: a};
+};
+var $author$project$Main$Model = F3(
+	function (key, url, model) {
+		return {aC: key, L: model, ah: url};
+	});
+var $author$project$Main$Projects = function (a) {
+	return {$: 3, a: a};
+};
+var $author$project$Main$ProjectsMsg = function (a) {
+	return {$: 3, a: a};
+};
+var $author$project$Main$Talk = function (a) {
+	return {$: 2, a: a};
+};
+var $author$project$Main$TalkMsg = function (a) {
+	return {$: 2, a: a};
+};
+var $elm$core$Platform$Cmd$map = _Platform_map;
+var $elm$core$Tuple$mapBoth = F3(
+	function (funcA, funcB, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			funcA(x),
+			funcB(y));
+	});
+var $elm$core$Tuple$mapFirst = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			func(x),
+			y);
+	});
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: -2};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
 var $elm$core$Dict$Black = 1;
@@ -6389,29 +6460,44 @@ var $elm$core$Dict$fromList = function (assocs) {
 		$elm$core$Dict$empty,
 		assocs);
 };
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$init = function (_v0) {
-	return _Utils_Tuple2(
-		{
-			A: _List_fromArray(
-				[
-					$elm$core$Maybe$Nothing,
-					$elm$core$Maybe$Just(0),
-					$elm$core$Maybe$Just(0)
-				]),
-			N: $elm$core$Dict$fromList(
-				_List_fromArray(
-					[
-						_Utils_Tuple2('berlekamp', false),
-						_Utils_Tuple2('nice', true)
-					]))
-		},
-		$elm$core$Platform$Cmd$none);
+var $elm$json$Json$Encode$object = function (pairs) {
+	return _Json_wrap(
+		A3(
+			$elm$core$List$foldl,
+			F2(
+				function (_v0, obj) {
+					var k = _v0.a;
+					var v = _v0.b;
+					return A3(_Json_addField, k, v, obj);
+				}),
+			_Json_emptyObject(0),
+			pairs));
 };
+var $author$project$Common$render = _Platform_outgoingPort(
+	'render',
+	function ($) {
+		return $elm$json$Json$Encode$object(_List_Nil);
+	});
+var $author$project$Article$init = _Utils_Tuple2(
+	{
+		y: _List_fromArray(
+			[
+				$elm$core$Maybe$Nothing,
+				$elm$core$Maybe$Just(0),
+				$elm$core$Maybe$Just(0)
+			]),
+		M: $elm$core$Dict$fromList(
+			_List_fromArray(
+				[
+					_Utils_Tuple2('berlekamp', false),
+					_Utils_Tuple2('nice', true)
+				]))
+	},
+	$author$project$Common$render(
+		{}));
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
-var $author$project$Main$subscriptions = function (_v0) {
+var $author$project$Article$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $elm$core$List$drop = F2(
@@ -6449,7 +6535,7 @@ var $elm_community$list_extra$List$Extra$getAt = F2(
 		return (idx < 0) ? $elm$core$Maybe$Nothing : $elm$core$List$head(
 			A2($elm$core$List$drop, idx, xs));
 	});
-var $author$project$Main$ifThenElse = F3(
+var $author$project$Common$ifThenElse = F3(
 	function (c, a, b) {
 		return c ? a : b;
 	});
@@ -6473,24 +6559,6 @@ var $elm$core$Dict$map = F2(
 		}
 	});
 var $elm$core$Basics$not = _Basics_not;
-var $elm$json$Json$Encode$object = function (pairs) {
-	return _Json_wrap(
-		A3(
-			$elm$core$List$foldl,
-			F2(
-				function (_v0, obj) {
-					var k = _v0.a;
-					var v = _v0.b;
-					return A3(_Json_addField, k, v, obj);
-				}),
-			_Json_emptyObject(0),
-			pairs));
-};
-var $author$project$Main$render = _Platform_outgoingPort(
-	'render',
-	function ($) {
-		return $elm$json$Json$Encode$object(_List_Nil);
-	});
 var $elm$core$Basics$always = F2(
 	function (a, _v0) {
 		return a;
@@ -6657,7 +6725,7 @@ var $elm$core$Maybe$withDefault = F2(
 			return _default;
 		}
 	});
-var $author$project$Main$update = F2(
+var $author$project$Article$update = F2(
 	function (msg, m) {
 		switch (msg.$) {
 			case 0:
@@ -6668,7 +6736,7 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						m,
 						{
-							A: A3($elm_community$list_extra$List$Extra$setAt, i, o, m.A)
+							y: A3($elm_community$list_extra$List$Extra$setAt, i, o, m.y)
 						}),
 					$elm$core$Platform$Cmd$none);
 			case 1:
@@ -6677,17 +6745,17 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						m,
 						{
-							A: A2(
+							y: A2(
 								$elm$core$List$map,
 								function (k) {
 									return A2(
 										$elm$core$Maybe$withDefault,
 										$elm$core$Maybe$Nothing,
-										A2($elm_community$list_extra$List$Extra$getAt, k, m.A));
+										A2($elm_community$list_extra$List$Extra$getAt, k, m.y));
 								},
 								A2($elm$core$List$range, 0, i - 1))
 						}),
-					$author$project$Main$render(
+					$author$project$Common$render(
 						{}));
 			default:
 				var str = msg.a;
@@ -6695,22 +6763,24 @@ var $author$project$Main$update = F2(
 					_Utils_update(
 						m,
 						{
-							N: A2(
+							M: A2(
 								$elm$core$Dict$map,
 								F2(
 									function (k, v) {
 										return A3(
-											$author$project$Main$ifThenElse,
+											$author$project$Common$ifThenElse,
 											_Utils_eq(k, str),
 											!v,
 											v);
 									}),
-								m.N)
+								m.M)
 						}),
 					$elm$core$Platform$Cmd$none);
 		}
 	});
-var $elm$html$Html$a = _VirtualDom_node('a');
+var $author$project$Article$ToggleArticleOpen = function (a) {
+	return {$: 2, a: a};
+};
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6720,173 +6790,9 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 			$elm$json$Json$Encode$string(string));
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
-	});
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
-var $elm$html$Html$img = _VirtualDom_node('img');
-var $elm_explorations$markdown$Markdown$defaultOptions = {
-	as: $elm$core$Maybe$Nothing,
-	bI: $elm$core$Maybe$Just(
-		{bv: false, b8: false}),
-	b4: true,
-	b5: false
-};
-var $elm$core$Maybe$isJust = function (maybe) {
-	if (!maybe.$) {
-		return true;
-	} else {
-		return false;
-	}
-};
-var $elm_explorations$markdown$Markdown$toHtmlWith = _Markdown_toHtml;
-var $elm_explorations$markdown$Markdown$toHtml = $elm_explorations$markdown$Markdown$toHtmlWith($elm_explorations$markdown$Markdown$defaultOptions);
-var $author$project$Main$md = function (x) {
-	return A2(
-		$elm_explorations$markdown$Markdown$toHtml,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('content')
-			]),
-		x);
-};
-var $elm$core$List$singleton = function (value) {
-	return _List_fromArray(
-		[value]);
-};
-var $elm$html$Html$Attributes$src = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'src',
-		_VirtualDom_noJavaScriptOrHtmlUri(url));
-};
-var $elm$html$Html$table = _VirtualDom_node('table');
-var $elm$html$Html$td = _VirtualDom_node('td');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $elm$html$Html$tr = _VirtualDom_node('tr');
-var $author$project$Main$about = A2(
-	$elm$html$Html$div,
-	_List_fromArray(
-		[
-			$elm$html$Html$Attributes$class('space-x-8 flex')
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('w-2/3 flex flex-col')
-				]),
-			_List_fromArray(
-				[
-					$author$project$Main$md('\n# About Me\n\n**Hi! I\'m Joel.** I study **Mathematics** and **Computer Science** at the *[University of Queensland](https://www.uq.edu.au/)* in Brisbane, Australia.\n\nHere\'s what I\'ve been up to recently:\n'),
-					A2(
-					$elm$html$Html$table,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('mt-2 rounded-lg border border-flu-300 p-4')
-						]),
-					$elm$core$List$reverse(
-						A2(
-							$elm$core$List$map,
-							A2(
-								$elm$core$Basics$composeR,
-								$elm$core$List$map(
-									A2(
-										$elm$core$Basics$composeR,
-										$elm$core$List$singleton,
-										$elm$html$Html$td(
-											_List_fromArray(
-												[
-													$elm$html$Html$Attributes$class('border border-flu-300 p-2 align-top')
-												])))),
-								$elm$html$Html$tr(_List_Nil)),
-							_List_fromArray(
-								[
-									_List_fromArray(
-									[
-										$author$project$Main$md('**2019 - 2022**'),
-										$author$project$Main$md('Completed a dual **Bachelor of Mathematics** / **Bachelor of Computer Science** with majors in Pure Mathematics and Programming Languages')
-									]),
-									_List_fromArray(
-									[
-										$author$project$Main$md('**2022 - 2024**'),
-										$author$project$Main$md('Developed **compilers** and **programming languages** for *[Planwisely](https://www.planwisely.io/)*, at Veitch Lister Consulting')
-									]),
-									_List_fromArray(
-									[
-										$author$project$Main$md('**2023 - 2024**'),
-										$author$project$Main$md('Completed a **Bachelor of Computer Science (honours)** (first class) with a thesis about polynomial factoring, supervised by *[Dr. Paul Vrbik](https://eecs.uq.edu.au/profile/1193/paul-vrbik)*')
-									]),
-									_List_fromArray(
-									[
-										$author$project$Main$md('**2024**'),
-										$author$project$Main$md('Tutoring mathematics at UQ')
-									])
-								])))),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('mt-3')
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text('I also like to sing, draw, and write.')
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('mt-3')
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text('A full copy of my cv is available '),
-							A2(
-							$elm$html$Html$a,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$href('./Joel_Richardson_website_cv.pdf'),
-									$elm$html$Html$Attributes$class('italic underline')
-								]),
-							_List_fromArray(
-								[
-									$elm$html$Html$text('here')
-								]))
-						]))
-				])),
-			A2(
-			$elm$html$Html$div,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class('w-1/3')
-				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$img,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$src('https://pro2-bar-s3-cdn-cf1.myportfolio.com/de5c29b78c39a894f024941ae54357bd/9af54e77-e987-476b-bf77-a0ee145137d7_rw_1920.jpg?h=886925297f9582be1dceaa224acd9a42'),
-							$elm$html$Html$Attributes$class('h-full rounded-lg border border-flu-300 object-cover')
-						]),
-					_List_Nil)
-				]))
-		]));
-var $author$project$Main$ToggleArticleOpen = function (a) {
-	return {$: 2, a: a};
-};
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
 };
@@ -6904,8 +6810,10 @@ var $elm$html$Html$Events$onClick = function (msg) {
 		'click',
 		$elm$json$Json$Decode$succeed(msg));
 };
-var $author$project$Main$article = F3(
-	function (name, open, art) {
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Common$article = F2(
+	function (open, art) {
 		if (open.$ === 1) {
 			return A2(
 				$elm$html$Html$div,
@@ -6914,7 +6822,9 @@ var $author$project$Main$article = F3(
 						$elm$html$Html$Attributes$class('w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg')
 					]),
 				_List_fromArray(
-					[art]));
+					[
+						A2($elm$html$Html$map, $elm$core$Maybe$Just, art)
+					]));
 		} else {
 			var o = open.a;
 			return A2(
@@ -6922,7 +6832,7 @@ var $author$project$Main$article = F3(
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class(
-						'w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg relative ' + A3($author$project$Main$ifThenElse, o, 'h-auto', 'h-16 overflow-y-clip'))
+						'w-3/4 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg relative ' + A3($author$project$Common$ifThenElse, o, 'h-auto', 'h-16 overflow-y-clip'))
 					]),
 				_List_fromArray(
 					[
@@ -6931,8 +6841,7 @@ var $author$project$Main$article = F3(
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('absolute m-4 top-[-1px] right-0 h-8 w-8 rounded-full border border-flu-300 grid place-items-center font-light text-flu-600 transition-all hover:bg-flu-50 cursor-pointer'),
-								$elm$html$Html$Events$onClick(
-								$author$project$Main$ToggleArticleOpen(name))
+								$elm$html$Html$Events$onClick($elm$core$Maybe$Nothing)
 							]),
 						_List_fromArray(
 							[
@@ -6945,20 +6854,51 @@ var $author$project$Main$article = F3(
 								_List_fromArray(
 									[
 										$elm$html$Html$text(
-										A3($author$project$Main$ifThenElse, o, '-', '+'))
+										A3($author$project$Common$ifThenElse, o, '-', '+'))
 									]))
 							])),
-						art
+						A2($elm$html$Html$map, $elm$core$Maybe$Just, art)
 					]));
 		}
 	});
 var $elm$html$Html$iframe = _VirtualDom_node('iframe');
-var $author$project$Main$berlekamp = A2(
+var $elm_explorations$markdown$Markdown$defaultOptions = {
+	aq: $elm$core$Maybe$Nothing,
+	bB: $elm$core$Maybe$Just(
+		{bn: false, b8: false}),
+	b4: true,
+	b5: false
+};
+var $elm$core$Maybe$isJust = function (maybe) {
+	if (!maybe.$) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var $elm_explorations$markdown$Markdown$toHtmlWith = _Markdown_toHtml;
+var $elm_explorations$markdown$Markdown$toHtml = $elm_explorations$markdown$Markdown$toHtmlWith($elm_explorations$markdown$Markdown$defaultOptions);
+var $author$project$Article$md = function (x) {
+	return A2(
+		$elm_explorations$markdown$Markdown$toHtml,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('content')
+			]),
+		x);
+};
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $author$project$Article$berlekamp = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Main$md('\n# Article: Berlekamp\'s Algorithm\n\nSuppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?\n\nElwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*, with what I think is a pretty sweet algorithm. Unfortunately, write-ups on his algorithm seem to fall helplessly into a "definition, proof, repeat" structure. These I find somewhat unmotivating — so here\'s my shot a more organic, hopefully more motivated, write up. We\'re going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp\'s algorithm. I hope you find it as interesting as I did.\n\nWe start by stating the obvious — we can theoretically find the factors of $f$ with a brute force search — though this makes for a rather terrible algorithm. Let\'s step back to see if we can find a better approach. Notice that any factorization algorithm doesn\'t really need to find *every* factor. At least, it doesn\'t need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing ->\n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two parts, *meaningfully* — into two parts both containing some of the factors of $f$. '),
+			$author$project$Article$md('\n# Berlekamp\'s Algorithm\n\nSuppose $\\F_p$ is the finite field of prime order $p$ and $f \\in \\F_p[x]$ is squarefree. How can we find the factors of $f$?\n\nElwyn Berlekamp answered this question in his 1967 paper *[Factoring polynomials over finite fields](https://ieeexplore.ieee.org/document/6768643)*, with what I think is a pretty sweet algorithm. Unfortunately, write-ups on his algorithm seem to fall helplessly into a "definition, proof, repeat" structure. These I find somewhat unmotivating — so here\'s my shot a more organic, hopefully more motivated, write up. We\'re going to think about our problem, *factoring a squarefree polynomial over a finite field*, and chip away at it until we run into Berlekamp\'s algorithm. I hope you find it as interesting as I did.\n\nWe start by stating the obvious — we can theoretically find the factors of $f$ with a brute force search — though this makes for a rather terrible algorithm. Let\'s step back to see if we can find a better approach. Notice that any factorization algorithm doesn\'t really need to find *every* factor. At least, it doesn\'t need to find every factor in one go. If our algorithm can produce even just one non-trivial divisor of $f$ (i.e. a non-unit divisor that isn\'t a unit multiple of $f$), then repeated application of our algorithm will suffice to find every factor. In code, this might look something like the following.\n\n```hs\n-- this code is pretty easy to verify using induction.\nfactor :: Polynomial -> Set Polynomial\nfactor f = case findNonTrivialDivisor f of\n    Just g_1 -> do\n        let g_2 = f / g_1\n        return $ Set.union ( factor g_1 ) ( factor g_2 )\n    Nothing ->\n        return $ Set.singleton f -- f is irreducible\n```\n\nPerhaps the term "non-trivial divisor" is a little obfuscating. We want a non-trivial divisor because *intuitively* we\'re trying to split $f$ into two parts, *meaningfully* — into two parts both containing some of the factors of $f$. '),
 			A2(
 			$elm$html$Html$iframe,
 			_List_fromArray(
@@ -6967,19 +6907,8 @@ var $author$project$Main$berlekamp = A2(
 					$elm$html$Html$Attributes$src('https://q.uiver.app/#q=WzAsMyxbMSwwLCJmPShmXzFmXzJmXzMpKGZfNFxcbGRvdHMgZl9uKSJdLFswLDIsImdfMT0oZl8xZl8yZl8zKSJdLFsyLDIsImdfMj0oZl80XFxsZG90cyBmX24pIl0sWzAsMiwiIiwyLHsiY3VydmUiOi0yfV0sWzAsMSwiIiwwLHsiY3VydmUiOjJ9XV0=&embed')
 				]),
 			_List_Nil),
-			$author$project$Main$md('\nAnd once we\'ve found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it\'s natural to express what we want of $g_1$ as follows:\n\n- We require that $g_1$ divides $f$\n- We require that at least one factor of $f$ divides $g_1$\n- We require that at least one factor of $f$ doesn\'t divide $g_1$\n\nBetter still, we can throw away the first requirement; the map $g \\mapsto \\gcd{(f,\\,g)}$, when applied to a polynomial satisfying (2) and (3), will produce a polynomial satisfying all three requirements. This is obvious, given a couple seconds thought. Alright, so now we\'re trying to find a polynomial $g_1$ such that:\n\n- At least one factor of $f$ divides $g_1$\n- At least one factor of $f$ doesn\'t divide $g_1$\n\nLet\'s turn our attention to the set we\'re searching over - currently, it\'s $\\F_p[x]$, which is pretty big, so it\'d be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)\n\n$$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$\n\nBefore we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yields a ring isomorphism\n\n$$ \\begin{aligned} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times \\F_p[x]/ \\ideal{f_2} \\times \\cdots \\times \\F_p[x]/ \\ideal{f_n} \\\\\\\\\n    \\\\\\\\\n    g \\; \\mapsto& \\;\\; (r_1,\\,r_2,\\,\\ldots,\\,r_n)\n\\end{aligned}$$\n\nWe consider how $\\phi$ acts on the factors of $f$. It\'s clear (given a seconds thought) that $\\phi(f_i)$ is zero in its $i^{\\text{th}}$ component and non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We\'re trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is zero in at least one, but not all, components.\n\nCan we find an even smaller set to search? One thing to consider is that this *"zero in at least one component"* property is preserved under exponentiation by positive integers — so we might think about limiting our set to only those points that are somehow fixed under exponentiation. Holding this thought, let\'s think about the effect of exponentiation different powers. If we think about the set of points fixed (in the normal sense) by exponentiation to any old power (say, two) we\'ll run into something a bit yucky; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are fixed under squaring: $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, try exponentiation to the $p^{\\text{th}}$ power. Consider the map\n\n$$ \\begin{aligned} \\sigma\\_p : A_f \\; \\to& \\;\\; A_f \\\\\\\\\n    g \\; \\mapsto& \\;\\; g^{\\, p}\n\\end{aligned} $$\n\nWe can apply the freshman\'s dream to see that the fixed points of $\\sigma\\_p$ form a ring.\n\n$$ \\begin{aligned}\n    \\forall \\, g,h \\in \\text{fix} (\\sigma\\_p) \\quad\\quad& \\sigma\\_p(gh) = (gh)^p = g^ph^p = gh\\\\\\\\\n    &\\sigma\\_p(g + h) = (g + h)^p = g^p + h^p = g + h\n\\end{aligned} $$\n\nThe fixed points of $\\sigma\\_p$ turn out to be pretty useful, so we\'re going to give them a name.\n\n$$ B_f \\;\\defeq\\; \\text{fix} (\\sigma\\_p)$$\n\nThis is called the Berlekamp subalgebra of $A\\_f$. At a first glance we can see that $B\\_f$ contains many of the points we care about, for instance $g$ with $\\phi(g) = (0, 1, 1, \\ldots, 1)$, but this probably shouldn\'t be enough to sell you on it\'s usefulness. Let\'s keep investigating. It follows from Fermat\'s little theorem that $\\sigma\\_p$ is linear:\n\n$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad \\sigma\\_p(tu + v) = {(tu + v)}^p = t^p u^p + v^p = t\\sigma\\_p(u) + \\sigma\\_p(v) $$\n\nWhich has potential to be a big win for us — it gives a fast method to produce elements of $B_f$. Indeed, watch this:\n\n$$B_f = \\text{fix} (\\sigma\\_p) = \\ker(\\sigma\\_p - \\text{id})$$\n\nWe can encode $(\\sigma\\_p - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we\'re not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:\n\n$$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$\n\nI plan to write another post to prove this equality (the proof involves an interesting application of combinatorics and of group theory), but for now we\'ll take it as given. To me the $h^p - h$ is just screaming $B_f$, so let\'s replace the dummy $h$ with any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)\n\n$$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$\n\nSomewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$!\n\n```hs\nfindNonTrivialDivisor :: Polynomial -> Maybe Polynomial\nfindNonTrivialDivisor f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> Nothing\n    basis -> do\n        let h = head basis\n        find ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        -- don\'t forget to apply that ^^^ gcd we talked about earlier!\n```\n\nBut we can do better. What if we lift the $\\text{gcd}$ into the product?\n\n$$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nAll we\'ve really done is remove some factors from the product - precisely the factors that aren\'t in $f$ - so the product as a whole must still be a multiple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:\n\nSuppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn\'t a unit, this is impossible.\n\nSo we get the following equality:\n\n$$f = \\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nUsing this equality we can improve our algorithm:\n\n```hs\nfactorBerlekamp :: Polynomial -> Set Polynomial\nfactorBerlekamp f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> do\n        return $ basis\n    basis -> do\n        let h = head basis\n        let terms = filter ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        return $ Set.unionMap factorBerlekamp terms\n```\n\nSo that\'s the general gist of Berlekamp\'s algoritm. Thanks for reading!\n\n*I\'ll leave the following note without proof: the vector space dimension of $B_f$ is equal to the number of factors of $f$. I think this is pretty dang cool.*\n')
+			$author$project$Article$md('\nAnd once we\'ve found one piece, $g_1 \\in \\F_p[x]$, we can trivially find $g_2 = f / g_1$. With this idea, *splitting the factors $f$*, in mind, it\'s natural to express what we want of $g_1$ as follows:\n\n- We require that $g_1$ divides $f$\n- We require that at least one factor of $f$ divides $g_1$\n- We require that at least one factor of $f$ doesn\'t divide $g_1$\n\nBetter still, we can throw away the first requirement; the map $g \\mapsto \\gcd{(f,\\,g)}$, when applied to a polynomial satisfying (2) and (3), will produce a polynomial satisfying all three requirements. This is obvious, given a couple seconds thought. Alright, so now we\'re trying to find a polynomial $g_1$ such that:\n\n- At least one factor of $f$ divides $g_1$\n- At least one factor of $f$ doesn\'t divide $g_1$\n\nLet\'s turn our attention to the set we\'re searching over - currently, it\'s $\\F_p[x]$, which is pretty big, so it\'d be handy to find a smaller set. One candidate is $D_f = \\set{ g \\in \\F_p[x] \\;|\\; \\deg{g} < \\deg{f} }$ which is both smaller than $\\F_p[x]$ and contains every non-trivial divisor of $f$. But we can do better; with all this talk of divisors, this problem feels very much like $\\text{mod}$ territory. So how about the ring of polynomials $\\text{mod } f$? (Note that this forms a subset of $D_f$)\n\n$$A_f \\; \\defeq \\; \\F_p[x]/\\ideal{f}$$\n\nBefore we do anything, we need to verify that $A_f$ contains all the factors of $f$. Or rather,  whether the factors of $f$ distinct in $A_f$. A tidy application of the chinese remainder theorem gets the job done. Suppose $f$ has factors $f_1,\\,f_2,\\,\\ldots,\\,f_n$. The chinese remainder theorem yields a ring isomorphism\n\n$$ \\begin{aligned} \\phi : A_f \\; \\to& \\;\\; \\F_p[x]/ \\ideal{f_1} \\times \\F_p[x]/ \\ideal{f_2} \\times \\cdots \\times \\F_p[x]/ \\ideal{f_n} \\\\\\\\\n    \\\\\\\\\n    g \\; \\mapsto& \\;\\; (r_1,\\,r_2,\\,\\ldots,\\,r_n)\n\\end{aligned}$$\n\nWe consider how $\\phi$ acts on the factors of $f$. It\'s clear (given a seconds thought) that $\\phi(f_i)$ is zero in its $i^{\\text{th}}$ component and non-zero in every other component (i.e. because each $f_i$ is irreducible, and therefore they do not divide each other). So each factor of $f$ is indeed distinct in $A_f$. Moreover, we can apply $\\phi$ to get another perspective on our $g_1$ requirements. We\'re trying to find a polynomial $g_1$ such that $\\phi(g_1)$ is zero in at least one, but not all, components.\n\nCan we find an even smaller set to search? One thing to consider is that this *"zero in at least one component"* property is preserved under exponentiation by positive integers — so we might think about limiting our set to only those points that are somehow fixed under exponentiation. Holding this thought, let\'s think about the effect of exponentiation different powers. If we think about the set of points fixed (in the normal sense) by exponentiation to any old power (say, two) we\'ll run into something a bit yucky; we might lose the ability add. Suppose $g,\\, h \\in A_f$ are fixed under squaring: $g = g^2$ and $h = h^2$. It follows that $(gh)^2 = gh$, but it does not follow that $(g + h)^2 = g + h$. Instead, try exponentiation to the $p^{\\text{th}}$ power. Consider the map\n\n$$ \\begin{aligned} \\sigma\\_p : A_f \\; \\to& \\;\\; A_f \\\\\\\\\n    g \\; \\mapsto& \\;\\; g^{\\, p}\n\\end{aligned} $$\n\nWe can apply the freshman\'s dream to see that the fixed points of $\\sigma\\_p$ form a ring.\n\n$$ \\begin{aligned}\n    \\forall \\, g,h \\in \\text{fix} (\\sigma\\_p) \\quad\\quad& \\sigma\\_p(gh) = (gh)^p = g^ph^p = gh\\\\\\\\\n    &\\sigma\\_p(g + h) = (g + h)^p = g^p + h^p = g + h\n\\end{aligned} $$\n\nThe fixed points of $\\sigma\\_p$ turn out to be pretty useful, so we\'re going to give them a name.\n\n$$ B_f \\;\\defeq\\; \\text{fix} (\\sigma\\_p)$$\n\nThis is called the Berlekamp subalgebra of $A\\_f$. At a first glance we can see that $B\\_f$ contains many of the points we care about, for instance $g$ with $\\phi(g) = (0, 1, 1, \\ldots, 1)$, but this probably shouldn\'t be enough to sell you on it\'s usefulness. Let\'s keep investigating. It follows from Fermat\'s little theorem that $\\sigma\\_p$ is linear:\n\n$$ \\forall \\, t \\in \\F_p,\\, u,v \\in \\F_p[x] \\quad\\quad \\sigma\\_p(tu + v) = {(tu + v)}^p = t^p u^p + v^p = t\\sigma\\_p(u) + \\sigma\\_p(v) $$\n\nWhich has potential to be a big win for us — it gives a fast method to produce elements of $B_f$. Indeed, watch this:\n\n$$B_f = \\text{fix} (\\sigma\\_p) = \\ker(\\sigma\\_p - \\text{id})$$\n\nWe can encode $(\\sigma\\_p - \\text{id})$ as a matrix, then use Gaussian elimination (or some other method) to produce a basis, $B$, of its nullspace. The elements of $B_f$ are precisely the linear combinations of $B$! But we\'re not done yet. Take some dummy variable $h$. Then the following equality holds in $\\F_p$:\n\n$$ \\prod\\_{c \\in \\F\\_p} (h + c) = h^p - h$$\n\nI plan to write another post to prove this equality (the proof involves an interesting application of combinatorics and of group theory), but for now we\'ll take it as given. To me the $h^p - h$ is just screaming $B_f$, so let\'s replace the dummy $h$ with any $h \\in B\\_f$ to get the following equality (which holds in $\\F\\_p[x]$)\n\n$$\\forall h\\in B\\_f,\\quad \\prod\\_{c \\in \\F\\_p} (h + c) = 0 \\mod f$$\n\nSomewhat magically, this equality basically completes our algorithm. If that $h$ is a non-zero in $B_f$ and a non-unit $F\\_p[x]$ then it must be that one of the $(h + c)$ terms is a multiple of a non-trivial divisor of $f$!\n\n```hs\nfindNonTrivialDivisor :: Polynomial -> Maybe Polynomial\nfindNonTrivialDivisor f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> Nothing\n    basis -> do\n        let h = head basis\n        find ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        -- don\'t forget to apply that ^^^ gcd we talked about earlier!\n```\n\nBut we can do better. What if we lift the $\\text{gcd}$ into the product?\n\n$$\\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nAll we\'ve really done is remove some factors from the product - precisely the factors that aren\'t in $f$ - so the product as a whole must still be a multiple of $f$ (i.e. zero $\\text{mod } f$). So every factor in the product is also in $f$, and every factor in $f$ is also in the product. Could they be equal? They are equal if the product has no repeated factors, which is pretty easy to verify:\n\nSuppose for some non-equal $s,\\,t \\in \\F\\_p$ the terms $\\gcd{(f,h+s)}$ and $\\gcd{(f,h+t)}$ share a factor $q$. Then $h+s$ and $h+t$ also share $q$. Moreover, $q$ divides their difference, $s - t$. Since $q$ isn\'t a unit, this is impossible.\n\nSo we get the following equality:\n\n$$f = \\prod\\_{c \\in \\F\\_p} \\gcd{(f,\\,h + c)}$$\n\nUsing this equality we can improve our algorithm:\n\n```hs\nfactorBerlekamp :: Polynomial -> Set Polynomial\nfactorBerlekamp f = case nullspaceBasis (berlekampMatrix f) of\n    basis | length basis < 2 -> do\n        return $ basis\n    basis -> do\n        let h = head basis\n        let terms = filter ( isNonZeroNonUnit ) [ gcd f (h + c) | c <- field ]\n        return $ Set.unionMap factorBerlekamp terms\n```\n\nSo that\'s the general gist of Berlekamp\'s algoritm. Thanks for reading!\n\n*I\'ll leave the following note without proof: the vector space dimension of $B_f$ is equal to the number of factors of $f$. I think this is pretty dang cool.*\n')
 		]));
-var $elm$core$List$append = F2(
-	function (xs, ys) {
-		if (!ys.b) {
-			return xs;
-		} else {
-			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
-		}
-	});
-var $elm$core$List$concat = function (lists) {
-	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
-};
 var $elm$core$Dict$get = F2(
 	function (targetKey, dict) {
 		get:
@@ -7011,11 +6940,27 @@ var $elm$core$Dict$get = F2(
 			}
 		}
 	});
-var $author$project$Main$SetBijection = function (a) {
+var $author$project$Article$SetBijection = function (a) {
 	return {$: 0, a: a};
 };
-var $author$project$Main$SetBijectionPrime = function (a) {
+var $author$project$Article$SetBijectionPrime = function (a) {
 	return {$: 1, a: a};
+};
+var $elm$core$Basics$composeR = F3(
+	function (f, g, x) {
+		return g(
+			f(x));
+	});
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
 };
 var $elm$core$List$concatMap = F2(
 	function (f, list) {
@@ -7087,7 +7032,7 @@ var $elm$core$List$repeat = F2(
 var $elm$core$List$sum = function (numbers) {
 	return A3($elm$core$List$foldl, $elm$core$Basics$add, 0, numbers);
 };
-var $author$project$Main$expand = function (p) {
+var $author$project$Article$expand = function (p) {
 	return function (lst) {
 		return A2(
 			$elm$core$List$map,
@@ -7115,7 +7060,7 @@ var $author$project$Main$expand = function (p) {
 					},
 					A2($elm$core$List$range, 0, p - 1)))));
 };
-var $author$project$Main$mapFirst = F2(
+var $author$project$Article$mapFirst = F2(
 	function (f, lst) {
 		if (lst.b) {
 			var h = lst.a;
@@ -7147,21 +7092,21 @@ var $elm_community$list_extra$List$Extra$removeAt = F2(
 			}
 		}
 	});
-var $author$project$Main$makeBijection = F2(
+var $author$project$Article$makeBijection = F2(
 	function (objects, inlst) {
 		if (inlst.b) {
 			if (!inlst.a.$) {
 				var h = inlst.a.a;
 				var t = inlst.b;
 				return A2(
-					$author$project$Main$mapFirst,
+					$author$project$Article$mapFirst,
 					$elm$core$List$cons(
 						A2(
 							$elm$core$Maybe$withDefault,
 							-1,
 							A2($elm_community$list_extra$List$Extra$getAt, h, objects))),
 					A2(
-						$author$project$Main$makeBijection,
+						$author$project$Article$makeBijection,
 						A2($elm_community$list_extra$List$Extra$removeAt, h, objects),
 						t));
 			} else {
@@ -7171,14 +7116,14 @@ var $author$project$Main$makeBijection = F2(
 					return A2($elm$core$List$cons, _List_Nil, l);
 				}(
 					A2(
-						$author$project$Main$mapFirst,
+						$author$project$Article$mapFirst,
 						$elm$core$List$cons(
 							A2(
 								$elm$core$Maybe$withDefault,
 								-1,
 								A2($elm_community$list_extra$List$Extra$getAt, 0, objects))),
 						A2(
-							$author$project$Main$makeBijection,
+							$author$project$Article$makeBijection,
 							A2($elm_community$list_extra$List$Extra$removeAt, 0, objects),
 							t)));
 			}
@@ -7220,7 +7165,7 @@ var $elm$core$Maybe$map2 = F3(
 			}
 		}
 	});
-var $author$project$Main$pairs_ = function (lst) {
+var $author$project$Article$pairs_ = function (lst) {
 	if (lst.b && lst.b.b) {
 		var h1 = lst.a;
 		var _v1 = lst.b;
@@ -7229,15 +7174,15 @@ var $author$project$Main$pairs_ = function (lst) {
 		return A2(
 			$elm$core$List$cons,
 			_Utils_Tuple2(h1, h2),
-			$author$project$Main$pairs_(
+			$author$project$Article$pairs_(
 				A2($elm$core$List$cons, h2, t)));
 	} else {
 		return _List_Nil;
 	}
 };
-var $author$project$Main$pairs = function (lst) {
+var $author$project$Article$pairs = function (lst) {
 	return _Utils_ap(
-		$author$project$Main$pairs_(lst),
+		$author$project$Article$pairs_(lst),
 		A2(
 			$elm$core$Maybe$withDefault,
 			_List_Nil,
@@ -7266,16 +7211,16 @@ var $author$project$Graph$lerppos = F2(
 var $elm$core$Basics$round = _Basics_round;
 var $author$project$Graph$xpos = F2(
 	function (_v0, a) {
-		var w = _v0.aj;
-		var h = _v0._;
+		var w = _v0.cc;
+		var h = _v0.bC;
 		return $elm$core$String$fromInt(
 			$elm$core$Basics$round(
 				A2($author$project$Graph$lerppos, w, a)));
 	});
 var $author$project$Graph$ypos = F2(
 	function (_v0, a) {
-		var w = _v0.aj;
-		var h = _v0._;
+		var w = _v0.cc;
+		var h = _v0.bC;
 		return $elm$core$String$fromInt(
 			$elm$core$Basics$round(
 				A2($author$project$Graph$lerppos, h, a)));
@@ -7289,8 +7234,8 @@ var $author$project$Graph$toStringTuple = F2(
 var $elm_explorations$linear_algebra$Math$Vector2$toRecord = _MJS_v2toRecord;
 var $author$project$Graph$toTuple = function (v) {
 	return function (_v0) {
-		var x = _v0.bp;
-		var y = _v0.bq;
+		var x = _v0.bg;
+		var y = _v0.bh;
 		return _Utils_Tuple2(x, y);
 	}(
 		$elm_explorations$linear_algebra$Math$Vector2$toRecord(v));
@@ -7318,7 +7263,7 @@ var $author$project$Graph$fromTuple = function (_v0) {
 	var x = _v0.a;
 	var y = _v0.b;
 	return $elm_explorations$linear_algebra$Math$Vector2$fromRecord(
-		{bp: x, bq: y});
+		{bg: x, bh: y});
 };
 var $elm$svg$Svg$trustedNode = _VirtualDom_nodeNS('http://www.w3.org/2000/svg');
 var $elm$svg$Svg$g = $elm$svg$Svg$trustedNode('g');
@@ -7474,14 +7419,6 @@ var $elm$core$Maybe$map = F2(
 			return $elm$core$Maybe$Nothing;
 		}
 	});
-var $elm$core$Tuple$mapBoth = F3(
-	function (funcA, funcB, _v0) {
-		var x = _v0.a;
-		var y = _v0.b;
-		return _Utils_Tuple2(
-			funcA(x),
-			funcB(y));
-	});
 var $elm$svg$Svg$Attributes$overflow = _VirtualDom_attribute('overflow');
 var $elm$svg$Svg$Attributes$preserveAspectRatio = _VirtualDom_attribute('preserveAspectRatio');
 var $elm$svg$Svg$Attributes$r = _VirtualDom_attribute('r');
@@ -7510,9 +7447,9 @@ var $author$project$Graph$view = function (g) {
 			function (n) {
 				return _Utils_Tuple2(
 					n,
-					g.bm(n));
+					g.bd(n));
 			},
-			g.a$));
+			g.bV));
 	var edges = A2(
 		function (f) {
 			return $elm$core$List$map(
@@ -7526,7 +7463,7 @@ var $author$project$Graph$view = function (g) {
 				$elm$core$Maybe$map($elm$core$Tuple$second),
 				$elm$core$Maybe$withDefault(
 					_Utils_Tuple2(0.5, 0.5)))),
-		g.at);
+		g.bu);
 	return A2(
 		$elm$svg$Svg$svg,
 		_List_fromArray(
@@ -7535,7 +7472,7 @@ var $author$project$Graph$view = function (g) {
 				$elm$svg$Svg$Attributes$height('100%'),
 				$elm$svg$Svg$Attributes$preserveAspectRatio('xMidYMid slice'),
 				$elm$svg$Svg$Attributes$viewBox(
-				A2($author$project$Graph$xpos, g.u, 0) + (' ' + (A2($author$project$Graph$ypos, g.u, 0) + (' ' + (A2($author$project$Graph$xpos, g.u, 1) + (' ' + A2($author$project$Graph$ypos, g.u, 1)))))))
+				A2($author$project$Graph$xpos, g.bl, 0) + (' ' + (A2($author$project$Graph$ypos, g.bl, 0) + (' ' + (A2($author$project$Graph$xpos, g.bl, 1) + (' ' + A2($author$project$Graph$ypos, g.bl, 1)))))))
 			]),
 		$elm$core$List$concat(
 			_List_fromArray(
@@ -7545,7 +7482,7 @@ var $author$project$Graph$view = function (g) {
 					function (_v0) {
 						var p1 = _v0.a;
 						var p2 = _v0.b;
-						return A4($author$project$Graph$arrowBetweenPoints, g.u, -0.6, p1, p2);
+						return A4($author$project$Graph$arrowBetweenPoints, g.bl, -0.6, p1, p2);
 					},
 					edges),
 					_List_fromArray(
@@ -7564,9 +7501,9 @@ var $author$project$Graph$view = function (g) {
 								_List_fromArray(
 									[
 										$elm$svg$Svg$Attributes$cx(
-										A2($author$project$Graph$xpos, g.u, px)),
+										A2($author$project$Graph$xpos, g.bl, px)),
 										$elm$svg$Svg$Attributes$cy(
-										A2($author$project$Graph$ypos, g.u, py)),
+										A2($author$project$Graph$ypos, g.bl, py)),
 										$elm$svg$Svg$Attributes$overflow('visible'),
 										$elm$svg$Svg$Attributes$fill('white'),
 										$elm$svg$Svg$Attributes$r('10')
@@ -7578,9 +7515,9 @@ var $author$project$Graph$view = function (g) {
 									[
 										$elm$svg$Svg$Attributes$overflow('visible'),
 										$elm$svg$Svg$Attributes$x(
-										A2($author$project$Graph$xpos, g.u, px)),
+										A2($author$project$Graph$xpos, g.bl, px)),
 										$elm$svg$Svg$Attributes$y(
-										A2($author$project$Graph$ypos, g.u, py))
+										A2($author$project$Graph$ypos, g.bl, py))
 									]),
 								_List_fromArray(
 									[
@@ -7598,7 +7535,7 @@ var $author$project$Graph$view = function (g) {
 					$elm$core$Dict$values(nodes))
 				])));
 };
-var $author$project$Main$funnyBijection_ = F3(
+var $author$project$Article$funnyBijection_ = F3(
 	function (h, f, lst) {
 		return A2(
 			$elm$html$Html$div,
@@ -7617,16 +7554,16 @@ var $author$project$Main$funnyBijection_ = F3(
 					var nodes = A2($elm$core$List$range, 1, p);
 					return $author$project$Graph$view(
 						{
-							u: {
-								_: _Utils_Tuple2(0, 200),
-								aj: _Utils_Tuple2(0, 300)
+							bl: {
+								bC: _Utils_Tuple2(0, 200),
+								cc: _Utils_Tuple2(0, 300)
 							},
-							at: A2(
+							bu: A2(
 								$elm$core$List$concatMap,
-								$author$project$Main$pairs,
-								A2($author$project$Main$makeBijection, nodes, lst)),
-							a$: nodes,
-							bm: function (i) {
+								$author$project$Article$pairs,
+								A2($author$project$Article$makeBijection, nodes, lst)),
+							bV: nodes,
+							bd: function (i) {
 								return _Utils_Tuple2(
 									f(i - 1),
 									_Utils_Tuple2(i / (p + 1), 0.5));
@@ -7640,7 +7577,7 @@ var $elm$core$String$fromChar = function (_char) {
 	return A2($elm$core$String$cons, _char, '');
 };
 var $elm$core$Char$fromCode = _Char_fromCode;
-var $author$project$Main$math = function (str) {
+var $author$project$Article$math = function (str) {
 	return A2(
 		$elm_explorations$markdown$Markdown$toHtml,
 		_List_fromArray(
@@ -7649,12 +7586,12 @@ var $author$project$Main$math = function (str) {
 			]),
 		'$' + (str + '$'));
 };
-var $author$project$Main$mathchar = function (i) {
-	return $author$project$Main$math(
+var $author$project$Article$mathchar = function (i) {
+	return $author$project$Article$math(
 		$elm$core$String$fromChar(
 			$elm$core$Char$fromCode(97 + i)));
 };
-var $author$project$Main$funnyBijection = A2($author$project$Main$funnyBijection_, 150, $author$project$Main$mathchar);
+var $author$project$Article$funnyBijection = A2($author$project$Article$funnyBijection_, 150, $author$project$Article$mathchar);
 var $elm$core$Basics$composeL = F3(
 	function (g, f, x) {
 		return g(
@@ -7684,7 +7621,7 @@ var $elm_community$list_extra$List$Extra$intercalate = function (xs) {
 		$elm$core$List$concat,
 		$elm$core$List$intersperse(xs));
 };
-var $author$project$Main$showInt = function (i) {
+var $author$project$Article$showInt = function (i) {
 	if (i === 1) {
 		return '';
 	} else {
@@ -7692,7 +7629,7 @@ var $author$project$Main$showInt = function (i) {
 	}
 };
 var $elm$core$List$sortBy = _List_sortBy;
-var $author$project$Main$funnyBicjectionPanel = function (opts) {
+var $author$project$Article$funnyBicjectionPanel = function (opts) {
 	var xc = A2(
 		$elm_community$list_extra$List$Extra$count,
 		$elm$core$Basics$eq($elm$core$Maybe$Nothing),
@@ -7739,7 +7676,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 												[
 													_List_fromArray(
 													[
-														$author$project$Main$math('(')
+														$author$project$Article$math('(')
 													]),
 													_List_fromArray(
 													[
@@ -7750,7 +7687,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 																$elm$html$Html$Attributes$class('cursor-pointer rounded-md pointer-events-auto'),
 																$elm$html$Html$Attributes$class(
 																A3(
-																	$author$project$Main$ifThenElse,
+																	$author$project$Common$ifThenElse,
 																	_Utils_eq(curr, $elm$core$Maybe$Nothing),
 																	'bg-hl-1',
 																	'hover:bg-hl-11')),
@@ -7759,7 +7696,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 															]),
 														_List_fromArray(
 															[
-																$author$project$Main$math('\\large \\,x\\,')
+																$author$project$Article$math('\\large \\,x\\,')
 															]))
 													]),
 													A2(
@@ -7767,7 +7704,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 													function (k) {
 														return _List_fromArray(
 															[
-																$author$project$Main$math('\\large +'),
+																$author$project$Article$math('\\large +'),
 																A2(
 																$elm$html$Html$div,
 																_List_fromArray(
@@ -7775,7 +7712,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 																		$elm$html$Html$Attributes$class('cursor-pointer rounded-md pointer-events-auto'),
 																		$elm$html$Html$Attributes$class(
 																		A3(
-																			$author$project$Main$ifThenElse,
+																			$author$project$Common$ifThenElse,
 																			_Utils_eq(
 																				curr,
 																				$elm$core$Maybe$Just(k)),
@@ -7788,7 +7725,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 																	]),
 																_List_fromArray(
 																	[
-																		$author$project$Main$math('\\large \\,1\\,')
+																		$author$project$Article$math('\\large \\,1\\,')
 																	]))
 															]);
 													},
@@ -7798,7 +7735,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 														(!i) ? (-1) : ((p - i) - 1))),
 													_List_fromArray(
 													[
-														$author$project$Main$math(')')
+														$author$project$Article$math(')')
 													])
 												]));
 									}());
@@ -7812,7 +7749,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 							]),
 						_List_fromArray(
 							[
-								$author$project$Main$math('\\overset{\\scriptsize f}{\\longmapsto}')
+								$author$project$Article$math('\\overset{\\scriptsize f}{\\longmapsto}')
 							])),
 						A2(
 						$elm$html$Html$div,
@@ -7822,7 +7759,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 							]),
 						_List_fromArray(
 							[
-								$author$project$Main$funnyBijection(opts)
+								$author$project$Article$funnyBijection(opts)
 							]))
 					])),
 				A2(
@@ -7844,7 +7781,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 									]),
 								_List_fromArray(
 									[
-										$author$project$Main$math(
+										$author$project$Article$math(
 										'$\\large P(' + ($elm$core$String$fromInt(p) + (') = \\prod_{ 0\\leq i < ' + ($elm$core$String$fromInt(p) + '} (x + i) = \\,$'))))
 									]))
 							]),
@@ -7852,7 +7789,7 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 							$elm_community$list_extra$List$Extra$intercalate,
 							_List_fromArray(
 								[
-									$author$project$Main$math('\\large + ')
+									$author$project$Article$math('\\large + ')
 								]),
 							A2(
 								$elm$core$List$map,
@@ -7867,15 +7804,15 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 												[
 													$elm$html$Html$Attributes$class(
 													A3(
-														$author$project$Main$ifThenElse,
+														$author$project$Common$ifThenElse,
 														_Utils_eq(i, xc),
 														'bg-hl-1',
 														''))
 												]),
 											_List_fromArray(
 												[
-													$author$project$Main$math(
-													'\\large ' + ($author$project$Main$showInt(a) + ('x^{' + ($author$project$Main$showInt(i) + '}'))))
+													$author$project$Article$math(
+													'\\large ' + ($author$project$Article$showInt(a) + ('x^{' + ($author$project$Article$showInt(i) + '}'))))
 												]))
 										]);
 								},
@@ -7883,20 +7820,18 @@ var $author$project$Main$funnyBicjectionPanel = function (opts) {
 									A2(
 										$elm$core$List$sortBy,
 										$elm$core$Tuple$second,
-										$author$project$Main$expand(p)))))
+										$author$project$Article$expand(p)))))
 						])))
 			]));
 };
-var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
-var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$core$Basics$modBy = _Basics_modBy;
-var $author$project$Main$nice = function (m) {
+var $author$project$Article$nice = function (m) {
 	return A2(
 		$elm$html$Html$div,
 		_List_Nil,
 		_List_fromArray(
 			[
-				$author$project$Main$md('\n# Article: Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is free. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned}\n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$\n\nWe\'re trying to figure out if it\'s always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let\'s get $a_1 \\equiv -1$ out of the way. Notice that\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I\'ll not prove it here). This yields $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nHow about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$ in terms of $P_p$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product. Let $A$ be a set of sets (as above).\n\n$$ C(A) \\; \\defeq \\; \\prod\\_{B \\,\\in\\, A} B$$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x)\n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{B \\,\\in\\, A} \\sum\\_{b \\,\\in\\, B} b \\; = \\; \\sum\\_{c \\,\\in\\, C(A)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |A|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory.\n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned}\n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, though we do need to differentiate between the many ones in each set of $P_p$.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times.\n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned}\n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2\n\\end{aligned}$$\n\nThis is cool, but it\'s still a bit tricky to think about. Can we come up with another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned}\n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned}\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... could each pile of cards correspond with a cycle? Quick recap on cycles: a cycle of set $A$ is a bijection on $A$ such that the orbit each point is $A$. For instance if $A = \\set{a,\\,b,\\,c}$ then the function $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. A cycle is exactly a connected directed graph such that every vertex has one incoming and one outgoing arrow. Using this fact, we can visualise our cycle as follows.'),
+				$author$project$Article$md('\n# Nice Bijection\n\nSuppose $n$ is a natural number and $x$ is a free variable. Consider the following product.\n\n$$P(n) \\; \\defeq \\prod_{0 \\, \\leq \\, i \\, < \\, n} (x + i) \\; = \\; x(x+1)(x+2)\\cdots(x+n-1)$$\n\nCan we say anything about how, in general, $P(n)$ expands? I think this is a fairly interesting question; $P(n)$ feels very structured, but it isn\'t obvious whether that structure will hand us any nice formulas. Let\'s try expanding a few examples.\n\n$$ \\begin{aligned}\n    P(1) \\; &= \\; x \\\\\\\\\n    P(2) \\; &= \\; x^2 + x \\\\\\\\\n    P(3) \\; &= \\; x^3 + 3x^2 + 2x \\\\\\\\\n    P(4) \\; &= \\; x^4 + 6x^3 + 11x^2 + 6x  \\\\\\\\\n    P(5) \\; &= \\; x^5 + 10x^4 + 35x^3 + 50x^2 + 24x \\\\\\\\\n    P(6) \\; &= \\; x^6 + 15 x^5 + 85 x^4 + 225 x^3 + 274 x^2 + 120 x\\\\\\\\\n    P(7) \\; &= \\; x^7 + 21x^6 + 175x^5 + 735x^4 + 1624x^3 + 1764x^2 + 720x\\\\\\\\\n    P(8) \\; &= \\; x^8 + 28 x^7 + 322 x^6 + 1960 x^5 + 6769 x^4 + 13132 x^3 + 13068 x^2 + 5040 x\n\\end{aligned} $$\n\nThat\'s a lot of numbers, and they all look pretty random. The $P(5)$ case does stick out to me though. $10,\\, 35,$ and $50$ are multiples of $5$, and $24$ is almost a multiple of $5$. The $P(7)$ case is similar — $21,\\, 175,\\, 735,\\, 1624,\\,$ and $1764$ are multiples of $7$, and $720$ is almost $721$. $721$ is a multiple of $7$. And I suppose the same pattern holds for $P(2)$ and $P(3)$. Perhaps this pattern is worthy of investigation. Let\'s take a look at $P(n)$ with coefficients modulo $n$\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(4) \\; &\\equiv \\; x^4 + 2x^3 - x^2 + 2x \\mod 4 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(6) \\; &\\equiv \\; x^6 + 3 x^5 + x^4 + 3 x^3 - 2 x^2 \\mod 6 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(8) \\; &\\equiv \\; x^8 + 4 x^7 + 2 x^6 + x^4 + 4 x^3 + 4 x^2 \\mod 8\n\\end{aligned} $$\n\nThe cases in which $n$ is prime are all looking suspicious, so let\'s investigate further.\n\n$$ \\begin{aligned}\n    P(2) \\; &\\equiv \\; x^2 - x \\mod 2 \\\\\\\\\n    P(3) \\; &\\equiv \\; x^3 - x \\mod 3 \\\\\\\\\n    P(5) \\; &\\equiv \\; x^5 - x \\mod 5 \\\\\\\\\n    P(7) \\; &\\equiv \\; x^7 - x \\mod 7 \\\\\\\\\n    P(11) \\; &\\equiv \\; x^{11} - x \\mod 11 \\\\\\\\\n    P(13) \\; &\\equiv \\; x^{13} - x \\mod 13 \\\\\\\\\n    P(17) \\; &\\equiv \\; x^{17} - x \\mod 17 \\\\\\\\\n\\end{aligned} $$\n\nSurely that\'s a pattern; these examples beg a question. Is it true that the following statment holds for every prime $p$?\n\n$$ \\prod_{0 \\, \\leq \\, i \\, < \\, p} (x+i) \\;\\; {\\overset{\\scriptsize\\textnormal{?}}{=}} \\;\\; x^p - x \\mod p $$\n\nIn order to answer this question we\'ll have to figure out what\'s going on here. Where do the coefficents in the expansion of $P(p)$ actually come from? We can start by giving them labels. Write\n\n$$P(p) = a\\_1x + a\\_2x^2 + \\cdots + a\\_{p-1}x^{p-1} + x^p$$\n\nWe\'re trying to figure out if it\'s always the case that $a\\_1 \\equiv -1$ and $a\\_2 \\equiv a\\_3 \\equiv \\cdots \\equiv a\\_{p - 1} \\equiv 0$ modulo $p$. Let\'s get $a_1 \\equiv -1$ out of the way. Notice that\n\n$$a_1 = 1\\cdot 2\\cdot 3 \\cdot \\ldots \\cdot (p-1)$$\n\nThe terms of this product are exactly the non-zero elements of the field of integers modulo $p$. It turns out that every term but $1$ and $p-1$ is cancelled by its inverse (though I\'ll not prove it here). This yields $$a_1 = 1\\cdot (p-1) \\equiv -1 \\mod p$$\n\nHow about every other $a_i$? It seems almost magical that they might all conspire to equal zero modulo $p$; this problem seems impenetrable. However we have one foothold — it really seems like some kind of inclusion/exclusion business going on. Let me explain what I mean. A common algorithm for expanding brackets involves taking every possible choice of one term from each brackets, then summing the products of each choice. In the case of $P(3)$ this is as follows.\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1\\,)(\\hl{x}+2\\,) &\\quad \\rightsquigarrow \\quad x\\cdot x\\cdot x = x^3 \\\\\\\\\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot x \\cdot 2 = 2x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot x = x^2 \\\\\\\\\n    \\hl{x}(x+\\hl{1})(x+\\hl{2}) &\\quad\\rightsquigarrow\\quad x \\cdot 1 \\cdot 2 = 2x\n\\end{aligned} $$\n\n$$ \\implies \\; P(3) \\, = \\, x^3 + 2x^2 + x^2 + 2x $$\n\nDespite the clunkiness of my explanation, I do think this is a very natural idea. Indeed, I\'d bet that you already use this algorithm, perhaps even without realizing it; the *FOIL* method is exactly this algorithm applied to a pair of brackets. Sure, you might say, but does this algorithm actually take us anywhere? To me this idea takes us into combinatorics territory. Instead of thinking about expanding $p$ pairs of brackets we can think about making $p$ choices. The value of each $a_ix^i$ is then the sum of the choices in which we picked $x$, $i$ times. Consider the products from the choices above in which we picked $x$ twice.\n\n$$a\\_2x^2 = \\sum \\; \\text{results of choices with $x$ picked twice } = x^2 + 2x^2 = 3x^2$$\n\nThis is all a bit vague. We need to formalize. Let\'s start by turning our product into a set of sets.\n\n$$ P_p \\; = \\; \\set{\\set{x},\\, \\set{x,\\,1},\\, \\set{x,\\,2},\\, \\ldots \\, ,\\, \\set{x,\\,p-1}} $$\n\nNow we can restate $P(p)$ in terms of $P_p$\n\n$$ P(p) \\; = \\; \\prod\\_{A \\,\\in\\, P\\_p} \\sum\\_{a \\,\\in\\, A} a $$\n\nNext, we\'ll use the cartesian product. Let $A$ be a set of sets (as above).\n\n$$ C(A) \\; \\defeq \\; \\prod\\_{B \\,\\in\\, A} B$$\n\nNow, each element of $C(P_p)$ corresponds to exactly one choice of terms in $P(p)$. We can use $\\hl{\\text{highlight}}$ notation as shorthand (really longhand) for the elements of $C(P_p)$. For example, in the case of $C(P_3)$\n\n$$ \\begin{aligned}\n    \\hl{x}(\\hl{x}+1)(x+\\hl{2}) &\\quad\\defeq\\quad (x,\\,x,\\,2) \\\\\\\\\n    \\hl{x}(x+\\hl{1})(\\hl{x}+2) &\\quad\\defeq\\quad (x,\\,1,\\,x)\n\\end{aligned} $$\n\nWe can now state our algorithm for expanding brackets. Denote the $i^{\\text{th}}$ component of $c \\in C(A)$ with $c_i$. Our algorithm is as follows.\n\n$$ \\prod\\_{B \\,\\in\\, A} \\sum\\_{b \\,\\in\\, B} b \\; = \\; \\sum\\_{c \\,\\in\\, C(A)} \\; \\prod\\_{1 \\, \\leq \\, i \\, \\leq \\, |A|} \\; c_i $$\n\nUsing $\\prod c$ to denote the product of the components of $c$, we can write\n\n$$ P(p) \\; = \\; \\sum\\_{c \\,\\in\\, C(P_p)} \\; \\prod c$$\n\nLet\'s recap. We have these choices $c \\in C(P_p)$, we know the coefficient $a_i$ has something to do with (is a weighted count of?) the choices $c$ in which $x$ appears $i$, and we\'d like to move further into combinatorics territory.\n\nNow, it\'d be great if we found some way to move into a counting problem. But, rather annoyingly, we have this "weighted count" business going on — $(x,\\,x,\\,2)$ and $(x,\\,1,\\,x)$ contribute to $a_2$ differently, despite both containing $x$ twice. It would be nice if our choices had a bit more symmetry to them, if each component of our choices were either $x$ or not $x$; either $x$ or $1$. What if we unfold each $(x+i)$ into a $(x+1+1+\\cdots+1)$?\n\n$$ \\begin{aligned}\n    P(3) \\; &= \\; x(x+1)(x+1+1) \\\\\\\\\n    &= \\; (x^2+x)(x+1+1) \\\\\\\\\n    &= \\; x^2(x+1+1) + x(x+1+1) \\\\\\\\\n    &= \\; x^3+x^2+x^2 + x^2+x+x \\\\\\\\\n\\end{aligned} $$\n\nWe can still apply our algorithm, though we do need to differentiate between the many ones in each set of $P_p$.\n\n$$P\\_p \\;\\defeq\\; \\Big\\\\{\\set{x},\\, \\set{x,\\,1\\_1},\\, \\set{x,\\,1\\_1,\\,1\\_2},\\, \\ldots ,\\, \\\\{\\, x,\\, 1\\_1,\\, 1\\_2,\\, \\ldots,\\, 1\\_{p - 1} \\, \\\\} \\Big\\\\} $$\n\nNow suppose $c \\in C(P_p)$. If $i$ components of $c$ are $x$, we have that $\\prod c = x^i$. It follows that the $a_i$ is equal to the number of distinct choices with $x$ picked $i$ times.\n\n$$a_i = \\Big|\\,\\set{c \\in C(P_p) \\;:\\; x \\text{ appears in } i \\text{ components of } c}\\,\\Big|$$\n\nIn our example, $P(3)$, there are $3$ choices with $x$ picked twice, so $a_2 = 3$.\n\n$$\\begin{aligned}\n    \\hl{x}(x+\\hl{1})(\\hl{x}+1+1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+\\hl{1} + 1) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2 \\\\\\\\\n    \\hl{x}(\\hl{x} + 1)(x+1+\\hl{1}) \\; &\\quad \\overset{\\scriptsize\\Pi\\,}{\\longmapsto} \\quad \\; x^2\n\\end{aligned}$$\n\nThis is cool, but it\'s still a bit tricky to think about. Can we come up with another perspective on these choices? Let\'s say we generate a choice, starting from the set containing the most terms, then the second most, down to the set containing $x$. Then at the $i^{\\text{th}}$ step in our sequence we have possible choices of $x$ and $p-i$ ones. Let\'s give ourselves some mental breathing room by supposing we never choose $x$, so at the $i^{\\text{th}}$ step we can choose between $p-i$ ones. This is exactly like ordering cards from a deck of $p-1$ cards! Picking the $k^{\\text{th}}$ one corresponds to picking the $k^{\\text{th}}$ remaining card from the deck. We can visualize this in the case of $P(3)$. Denote the king and queen cards with $\\textbf{K}$ and $\\textbf{Q}$.\n\n$$ \\begin{aligned}\n    x\\big(x +\\hl{1} + 1 \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + \\hl{\\textbf K} + {\\textbf Q} \\big)\\big(x + \\hl{\\textbf Q\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n    x\\big(x + 1 + \\hl{1} \\big)\\big(x + \\hl{1} \\big) & \\quad\\, \\rightsquigarrow \\quad x\\big(x + {\\textbf K} + \\hl{\\textbf Q} \\big)\\big(x + \\hl{\\textbf K\\,}\\big) \\quad \\rightsquigarrow \\quad \\big(\\, {\\textbf Q},\\, {\\textbf K} \\, \\big)\n\\end{aligned} $$\n\nSo the fact that $a_1 = 2$ corresponds to the fact that there are $2$ ways to order $2$ cards. Now we\'re pretty close to understanding our whole problem through a nice counting lense — we just need to find a way to understand a choice containing an $x$. Each $1$ represents picking some distinct object. An $x$ ought to represent something meaningfully different. In my imagination I order a scrambled mess of cards by placing them, one at a time, onto a deck. What an $x$ represents starting a new deck? Then $a_i$ is equal to the the number of ways to arrange $p$ cards into $i$ decks. Our only trouble is that the number of remaining cards should decrease after we choose $x$. Let\'s just say the highest available card is always used to start a new pile. This will also make sense of the $(x)$ term of $P(p)$; before you can start ordering cards into decks, you have to start a deck. Again, we can visualize this in the case of $P(3)$.\n\n$$ \\begin{aligned}\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\hl{\\text{new pile with \\textbf{Q}}} + {\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K}\\, \\big) \\;\\; \\big(\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + \\hl{\\textbf Q} + {\\textbf J} \\big)\\big(\\text{new pile with \\textbf J} + \\hl{\\textbf J\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf Q},\\, {\\textbf J} \\, \\big) \\\\\\\\\n    \\hl{\\text{new pile with \\textbf{K}}}\\big(\\text{new pile with \\textbf{Q}} + {\\textbf Q} + \\hl{\\textbf J} \\big)\\big(\\text{new pile with \\textbf Q} + \\hl{\\textbf Q\\,}\\big) \\quad &\\rightsquigarrow \\quad \\big(\\, {\\textbf K},\\, {\\textbf J},\\, {\\textbf Q} \\, \\big) \\\\\\\\\n\\end{aligned} $$\n\nTo recap, for $i>1$, the coefficient $a_i$ in the expansion of $P(p)$ is equal to the number of ways to arrange $p$ cards (remember we\'re inlcuding the $x$ term) into $i$ piles, modulo the choice of the first card of each pile. Woah, let\'s simplify this a bit. "An ordered list modulo choice of first element"... could each pile of cards correspond with a cycle? Quick recap on cycles: a cycle of set $A$ is a bijection on $A$ such that the orbit each point is $A$. For instance if $A = \\set{a,\\,b,\\,c}$ then the function $\\set{(a,c),\\,(c,b),\\,(b,a)}$ is a cycle of $A$. A cycle is exactly a connected directed graph such that every vertex has one incoming and one outgoing arrow. Using this fact, we can visualise our cycle as follows.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7906,9 +7841,9 @@ var $author$project$Main$nice = function (m) {
 				_List_fromArray(
 					[
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						200,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -7916,7 +7851,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$core$Maybe$Just(0)
 							]))
 					])),
-				$author$project$Main$md('\nMore generally, every permutation of $A$ can be uniquely decomposed into cycles of partitions of $A$. Maybe, then, $a_i$ is the number permutations in $S_p$ that decompose into $i$ cycles. To verify this, one must show that this correspondence we\'ve established, call it $f$, is indeed a bijection from choices in $C(P_p)$ to permuations in $S_p$. It\'s not hard to construct $f^{-1}$, one can simply follow the algorithm that defines $f$, but in reverse. That in mind, let\'s look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ maps to the permuation that decomposes into the set of three $3$ one-cycles, each of which contain one element of $\\set{a,\\,b,\\,c}$\n'),
+				$author$project$Article$md('\nMore generally, every permutation of $A$ can be uniquely decomposed into cycles of partitions of $A$. Maybe, then, $a_i$ is the number permutations in $S_p$ that decompose into $i$ cycles. To verify this, one must show that this correspondence we\'ve established, call it $f$, is indeed a bijection from choices in $C(P_p)$ to permuations in $S_p$. It\'s not hard to construct $f^{-1}$, one can simply follow the algorithm that defines $f$, but in reverse. That in mind, let\'s look at some examples — suppose our set of $p$ objects is $\\set{a,\\,b,\\,c,\\, \\cdots}$. In the case of $P(3)$, the choice $(x,\\,x,\\,x)$ maps to the permuation that decomposes into the set of three $3$ one-cycles, each of which contain one element of $\\set{a,\\,b,\\,c}$\n'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7925,13 +7860,13 @@ var $author$project$Main$nice = function (m) {
 					]),
 				_List_fromArray(
 					[
-						$author$project$Main$math('\\hl{x}(\\hl{x} + 1 + 1)(\\hl{x} + 1)'),
-						$author$project$Main$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
-						$author$project$Main$funnyBijection(
+						$author$project$Article$math('\\hl{x}(\\hl{x} + 1 + 1)(\\hl{x} + 1)'),
+						$author$project$Article$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
+						$author$project$Article$funnyBijection(
 						_List_fromArray(
 							[$elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing, $elm$core$Maybe$Nothing]))
 					])),
-				$author$project$Main$md('The choice $(x,\\, 1\\_1,\\, x)$ maps to the following permuation; decomposing into a two-cycle and a one-cycle.'),
+				$author$project$Article$md('The choice $(x,\\, 1\\_1,\\, x)$ maps to the following permuation; decomposing into a two-cycle and a one-cycle.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7940,9 +7875,9 @@ var $author$project$Main$nice = function (m) {
 					]),
 				_List_fromArray(
 					[
-						$author$project$Main$math('\\hl{x}(x + \\hl{1} + 1)(\\hl{x} + 1)'),
-						$author$project$Main$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
-						$author$project$Main$funnyBijection(
+						$author$project$Article$math('\\hl{x}(x + \\hl{1} + 1)(\\hl{x} + 1)'),
+						$author$project$Article$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
+						$author$project$Article$funnyBijection(
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -7950,7 +7885,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$core$Maybe$Nothing
 							]))
 					])),
-				$author$project$Main$md('The choice $(x,\\, 1\\_2,\\, x)$ maps to another permuation.'),
+				$author$project$Article$md('The choice $(x,\\, 1\\_2,\\, x)$ maps to another permuation.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7959,9 +7894,9 @@ var $author$project$Main$nice = function (m) {
 					]),
 				_List_fromArray(
 					[
-						$author$project$Main$math('\\hl{x}(x + 1 + \\hl{1})(\\hl{x} + 1)'),
-						$author$project$Main$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
-						$author$project$Main$funnyBijection(
+						$author$project$Article$math('\\hl{x}(x + 1 + \\hl{1})(\\hl{x} + 1)'),
+						$author$project$Article$math('\\quad\\quad\\overset{\\scriptsize f}{\\longmapsto}'),
+						$author$project$Article$funnyBijection(
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -7969,7 +7904,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$core$Maybe$Nothing
 							]))
 					])),
-				$author$project$Main$md('The following tool visualizes arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*'),
+				$author$project$Article$md('The following tool visualizes arbitrary choices. *Hint: trying clicking an $\\mathit{x}$ or a $\\mathit{1}$ in the tool.*'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -7984,29 +7919,29 @@ var $author$project$Main$nice = function (m) {
 							_List_fromArray(
 								[
 									$elm$html$Html$Events$onClick(
-									$author$project$Main$SetBijectionPrime(i)),
+									$author$project$Article$SetBijectionPrime(i)),
 									$elm$html$Html$Attributes$class(
 									'rounded-md py-2 px-3 cursor-pointer hover:bg-flu-200 ' + A3(
-										$author$project$Main$ifThenElse,
+										$author$project$Common$ifThenElse,
 										_Utils_eq(
-											$elm$core$List$length(m.A),
+											$elm$core$List$length(m.y),
 											i),
 										' bg-flu-200 ',
 										''))
 								]),
 							_List_fromArray(
 								[
-									$author$project$Main$math(
-									'P(' + ($author$project$Main$showInt(i) + ')'))
+									$author$project$Article$math(
+									'P(' + ($author$project$Article$showInt(i) + ')'))
 								]));
 					},
 					_List_fromArray(
 						[3, 5, 7]))),
 				A2(
 				$elm$html$Html$map,
-				$author$project$Main$SetBijection,
-				$author$project$Main$funnyBicjectionPanel(m.A)),
-				$author$project$Main$md('\nGetting back to our original point, we have that $a_i$ is equal to the number of permuations of $p$ objects that decompose into an $i$ cycles. We wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of permuations of $p$ objects that decompose into an $i$ cycles" is a multiple of $p$. For $c \\in S\\_p$ denote the set of cycles $c$ decomposes into by $d(c)$. Take\n\n$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |d(c)| = i } $$\n\nWe have\n\n$$ a\\_i \\,=\\, \\big| A_{p,\\,i} \\big| $$\n\nNow that we\'re working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don\'t actually need to divide it. Let\'s look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we\'re trying to split this into (two) disjoint subsets of size five.\n'),
+				$author$project$Article$SetBijection,
+				$author$project$Article$funnyBicjectionPanel(m.y)),
+				$author$project$Article$md('\nGetting back to our original point, we have that $a_i$ is equal to the number of permuations of $p$ objects that decompose into an $i$ cycles. We wanted to show that $a_i$ is a multiple of $p$. So now we want to show "the number of permuations of $p$ objects that decompose into an $i$ cycles" is a multiple of $p$. For $c \\in S\\_p$ denote the set of cycles $c$ decomposes into by $d(c)$. Take\n\n$$A_{p,\\,i} \\,\\defeq\\; \\set{ c \\in (f \\circ C)(P_p) \\,:\\, |d(c)| = i } $$\n\nWe have\n\n$$ a\\_i \\,=\\, \\big| A_{p,\\,i} \\big| $$\n\nNow that we\'re working with a set, we can take a more literal perspective on multiples and divisors. To say that $a\\_i$ is a multiple of $p$ is to say that $A\\_{p,\\,i}$ can be divided into disjoint subsets, each containing $p$ elements. So how might we divide the elements of $A\\_{p,\\,i}$? Perhaps we ought to look at some examples, $A\\_{3,\\,2}$ contains exactly three elements so we don\'t actually need to divide it. Let\'s look at the next smallest case, $A\\_{5,\\,4}$, which contains ten elements. Remember, we\'re trying to split this into (two) disjoint subsets of size five.\n'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -8026,9 +7961,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\Bigg\\{$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8048,9 +7983,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8070,9 +8005,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8092,9 +8027,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8114,9 +8049,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8155,9 +8090,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\;$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8177,9 +8112,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8199,9 +8134,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8221,9 +8156,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8243,9 +8178,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8265,7 +8200,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\Bigg\\}$$')
 							]))
 					])),
-				$author$project$Main$md('\nPerhaps, you have some ideas, perhaps you don\'t. I claim that, even in writing out our set, we\'ve stumbled into a hint. The trick is to think about *how many elements each arrow skips*. Look at the order we wrote the elements in. We naturally put first the sets with cycles *skipping no elements*, then those *skipping one element*, and so on. Let\'s rewrite our set in a way that these *element skips* easier to compare. The order of our labels, $a,\\, b ,\\, c ,\\, \\ldots$, is arbitrary; let\'s shift them around to place the label that\'s projecting an arrow first.'),
+				$author$project$Article$md('\nPerhaps, you have some ideas, perhaps you don\'t. I claim that, even in writing out our set, we\'ve stumbled into a hint. The trick is to think about *how many elements each arrow skips*. Look at the order we wrote the elements in. We naturally put first the sets with cycles *skipping no elements*, then those *skipping one element*, and so on. Let\'s rewrite our set in a way that these *element skips* easier to compare. The order of our labels, $a,\\, b ,\\, c ,\\, \\ldots$, is arbitrary; let\'s shift them around to place the label that\'s projecting an arrow first.'),
 				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
@@ -8285,9 +8220,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\Bigg\\{$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8307,7 +8242,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8315,7 +8250,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8335,7 +8270,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8343,7 +8278,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8363,7 +8298,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8371,7 +8306,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8391,9 +8326,9 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
-						$author$project$Main$mathchar,
+						$author$project$Article$mathchar,
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8432,7 +8367,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\;$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8440,7 +8375,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8460,7 +8395,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8468,7 +8403,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8488,7 +8423,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8496,7 +8431,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8516,7 +8451,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8524,7 +8459,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8544,7 +8479,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge ,$$')
 							])),
 						A3(
-						$author$project$Main$funnyBijection_,
+						$author$project$Article$funnyBijection_,
 						130,
 						A2(
 							$elm$core$Basics$composeR,
@@ -8552,7 +8487,7 @@ var $author$project$Main$nice = function (m) {
 							A2(
 								$elm$core$Basics$composeR,
 								$elm$core$Basics$modBy(5),
-								$author$project$Main$mathchar)),
+								$author$project$Article$mathchar)),
 						_List_fromArray(
 							[
 								$elm$core$Maybe$Nothing,
@@ -8572,7 +8507,7 @@ var $author$project$Main$nice = function (m) {
 								$elm$html$Html$text('$$\\huge \\Bigg\\}$$')
 							]))
 					])),
-				$author$project$Main$md('\nAh-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after label shifting". So let\'s formalize label shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function.\n\n$$\\texttt{shift} \\, : \\, j \\; \\longmapsto \\; j + 1 \\mod p$$\n\nThis function is defined on our label, lift it to $A\\_{p,\\,i}$ by partially applying function. Now "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\circ\\,\\texttt{shift}$. Notice that every orbit of $\\circ\\,\\texttt{shift}$ has size at most $p$ because $\\texttt{shift}^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\circ\\,\\texttt{shift}$ into at least two orbits. Now, if we can show that every orbit has exactly $p$ elements, we\'ll be done — we will have solved our whole problem. The orbit-stabilizer theorem is practically calling to us, so let\'s redefine $\\circ\\,\\texttt{shift}$ as a group action on $A\\_{p,\\,i}$. Let $\\Z\\_p$ we the group of integers under addition.\n\n$$ \\begin{aligned}\n\\varphi \\;:\\; \\Z\\_p \\times A\\_{p,\\,i} \\;&\\longrightarrow\\; A\\_{p,\\,i} \\\\\\\\\n(j,\\,c) \\;&\\longmapsto\\; c \\,\\circ\\, \\texttt{shift}^{\\,j}\n\\end{aligned} $$\n\nFirst we ought to note that $\\varphi$ is well defined, following from the commutativity of the diagram:\n'),
+				$author$project$Article$md('\nAh-ha! Now we have two, very obvious, disjoint subsets of size five. This is good; we ought to formalize our *skipping elements* business. When we say "these two memebers of $A\\_{p,\\,i}$ have the same element skips" we really mean "these two memebers of $A\\_{p,\\,i}$ look the same after label shifting". So let\'s formalize label shifting. We begin by swapping our $p$ letter labels $\\set{a,\\,b,\\, c,\\, \\cdots\\,}$ for integers $\\set{0,1,\\ldots, p - 1}$. Now a *label shift* is simply one or more applications of the following shifting function.\n\n$$\\texttt{shift} \\, : \\, j \\; \\longmapsto \\; j + 1 \\mod p$$\n\nThis function is defined on our label, lift it to $A\\_{p,\\,i}$ by partially applying function. Now "two memebers of $A\\_{p,\\,i}$ look the same modulo element shifting" if they are both members of the same orbit of $\\circ\\,\\texttt{shift}$. Notice that every orbit of $\\circ\\,\\texttt{shift}$ has size at most $p$ because $\\texttt{shift}^p = 1$; there are $10$ elements in $A\\_{5,\\,4}$ hence it was split by $\\circ\\,\\texttt{shift}$ into at least two orbits. Now, if we can show that every orbit has exactly $p$ elements, we\'ll be done — we will have solved our whole problem. The orbit-stabilizer theorem is practically calling to us, so let\'s redefine $\\circ\\,\\texttt{shift}$ as a group action on $A\\_{p,\\,i}$. Let $\\Z\\_p$ we the group of integers under addition.\n\n$$ \\begin{aligned}\n\\varphi \\;:\\; \\Z\\_p \\times A\\_{p,\\,i} \\;&\\longrightarrow\\; A\\_{p,\\,i} \\\\\\\\\n(j,\\,c) \\;&\\longmapsto\\; c \\,\\circ\\, \\texttt{shift}^{\\,j}\n\\end{aligned} $$\n\nFirst we ought to note that $\\varphi$ is well defined, following from the commutativity of the diagram:\n'),
 				A2(
 				$elm$html$Html$iframe,
 				_List_fromArray(
@@ -8581,14 +8516,72 @@ var $author$project$Main$nice = function (m) {
 						$elm$html$Html$Attributes$src('https://q.uiver.app/#q=WzAsNCxbMCwwLCJTX3AiXSxbMCwyLCJkKFNfcCkiXSxbMiwyLCJkKFNfcCkiXSxbMiwwLCJTX3AiXSxbMSwyLCJcXGNpcmNcXCxcXHRleHR0dHtzaGlmdH1cXFxcIFxcdGV4dHsoYXBwbGllZCBlbGVtZW50LXdpc2UpfSIsMl0sWzAsMSwiZCIsMl0sWzAsMywiXFxjaXJjXFwsXFx0ZXh0dHR7c2hpZnR9Il0sWzIsMywiZF57LTF9IiwyXV0=&embed')
 					]),
 				_List_Nil),
-				$author$project$Main$md('\nNow suppose $c \\in A\\_{p,\\,i}$ with $1 < i < p$. The obrit stabilizer theorem implies that the size of the $\\varphi$ orbit of $c$ divides the size of $\\Z\\_p$. Because $p$ is prime, its only divisors are $p$ and $1$ — for the sake contradiction suppose the orbit of $c$ contains only one $1$ element. Could it really be that $\\varphi\\_j(c) = c$ for every $j$? Let\'s investigate further. For every label $k \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$ it must be that\n\n$$ c(k) \\;=\\; (\\varphi\\_1(c))(k) \\; = \\; (c \\circ \\texttt{shift})(k) \\; = \\; c(k+1)$$\n\nThis implies that $c$ isn\'t injective, but $c$ is a permuation — it\'s a bijection, so we\'ve reached our contradiction. Instead, it must be that every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$.\n\n$$P(p) \\;\\equiv\\; x^p - x \\mod p$$\n        ')
+				$author$project$Article$md('\nNow suppose $c \\in A\\_{p,\\,i}$ with $1 < i < p$. The obrit stabilizer theorem implies that the size of the $\\varphi$ orbit of $c$ divides the size of $\\Z\\_p$. Because $p$ is prime, its only divisors are $p$ and $1$ — for the sake contradiction suppose the orbit of $c$ contains only one $1$ element. Could it really be that $\\varphi\\_j(c) = c$ for every $j$? Let\'s investigate further. For every label $k \\in \\set{0,\\,1,\\,2,\\,\\ldots,\\, p - 1}$ it must be that\n\n$$ c(k) \\;=\\; (\\varphi\\_1(c))(k) \\; = \\; (c \\circ \\texttt{shift})(k) \\; = \\; c(k+1)$$\n\nThis implies that $c$ isn\'t injective, but $c$ is a permuation — it\'s a bijection, so we\'ve reached our contradiction. Instead, it must be that every orbit of $\\varphi$ contains $p$ elements. It follows that $A\\_{p,\\, i}$ can be divided into disjoint subsets of size of $p$, and that $a_i$ is divisable $p$.\n\n$$P(p) \\;\\equiv\\; x^p - x \\mod p$$\n        ')
 			]));
 };
-var $author$project$Main$topBar = A2(
+var $author$project$Article$view = function (m) {
+	return A2(
+		$elm$core$List$map,
+		function (_v0) {
+			var k = _v0.a;
+			var v = _v0.b;
+			return A2(
+				$elm$html$Html$map,
+				$elm$core$Maybe$withDefault(
+					$author$project$Article$ToggleArticleOpen(k)),
+				A2(
+					$author$project$Common$article,
+					A2($elm$core$Dict$get, k, m.M),
+					v));
+		},
+		_List_fromArray(
+			[
+				_Utils_Tuple2('berlekamp', $author$project$Article$berlekamp),
+				_Utils_Tuple2(
+				'nice',
+				$author$project$Article$nice(m))
+			]));
+};
+var $author$project$Article$page = {bH: $author$project$Article$init, b7: $author$project$Article$subscriptions, cb: $author$project$Article$update, bd: $author$project$Article$view};
+var $author$project$Home$init = _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
+var $author$project$Home$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Home$update = F2(
+	function (msg, _v0) {
+		return _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
+	});
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $author$project$Common$md = function (x) {
+	return A2(
+		$elm_explorations$markdown$Markdown$toHtml,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('content')
+			]),
+		x);
+};
+var $author$project$Common$mdCodeLike = function (x) {
+	return A2(
+		$elm_explorations$markdown$Markdown$toHtml,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('content_codelike')
+			]),
+		x);
+};
+var $author$project$Home$about = A2(
 	$elm$html$Html$div,
 	_List_fromArray(
 		[
-			$elm$html$Html$Attributes$class('w-full p-6 space-x-6 flex text-lg items-center font-bold border border-flu-300 bg-flu-0')
+			$elm$html$Html$Attributes$class('space-x-6 flex')
 		]),
 	_List_fromArray(
 		[
@@ -8596,72 +8589,895 @@ var $author$project$Main$topBar = A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$class('grow')
+					$elm$html$Html$Attributes$class('flex-auto flex flex-col')
 				]),
-			_List_Nil),
-			A2(
-			$elm$html$Html$div,
-			_List_Nil,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Joel Richardson')
+					$author$project$Common$md('\n# About Me\n\n**Hi, I\'m Joel.** Here\'s a few things I\'ve been up to recently:\n'),
+					$author$project$Common$mdCodeLike('\n*2024* **Tutoring mathematics** at the University of Queensland (UQ)\n\n*2024* Completed a **B. Computer Science (honours)** at UQ\n- Received first-class honours\n- Thesis project on computer algebra\n- Supervised by Dr. Paul Vrbik\n\n*2023* **Software Engineering** at Veitch Lister Consulting\n- Built type-systems and programming languages\n\n*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ\n'),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('mt-3')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('I also like to sing, draw, and write. A copy of my full cv is available '),
+							A2(
+							$elm$html$Html$a,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$href('./Joel_Richardson_website_cv.pdf'),
+									$elm$html$Html$Attributes$class('italic underline')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('here')
+								])),
+							$elm$html$Html$text('.')
+						]))
 				])),
 			A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$class('grow')
+					$elm$html$Html$Attributes$class('flex-none w-1/3')
 				]),
-			_List_Nil)
-		]));
-var $author$project$Main$view = function (m) {
-	return A2(
-		$elm$html$Html$div,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('flex flex-col place-items-center bg-flu-50 space-y-4 min-h-screen')
-			]),
-		$elm$core$List$concat(
 			_List_fromArray(
 				[
-					_List_fromArray(
-					[$author$project$Main$topBar]),
 					A2(
-					$elm$core$List$map,
-					function (_v0) {
-						var k = _v0.a;
-						var v = _v0.b;
-						return A3(
-							$author$project$Main$article,
-							k,
-							A2($elm$core$Dict$get, k, m.N),
-							v);
-					},
+					$elm$html$Html$img,
 					_List_fromArray(
 						[
-							_Utils_Tuple2('', $author$project$Main$about),
-							_Utils_Tuple2('berlekamp', $author$project$Main$berlekamp),
-							_Utils_Tuple2(
-							'nice',
-							$author$project$Main$nice(m))
-						])),
-					_List_fromArray(
+							$elm$html$Html$Attributes$src('pfp.jpg'),
+							$elm$html$Html$Attributes$class('w-full h-full rounded-lg border border-flu-300 object-cover object-left')
+						]),
+					_List_Nil)
+				]))
+		]));
+var $author$project$Home$view = function (_v0) {
+	return _List_fromArray(
+		[
+			A2(
+			$elm$html$Html$map,
+			$elm$core$Maybe$withDefault(0),
+			A2($author$project$Common$article, $elm$core$Maybe$Nothing, $author$project$Home$about))
+		]);
+};
+var $author$project$Home$page = {bH: $author$project$Home$init, b7: $author$project$Home$subscriptions, cb: $author$project$Home$update, bd: $author$project$Home$view};
+var $author$project$Projects$init = _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
+var $author$project$Projects$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Projects$update = F2(
+	function (msg, _v0) {
+		return _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
+	});
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube = F2(
+	function (a, b) {
+		return {$: 0, a: a, b: b};
+	});
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$attributes = F2(
+	function (a, _v0) {
+		var youtubeVideoid = _v0.a;
+		var listOfAttributes = _v0.b;
+		return A2(
+			$bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube,
+			youtubeVideoid,
+			_Utils_ap(listOfAttributes, a));
+	});
+var $bellroy$elm_embed_youtube$Embed$Youtube$attributes = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$attributes;
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$YoutubeVideoId = $elm$core$Basics$identity;
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$fromString = function (stringYoutubeVideoid) {
+	return A2($bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube, stringYoutubeVideoid, _List_Nil);
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$fromString = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$fromString;
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Height = function (a) {
+	return {$: 1, a: a};
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$Attributes$height = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Height;
+var $elm$virtual_dom$VirtualDom$attribute = F2(
+	function (key, value) {
+		return A2(
+			_VirtualDom_attribute,
+			_VirtualDom_noOnOrFormAction(key),
+			_VirtualDom_noJavaScriptOrHtmlUri(value));
+	});
+var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
+var $elm$core$List$maybeCons = F3(
+	function (f, mx, xs) {
+		var _v0 = f(mx);
+		if (!_v0.$) {
+			var x = _v0.a;
+			return A2($elm$core$List$cons, x, xs);
+		} else {
+			return xs;
+		}
+	});
+var $elm$core$List$filterMap = F2(
+	function (f, xs) {
+		return A3(
+			$elm$core$List$foldr,
+			$elm$core$List$maybeCons(f),
+			_List_Nil,
+			xs);
+	});
+var $elm$html$Html$Attributes$height = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'height',
+		$elm$core$String$fromInt(n));
+};
+var $elm$html$Html$Attributes$width = function (n) {
+	return A2(
+		_VirtualDom_attribute,
+		'width',
+		$elm$core$String$fromInt(n));
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttribute = function (attribute) {
+	switch (attribute.$) {
+		case 0:
+			var a = attribute.a;
+			return $elm$core$Maybe$Just(
+				$elm$html$Html$Attributes$width(a));
+		case 1:
+			var a = attribute.a;
+			return $elm$core$Maybe$Just(
+				$elm$html$Html$Attributes$height(a));
+		case 2:
+			return $elm$core$Maybe$Just(
+				A2($elm$html$Html$Attributes$attribute, 'loading', 'lazy'));
+		default:
+			return $elm$core$Maybe$Nothing;
+	}
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttributes = function (_v0) {
+	var attributes = _v0.b;
+	return A2($elm$core$List$filterMap, $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttribute, attributes);
+};
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 1) {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 1) {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.b0;
+		if (!_v0) {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.av,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.b1,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.b$,
+					_Utils_ap(http, url.bE)),
+				url.b_)));
+};
+var $elm$url$Url$Builder$toQueryPair = function (_v0) {
+	var key = _v0.a;
+	var value = _v0.b;
+	return key + ('=' + value);
+};
+var $elm$url$Url$Builder$toQuery = function (parameters) {
+	if (!parameters.b) {
+		return '';
+	} else {
+		return '?' + A2(
+			$elm$core$String$join,
+			'&',
+			A2($elm$core$List$map, $elm$url$Url$Builder$toQueryPair, parameters));
+	}
+};
+var $elm$url$Url$Builder$QueryParameter = F2(
+	function (a, b) {
+		return {$: 0, a: a, b: b};
+	});
+var $elm$url$Url$percentEncode = _Url_percentEncode;
+var $elm$url$Url$Builder$string = F2(
+	function (key, value) {
+		return A2(
+			$elm$url$Url$Builder$QueryParameter,
+			$elm$url$Url$percentEncode(key),
+			$elm$url$Url$percentEncode(value));
+	});
+var $elm$url$Url$Builder$int = F2(
+	function (key, value) {
+		return A2(
+			$elm$url$Url$Builder$QueryParameter,
+			$elm$url$Url$percentEncode(key),
+			$elm$core$String$fromInt(value));
+	});
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters_ = F2(
+	function (_v0, attribute) {
+		var stringYoutubeVideoId = _v0;
+		switch (attribute.$) {
+			case 0:
+				return _List_Nil;
+			case 1:
+				return _List_Nil;
+			case 2:
+				return _List_Nil;
+			case 3:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'autoplay', '1'),
+						A2($elm$url$Url$Builder$string, 'mute', '1')
+					]);
+			case 4:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'loop', '1'),
+						A2($elm$url$Url$Builder$string, 'playlist', stringYoutubeVideoId)
+					]);
+			case 5:
+				var a = attribute.a;
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$int, 'start', a)
+					]);
+			case 6:
+				var a = attribute.a;
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$int, 'end', a)
+					]);
+			case 7:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'mute', '1')
+					]);
+			case 8:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'color', 'red')
+					]);
+			case 9:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'color', 'white')
+					]);
+			case 10:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'modestbranding', '1'),
+						A2($elm$url$Url$Builder$string, 'showinfo', '1')
+					]);
+			case 11:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'playsinline', '1'),
+						A2($elm$url$Url$Builder$string, 'webkit-playsinline', '1')
+					]);
+			case 12:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'controls', '0')
+					]);
+			case 13:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'disablekb', '1')
+					]);
+			case 14:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'fs', '0')
+					]);
+			case 15:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'iv_load_policy', '3')
+					]);
+			case 16:
+				var a = attribute.a;
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'hl', a)
+					]);
+			case 17:
+				var a = attribute.a;
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'cc_lang_pref', a)
+					]);
+			default:
+				return _List_fromArray(
+					[
+						A2($elm$url$Url$Builder$string, 'cc_load_policy', '1')
+					]);
+		}
+	});
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters = function (_v0) {
+	var youtubeVideoId = _v0.a;
+	var attributes = _v0.b;
+	return _Utils_ap(
+		A3(
+			$elm$core$List$foldl,
+			function (a) {
+				return $elm$core$Basics$append(
+					A2($bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters_, youtubeVideoId, a));
+			},
+			_List_Nil,
+			attributes),
+		_List_fromArray(
+			[
+				A2($elm$url$Url$Builder$string, 'version', '3'),
+				A2($elm$url$Url$Builder$string, 'rel', '0'),
+				A2($elm$url$Url$Builder$string, 'enablejsapi', '1')
+			]));
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toYoutubeUrl = function (yt) {
+	var stringYoutubeVideoid = yt.a;
+	return {
+		av: $elm$core$Maybe$Nothing,
+		bE: 'www.youtube-nocookie.com',
+		b_: '/embed/' + stringYoutubeVideoid,
+		b$: $elm$core$Maybe$Nothing,
+		b0: 1,
+		b1: $elm$core$Maybe$Just(
+			A2(
+				$elm$core$String$dropLeft,
+				1,
+				$elm$url$Url$Builder$toQuery(
+					$bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters(yt))))
+	};
+};
+var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toIframe = function (yt) {
+	return A2(
+		$elm$html$Html$iframe,
+		_Utils_ap(
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$src(
+					$elm$url$Url$toString(
+						$bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toYoutubeUrl(yt))),
+					$elm$html$Html$Attributes$type_('text/html'),
+					A2($elm$html$Html$Attributes$attribute, 'allowfullscreen', 'true'),
+					A2($elm$html$Html$Attributes$attribute, 'allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen'),
+					A2($elm$html$Html$Attributes$attribute, 'frameborder', '0')
+				]),
+			$bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttributes(yt)),
+		_List_Nil);
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$toHtml = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toIframe;
+var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Width = function (a) {
+	return {$: 0, a: a};
+};
+var $bellroy$elm_embed_youtube$Embed$Youtube$Attributes$width = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Width;
+var $author$project$Projects$fluid = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## 2D Fluid Simultion [[GitHub](https://github.com/JoelWantsCoffee/fluid-sim)]\nA fluid sim written in C, with `CUDA` and `AVX` implementations. I built this a for the (excellent) course *High-Performance Computing (COSC3500)* at the University of Queensland. Here\'s a project reflection video I submitted for the course - can you tell it was recorded in the throws of covid? \n'),
+			function (x) {
+			return A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-full flex')
+					]),
+				_List_fromArray(
 					[
 						A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('w-full p-4 pb-8 text-flu-300 text-center')
+								$elm$html$Html$Attributes$class('grow')
+							]),
+						_List_Nil),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('rounded-md border border-flu-300 overflow-clip')
+							]),
+						_List_fromArray(
+							[x])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('grow')
+							]),
+						_List_Nil)
+					]));
+		}(
+			$bellroy$elm_embed_youtube$Embed$Youtube$toHtml(
+				A2(
+					$bellroy$elm_embed_youtube$Embed$Youtube$attributes,
+					_List_fromArray(
+						[
+							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$width(640),
+							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$height(360)
+						]),
+					$bellroy$elm_embed_youtube$Embed$Youtube$fromString('-RVnkuJ1Oao'))))
+		]));
+var $author$project$Projects$hpolys = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## Haskell Polynomial Factoring [[GitHub](https://github.com/JoelWantsCoffee/Haskell-Polynomials)]\nMy honours thesis project - polynomial factoring in Haskell. The project includes all of the computer-algebra pieces needed to factor polynomials over the integers and finite fields, all built from the ground up.\n')
+		]));
+var $author$project$Projects$timer = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## Distressed Study Timer [[GitHub](https://github.com/JoelWantsCoffee/uni-timer)] [[Website](/uni-timer)]\nThis is a pomodoro study timer that I coded up during the first year of my undergrad. Somehow, it\'s continued to find use ever after my graduation in 2022. The background (drawn in microsoft paint) attempts to capture the atmosphere present in Room 102 of the UQ Social Sciences Annexe (Building 31A) during the SWOTVAC of Semester 2, 2019. \n')
+		]));
+var $author$project$Projects$view = function (_v0) {
+	return A2(
+		$elm$core$List$map,
+		A2(
+			$elm$core$Basics$composeL,
+			$elm$html$Html$map(
+				$elm$core$Maybe$withDefault(0)),
+			$author$project$Common$article($elm$core$Maybe$Nothing)),
+		_List_fromArray(
+			[$author$project$Projects$hpolys, $author$project$Projects$timer, $author$project$Projects$fluid]));
+};
+var $author$project$Projects$page = {bH: $author$project$Projects$init, b7: $author$project$Projects$subscriptions, cb: $author$project$Projects$update, bd: $author$project$Projects$view};
+var $author$project$Talk$init = _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
+var $author$project$Talk$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Talk$update = F2(
+	function (msg, _v0) {
+		return _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
+	});
+var $author$project$Talk$berlekamp = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## Finding factors in Berlekamp\'s Algebra (April 2024)\nI gave this talk at the UQ Mathematics Student Society - it\'s about Berlekamp\'s factoring algorithm. I\'m pretty happy with how it turned out. The slides are available [here](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf).\n')
+		]));
+var $author$project$Talk$ssets = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## Simplicial Sets, Simply (August 2024)\nI gave this talk at the UQ Mathematics Student Society too - it\'s about delta sets. In retrospect, I should have refrained from using any category theory words - they were confusing to many and useful to no one. I\'m quite happy with the pictures though. [These](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf) are the slides.\n')
+		]));
+var $author$project$Talk$view = function (_v0) {
+	return A2(
+		$elm$core$List$map,
+		A2(
+			$elm$core$Basics$composeL,
+			$elm$html$Html$map(
+				$elm$core$Maybe$withDefault(0)),
+			$author$project$Common$article($elm$core$Maybe$Nothing)),
+		_List_fromArray(
+			[$author$project$Talk$berlekamp, $author$project$Talk$ssets]));
+};
+var $author$project$Talk$page = {bH: $author$project$Talk$init, b7: $author$project$Talk$subscriptions, cb: $author$project$Talk$update, bd: $author$project$Talk$view};
+var $author$project$Main$init = F2(
+	function (url, key) {
+		return A2(
+			$elm$core$Tuple$mapFirst,
+			A2($author$project$Main$Model, key, url),
+			function () {
+				var _v0 = url.av;
+				if (!_v0.$) {
+					switch (_v0.a) {
+						case 'articles':
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								$author$project$Main$Article,
+								$elm$core$Platform$Cmd$map($author$project$Main$ArticleMsg),
+								$author$project$Article$page.bH);
+						case 'talks':
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								$author$project$Main$Talk,
+								$elm$core$Platform$Cmd$map($author$project$Main$TalkMsg),
+								$author$project$Talk$page.bH);
+						case 'projects':
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								$author$project$Main$Projects,
+								$elm$core$Platform$Cmd$map($author$project$Main$ProjectsMsg),
+								$author$project$Projects$page.bH);
+						default:
+							return _Utils_Tuple2($author$project$Main$Empty, $elm$core$Platform$Cmd$none);
+					}
+				} else {
+					return A3(
+						$elm$core$Tuple$mapBoth,
+						$author$project$Main$Home,
+						$elm$core$Platform$Cmd$map($author$project$Main$HomeMsg),
+						$author$project$Home$page.bH);
+				}
+			}());
+	});
+var $elm$core$Platform$Sub$map = _Platform_map;
+var $author$project$Main$subscriptions = function (model) {
+	var _v0 = model.L;
+	switch (_v0.$) {
+		case 4:
+			return $elm$core$Platform$Sub$none;
+		case 0:
+			var m = _v0.a;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$HomeMsg,
+				$author$project$Home$page.b7(m));
+		case 1:
+			var m = _v0.a;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$ArticleMsg,
+				$author$project$Article$page.b7(m));
+		case 2:
+			var m = _v0.a;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$TalkMsg,
+				$author$project$Talk$page.b7(m));
+		default:
+			var m = _v0.a;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$ProjectsMsg,
+				$author$project$Projects$page.b7(m));
+	}
+};
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $author$project$Main$setSubModel = F3(
+	function (m, f, s) {
+		return _Utils_update(
+			m,
+			{
+				L: f(s)
+			});
+	});
+var $author$project$Main$update = F2(
+	function (message, model) {
+		update:
+		while (true) {
+			var _v0 = _Utils_Tuple2(message, model.L);
+			_v0$7:
+			while (true) {
+				switch (_v0.a.$) {
+					case 0:
+						if (!_v0.b.$) {
+							var msg = _v0.a.a;
+							var m = _v0.b.a;
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								A2($author$project$Main$setSubModel, model, $author$project$Main$Home),
+								$elm$core$Platform$Cmd$map($author$project$Main$HomeMsg),
+								A2($author$project$Home$page.cb, msg, m));
+						} else {
+							break _v0$7;
+						}
+					case 2:
+						if (_v0.b.$ === 2) {
+							var msg = _v0.a.a;
+							var m = _v0.b.a;
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								A2($author$project$Main$setSubModel, model, $author$project$Main$Talk),
+								$elm$core$Platform$Cmd$map($author$project$Main$TalkMsg),
+								A2($author$project$Talk$page.cb, msg, m));
+						} else {
+							break _v0$7;
+						}
+					case 3:
+						if (_v0.b.$ === 3) {
+							var msg = _v0.a.a;
+							var m = _v0.b.a;
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								A2($author$project$Main$setSubModel, model, $author$project$Main$Projects),
+								$elm$core$Platform$Cmd$map($author$project$Main$ProjectsMsg),
+								A2($author$project$Projects$page.cb, msg, m));
+						} else {
+							break _v0$7;
+						}
+					case 1:
+						if (_v0.b.$ === 1) {
+							var msg = _v0.a.a;
+							var m = _v0.b.a;
+							return A3(
+								$elm$core$Tuple$mapBoth,
+								A2($author$project$Main$setSubModel, model, $author$project$Main$Article),
+								$elm$core$Platform$Cmd$map($author$project$Main$ArticleMsg),
+								A2($author$project$Article$page.cb, msg, m));
+						} else {
+							break _v0$7;
+						}
+					case 4:
+						if (_v0.a.a.$ === 1) {
+							var s = _v0.a.a.a;
+							return _Utils_Tuple2(
+								model,
+								$elm$browser$Browser$Navigation$load(s));
+						} else {
+							var u = _v0.a.a.a;
+							return _Utils_Tuple2(
+								model,
+								$elm$browser$Browser$Navigation$load(
+									$elm$url$Url$toString(u)));
+						}
+					default:
+						var u = _v0.a.a;
+						return A2($author$project$Main$init, u, model.aC);
+				}
+			}
+			var $temp$message = $author$project$Main$Reset(model.ah),
+				$temp$model = model;
+			message = $temp$message;
+			model = $temp$model;
+			continue update;
+		}
+	});
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
+};
+var $author$project$Main$topBar = function (s) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('transition-fast w-full p-6 space-x-6 flex text-lg items-center border border-flu-300 bg-flu-0')
+			]),
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href(''),
+						$elm$html$Html$Attributes$class(
+						A3(
+							$author$project$Common$ifThenElse,
+							_Utils_eq($elm$core$Maybe$Nothing, s),
+							'',
+							'')),
+						$elm$html$Html$Attributes$class('cursor-pointer hover:underline font-bold')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Joel Richardson')
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('grow')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('w-1/3 flex space-x-6 items-center')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href('#projects'),
+								$elm$html$Html$Attributes$class(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq(
+										$elm$core$Maybe$Just('projects'),
+										s),
+									'font-bold',
+									'')),
+								$elm$html$Html$Attributes$class('flex-1 grow text-right cursor-pointer hover:underline')
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('that\'s it - the end.')
+								$elm$html$Html$text('Projects')
+							])),
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href('#articles'),
+								$elm$html$Html$Attributes$class(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq(
+										$elm$core$Maybe$Just('articles'),
+										s),
+									'font-bold',
+									'')),
+								$elm$html$Html$Attributes$class('flex-1 grow text-center cursor-pointer hover:underline')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Articles ')
+							])),
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href('#talks'),
+								$elm$html$Html$Attributes$class(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq(
+										$elm$core$Maybe$Just('talks'),
+										s),
+									'font-bold',
+									'')),
+								$elm$html$Html$Attributes$class('flex-1 grow text-left cursor-pointer hover:underline')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Talks')
 							]))
-					])
-				])));
+					])),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('grow')
+					]),
+				_List_Nil),
+				A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('pointer-events-none opacity-0')
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Joel Richardson____')
+					]))
+			]));
 };
-var $author$project$Main$main = $elm$browser$Browser$element(
-	{bM: $author$project$Main$init, b7: $author$project$Main$subscriptions, cb: $author$project$Main$update, bm: $author$project$Main$view});
+var $author$project$Main$view = function (model) {
+	return {
+		bm: $elm$core$List$singleton(
+			A2(
+				$elm$html$Html$div,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$class('h-screen w-screen bg-flu-50')
+					]),
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('h-[10%]')
+							]),
+						_List_fromArray(
+							[
+								$author$project$Main$topBar(model.ah.av)
+							])),
+						A2(
+						$elm$html$Html$div,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('h-[90%] overflow-scroll')
+							]),
+						A3(
+							$elm$core$Basics$composeR,
+							$elm$html$Html$div(
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('flex flex-col place-items-center space-y-6')
+									])),
+							$elm$core$List$singleton,
+							$elm$core$List$concat(
+								_List_fromArray(
+									[
+										_List_fromArray(
+										[
+											A2($elm$html$Html$div, _List_Nil, _List_Nil)
+										]),
+										function () {
+										var _v0 = model.L;
+										switch (_v0.$) {
+											case 4:
+												return _List_fromArray(
+													[
+														A2(
+														$elm$html$Html$div,
+														_List_fromArray(
+															[
+																$elm$html$Html$Attributes$class('text-flu-600 font-bold text-2xl pt-8')
+															]),
+														_List_fromArray(
+															[
+																$elm$html$Html$text('Whoops! There\'s nothing here.')
+															]))
+													]);
+											case 0:
+												var m = _v0.a;
+												return A2(
+													$elm$core$List$map,
+													$elm$html$Html$map($author$project$Main$HomeMsg),
+													$author$project$Home$page.bd(m));
+											case 2:
+												var m = _v0.a;
+												return A2(
+													$elm$core$List$map,
+													$elm$html$Html$map($author$project$Main$TalkMsg),
+													$author$project$Talk$page.bd(m));
+											case 3:
+												var m = _v0.a;
+												return A2(
+													$elm$core$List$map,
+													$elm$html$Html$map($author$project$Main$ProjectsMsg),
+													$author$project$Projects$page.bd(m));
+											default:
+												var m = _v0.a;
+												return A2(
+													$elm$core$List$map,
+													$elm$html$Html$map($author$project$Main$ArticleMsg),
+													$author$project$Article$page.bd(m));
+										}
+									}(),
+										_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$div,
+											_List_fromArray(
+												[
+													$elm$html$Html$Attributes$class('w-full p-4 pb-8 text-flu-300 text-center')
+												]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('that\'s it - the end.')
+												]))
+										])
+									]))))
+					]))),
+		ca: 'Joel Richardson'
+	};
+};
+var $author$project$Main$main = $elm$browser$Browser$application(
+	{
+		bH: function (_v0) {
+			return $author$project$Main$init;
+		},
+		bX: $author$project$Main$Reset,
+		bY: $author$project$Main$LinkClicked,
+		b7: $author$project$Main$subscriptions,
+		cb: $author$project$Main$update,
+		bd: $author$project$Main$view
+	});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(
 		{}))(0)}});}(this));

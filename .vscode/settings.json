@@ -1,5 +1,6 @@
 {
     "emeraldwalk.runonsave": {
+        "showElapsed": true,
         "commands": [
             {
                 "match": ".*",

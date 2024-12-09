@@ -17,13 +17,48 @@ $font-mono: 'JetBrains Mono'
         @apply text-2xl font-bold mb-4
     
     h2
-        @apply text-lg font-bold mt-6 mb-4
+        @apply text-lg font-bold
     
     li
         @apply list-decimal ml-5
 
     code
-        @apply rounded-md border border-flu-200 my-4
+        @apply tracking-wide font-semibold rounded-md
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+    
+    .katex-display
+        @apply my-6
+
+
+.content_codelike
+    background: #272822
+    color: #ddd
+    @apply rounded-md border border-flu-200 p-4 pt-2
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+
+    strong
+        color: #f92672
+
+    em
+        color: #a6e22e
+    
+    p
+        @apply mt-2
+
+    a
+        @apply underline
+
+    h1
+        @apply text-2xl font-bold mb-4
+    
+    h2
+        @apply text-lg font-bold mt-6 mb-4
+    
+    ul
+        @apply ml-8
+
+    li
+        @apply list-disc
     
     .katex-display
         @apply my-6
