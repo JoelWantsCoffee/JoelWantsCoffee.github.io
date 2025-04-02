@@ -39,8 +39,8 @@ A fluid sim written in C, with `CUDA` and `AVX` implementations. I built this a 
 """
         , Embed.Youtube.fromString "-RVnkuJ1Oao"
             |> Embed.Youtube.attributes
-                [ Embed.Youtube.Attributes.width 640
-                , Embed.Youtube.Attributes.height 360
+                [ Embed.Youtube.Attributes.width 480
+                , Embed.Youtube.Attributes.height 270
                 ]
             |> Embed.Youtube.toHtml
             |> (\x -> Html.div [ class "w-full flex" ] [ Html.div [ class "grow" ] [], Html.div [ class "rounded-md border border-flu-300 overflow-clip" ] [ x ], Html.div [ class "grow" ] [] ])
@@ -53,7 +53,7 @@ A fluid sim written in C, with `CUDA` and `AVX` implementations. I built this a 
 
 view : Model -> List (Html Msg)
 view _ =
-    List.map (Html.map (Maybe.withDefault ()) << article Nothing) [ hpolys, timer, fluid ]
+    List.map (Html.map (Maybe.withDefault ()) << bubble) [ hpolys, timer, fluid ]
 
 
 type alias Model =

@@ -8594,7 +8594,7 @@ var $author$project$Home$about = A2(
 			_List_fromArray(
 				[
 					$author$project$Common$md('\n# About Me\n\n**Hi, I\'m Joel.** Here\'s a few things I\'ve been up to recently:\n'),
-					$author$project$Common$mdCodeLike('\n*2024* **Tutoring mathematics** at the University of Queensland (UQ)\n\n*2024* Completed a **B. Computer Science (honours)** at UQ\n- Received first-class honours\n- Thesis project on computer algebra\n- Supervised by Dr. Paul Vrbik\n\n*2023* **Software Engineering** at Veitch Lister Consulting\n- Built type-systems and programming languages\n\n*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ\n'),
+					$author$project$Common$mdCodeLike('\n*2025* Studying an **MRes. in Mathematics** at Macquarie University\n\n*2024* Completed a **B. Computer Science (honours)** at UQ\n- Received first class honours\n- Thesis project on computer algebra\n- Supervised by Dr. Paul Vrbik\n\n*2024* **Tutoring mathematics** at the University of Queensland (UQ)\n\n*2023* **Software Engineering** at Veitch Lister Consulting\n- Built type systems and programming languages\n\n*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ\n'),
 					A2(
 					$elm$html$Html$div,
 					_List_fromArray(
@@ -8654,6 +8654,18 @@ var $author$project$Projects$update = F2(
 	function (msg, _v0) {
 		return _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
 	});
+var $author$project$Common$bubble = function (art) {
+	return A2(
+		$elm$html$Html$div,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class('w-1/2 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg')
+			]),
+		_List_fromArray(
+			[
+				A2($elm$html$Html$map, $elm$core$Maybe$Just, art)
+			]));
+};
 var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube = F2(
 	function (a, b) {
 		return {$: 0, a: a, b: b};
@@ -9016,8 +9028,8 @@ var $author$project$Projects$fluid = A2(
 					$bellroy$elm_embed_youtube$Embed$Youtube$attributes,
 					_List_fromArray(
 						[
-							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$width(640),
-							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$height(360)
+							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$width(480),
+							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$height(270)
 						]),
 					$bellroy$elm_embed_youtube$Embed$Youtube$fromString('-RVnkuJ1Oao'))))
 		]));
@@ -9042,7 +9054,7 @@ var $author$project$Projects$view = function (_v0) {
 			$elm$core$Basics$composeL,
 			$elm$html$Html$map(
 				$elm$core$Maybe$withDefault(0)),
-			$author$project$Common$article($elm$core$Maybe$Nothing)),
+			$author$project$Common$bubble),
 		_List_fromArray(
 			[$author$project$Projects$hpolys, $author$project$Projects$timer, $author$project$Projects$fluid]));
 };
@@ -9055,19 +9067,26 @@ var $author$project$Talk$update = F2(
 	function (msg, _v0) {
 		return _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
 	});
+var $author$project$Talk$algebras = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## Thinking about the algebras of tangent bundle monad (April 2025) [[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]\nMy first talk for the australian category seminar - it\'s an intro to my MRes project, which is all about the algebras of tangent bundle monad in the category of affine schemes.\n')
+		]));
 var $author$project$Talk$berlekamp = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Finding factors in Berlekamp\'s Algebra (April 2024)\nI gave this talk at the UQ Mathematics Student Society - it\'s about Berlekamp\'s factoring algorithm. I\'m pretty happy with how it turned out. The slides are available [here](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf).\n')
+			$author$project$Common$md('\n## Finding factors in Berlekamp\'s Algebra (April 2024) [[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]\nMy first talk for the UQ Mathematics Student Society - it\'s about Berlekamp\'s factoring algorithm. I\'m pretty happy with how it turned out.\n')
 		]));
 var $author$project$Talk$ssets = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Simplicial Sets, Simply (August 2024)\nI gave this talk at the UQ Mathematics Student Society too - it\'s about delta sets. In retrospect, I should have refrained from using any category theory words - they were confusing to many and useful to no one. I\'m quite happy with the pictures though. [These](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf) are the slides.\n')
+			$author$project$Common$md('\n## Simplicial Sets, Simply (August 2024) [[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]\nMy second talk for the UQ Mathematics Student Society - it\'s about delta sets. In retrospect, I should have refrained from using any category theory words. I think they were confusing to many and useful to no one. I\'m quite happy with the pictures though.\n')
 		]));
 var $author$project$Talk$view = function (_v0) {
 	return A2(
@@ -9076,9 +9095,9 @@ var $author$project$Talk$view = function (_v0) {
 			$elm$core$Basics$composeL,
 			$elm$html$Html$map(
 				$elm$core$Maybe$withDefault(0)),
-			$author$project$Common$article($elm$core$Maybe$Nothing)),
+			$author$project$Common$bubble),
 		_List_fromArray(
-			[$author$project$Talk$berlekamp, $author$project$Talk$ssets]));
+			[$author$project$Talk$algebras, $author$project$Talk$ssets, $author$project$Talk$berlekamp]));
 };
 var $author$project$Talk$page = {bH: $author$project$Talk$init, b7: $author$project$Talk$subscriptions, cb: $author$project$Talk$update, bd: $author$project$Talk$view};
 var $author$project$Main$init = F2(
@@ -9310,25 +9329,6 @@ var $author$project$Main$topBar = function (s) {
 						$elm$html$Html$a,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$href('#articles'),
-								$elm$html$Html$Attributes$class(
-								A3(
-									$author$project$Common$ifThenElse,
-									_Utils_eq(
-										$elm$core$Maybe$Just('articles'),
-										s),
-									'font-bold',
-									'')),
-								$elm$html$Html$Attributes$class('flex-1 grow text-center cursor-pointer hover:underline')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Articles ')
-							])),
-						A2(
-						$elm$html$Html$a,
-						_List_fromArray(
-							[
 								$elm$html$Html$Attributes$href('#talks'),
 								$elm$html$Html$Attributes$class(
 								A3(
@@ -9338,11 +9338,30 @@ var $author$project$Main$topBar = function (s) {
 										s),
 									'font-bold',
 									'')),
-								$elm$html$Html$Attributes$class('flex-1 grow text-left cursor-pointer hover:underline')
+								$elm$html$Html$Attributes$class('flex-1 grow text-center cursor-pointer hover:underline')
 							]),
 						_List_fromArray(
 							[
 								$elm$html$Html$text('Talks')
+							])),
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href('#articles'),
+								$elm$html$Html$Attributes$class(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq(
+										$elm$core$Maybe$Just('articles'),
+										s),
+									'font-bold',
+									'')),
+								$elm$html$Html$Attributes$class('flex-1 grow text-left cursor-pointer hover:underline')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Articles ')
 							]))
 					])),
 				A2(

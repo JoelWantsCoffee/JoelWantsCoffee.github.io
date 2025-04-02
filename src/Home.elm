@@ -56,15 +56,17 @@ about =
 **Hi, I'm Joel.** Here's a few things I've been up to recently:
 """
             , mdCodeLike """
-*2024* **Tutoring mathematics** at the University of Queensland (UQ)
+*2025* Studying an **MRes. in Mathematics** at Macquarie University
 
 *2024* Completed a **B. Computer Science (honours)** at UQ
-- Received first-class honours
+- Received first class honours
 - Thesis project on computer algebra
 - Supervised by Dr. Paul Vrbik
 
+*2024* **Tutoring mathematics** at the University of Queensland (UQ)
+
 *2023* **Software Engineering** at Veitch Lister Consulting
-- Built type-systems and programming languages
+- Built type systems and programming languages
 
 *2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ
 """
