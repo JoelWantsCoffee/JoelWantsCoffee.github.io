@@ -91,30 +91,33 @@ view model =
     { title = "Joel Richardson"
     , body =
         List.singleton <|
-            Html.div [ class "h-screen w-screen bg-flu-50" ] <|
-                [ Html.div [ class "h-[10%]" ] [ topBar model.url.fragment ]
-                , Html.div [ class "h-[90%] overflow-scroll" ] <|
-                    (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
-                        List.concat
-                            [ [ Html.div [] [] ]
-                            , case model.model of
-                                Empty ->
-                                    [ Html.div [ class "text-flu-600 font-bold text-2xl pt-8" ] [ Html.text "Whoops! There's nothing here." ] ]
+            Html.div [ class "h-screen w-screen p-3" ] <|
+                List.singleton <|
+                    Html.div [ class "w-full h-full bg-flu-50" ]
+                        [ Html.div [ class "h-[10%] w-full" ] [ topBar model.url.fragment ]
+                        , Html.div [ class "h-[1px]" ] []
+                        , Html.div [ class "h-[90%] w-full overflow-scroll" ] <|
+                            (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
+                                List.concat
+                                    [ [ Html.div [] [] ]
+                                    , case model.model of
+                                        Empty ->
+                                            [ Html.div [ class "text-flu-600 font-bold text-2xl pt-8" ] [ Html.text "Whoops! There's nothing here." ] ]
 
-                                Home m ->
-                                    List.map (Html.map HomeMsg) (Home.page.view m)
+                                        Home m ->
+                                            List.map (Html.map HomeMsg) (Home.page.view m)
 
-                                Talk m ->
-                                    List.map (Html.map TalkMsg) (Talk.page.view m)
+                                        Talk m ->
+                                            List.map (Html.map TalkMsg) (Talk.page.view m)
 
-                                Projects m ->
-                                    List.map (Html.map ProjectsMsg) (Projects.page.view m)
+                                        Projects m ->
+                                            List.map (Html.map ProjectsMsg) (Projects.page.view m)
 
-                                Article m ->
-                                    List.map (Html.map ArticleMsg) (Article.page.view m)
-                            , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
-                            ]
-                ]
+                                        Article m ->
+                                            List.map (Html.map ArticleMsg) (Article.page.view m)
+                                    , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
+                                    ]
+                        ]
     }
 
 

@@ -8594,7 +8594,7 @@ var $author$project$Home$about = A2(
 			_List_fromArray(
 				[
 					$author$project$Common$md('\n# About Me\n\n**Hi, I\'m Joel.** Here\'s a few things I\'ve been up to recently:\n'),
-					$author$project$Common$mdCodeLike('\n*2025* Studying an **MRes. in Mathematics** at Macquarie University\n\n*2024* Completed a **B. Computer Science (honours)** at UQ\n- Received first class honours\n- Thesis project on computer algebra\n- Supervised by Dr. Paul Vrbik\n\n*2024* **Tutoring mathematics** at the University of Queensland (UQ)\n\n*2023* **Software Engineering** at Veitch Lister Consulting\n- Built type systems and programming languages\n\n*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ\n'),
+					$author$project$Common$mdCodeLike('\n*2025* Studying an **MRes. in Mathematics** at Macquarie University\n- Thesis project in category theory\n\n*2024* Completed a **B. Computer Science (honours)** at UQ\n- Thesis project in computer algebra\n- Received first class honours\n\n*2024* **Tutoring mathematics** at the University of Queensland (UQ)\n\n*2023* **Software Engineering** at Veitch Lister Consulting\n- Built type systems and programming languages\n\n*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ\n'),
 					A2(
 					$elm$html$Html$div,
 					_List_fromArray(
@@ -8989,7 +8989,7 @@ var $author$project$Projects$fluid = A2(
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## 2D Fluid Simultion [[GitHub](https://github.com/JoelWantsCoffee/fluid-sim)]\nA fluid sim written in C, with `CUDA` and `AVX` implementations. I built this a for the (excellent) course *High-Performance Computing (COSC3500)* at the University of Queensland. Here\'s a project reflection video I submitted for the course - can you tell it was recorded in the throws of covid? \n'),
+			$author$project$Common$md('\n## 2D Fluid Simulation [[GitHub](https://github.com/JoelWantsCoffee/fluid-sim)]\nA fluid sim coded in C, complete with `CUDA` and `AVX` optimizations. I built this for the (excellent!) *COSC3500: High-Performance Computing* course at UQ. Here\'s a project reflection video.\n'),
 			function (x) {
 			return A2(
 				$elm$html$Html$div,
@@ -9038,14 +9038,21 @@ var $author$project$Projects$hpolys = A2(
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Haskell Polynomial Factoring [[GitHub](https://github.com/JoelWantsCoffee/Haskell-Polynomials)]\nMy honours thesis project - polynomial factoring in Haskell. The project includes all of the computer-algebra pieces needed to factor polynomials over the integers and finite fields, all built from the ground up.\n')
+			$author$project$Common$md('\n## Polynomial Factoring in Haskell [[GitHub](https://github.com/JoelWantsCoffee/Haskell-Polynomials)]\nMy Honours thesis project, a haskell program to factor polynomials. All built and verified from the ground up.\n')
+		]));
+var $author$project$Projects$sotrue = A2(
+	$elm$html$Html$div,
+	_List_Nil,
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n## So True! — A Theorem Verifier [[GitHub](https://github.com/mitchellholt/DisneyMusicVEVO-Z-O-M-B-I-E-S-Someday)]\n[Mitchell](https://mitchellholt.github.io/) and I hacked this together at the 2022 UQ Computing Society Hackathon. In theory, it can verify proofs in first-order logic. In practice, it\'s hanging by a thread—it was a fun project.\n')
 		]));
 var $author$project$Projects$timer = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Distressed Study Timer [[GitHub](https://github.com/JoelWantsCoffee/uni-timer)] [[Website](/uni-timer)]\nThis is a pomodoro study timer that I coded up during the first year of my undergrad. Somehow, it\'s continued to find use ever after my graduation in 2022. The background (drawn in microsoft paint) attempts to capture the atmosphere present in Room 102 of the UQ Social Sciences Annexe (Building 31A) during the SWOTVAC of Semester 2, 2019. \n')
+			$author$project$Common$md('\n## Distressed Study Timer [[GitHub](https://github.com/JoelWantsCoffee/uni-timer)] [[Website](/uni-timer)]\nA Pomodoro timer I cobbled together in my first year of undergrad. Somehow it seems to have survived beyond graduation in 2022. The background—artfully drawn in Microsoft Paint—captures the atmosphere of Room 102, Building 31A during SWOTVAC, Semester 2, 2019 at UQ.\n')
 		]));
 var $author$project$Projects$view = function (_v0) {
 	return A2(
@@ -9056,7 +9063,7 @@ var $author$project$Projects$view = function (_v0) {
 				$elm$core$Maybe$withDefault(0)),
 			$author$project$Common$bubble),
 		_List_fromArray(
-			[$author$project$Projects$hpolys, $author$project$Projects$timer, $author$project$Projects$fluid]));
+			[$author$project$Projects$hpolys, $author$project$Projects$sotrue, $author$project$Projects$timer, $author$project$Projects$fluid]));
 };
 var $author$project$Projects$page = {bH: $author$project$Projects$init, b7: $author$project$Projects$subscriptions, cb: $author$project$Projects$update, bd: $author$project$Projects$view};
 var $author$project$Talk$init = _Utils_Tuple2(0, $elm$core$Platform$Cmd$none);
@@ -9072,21 +9079,21 @@ var $author$project$Talk$algebras = A2(
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Thinking about the algebras of tangent bundle monad (April 2025) [[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]\nMy first talk for the australian category seminar - it\'s an intro to my MRes project, which is all about the algebras of tangent bundle monad in the category of affine schemes.\n')
+			$author$project$Common$md('\n## Algebras of the Tangent Bundle Monad (April 2025) [[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]\nMy first talk for the Australian Category Seminar. This talk introduces my MRes project, focusing on algebras of the tangent bundle monad in the category of affine schemes.\n')
 		]));
 var $author$project$Talk$berlekamp = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Finding factors in Berlekamp\'s Algebra (April 2024) [[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]\nMy first talk for the UQ Mathematics Student Society - it\'s about Berlekamp\'s factoring algorithm. I\'m pretty happy with how it turned out.\n')
+			$author$project$Common$md('\n## Finding Factors in Berlekamp\'s Algebra (April 2024) [[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]\nMy first talk for the UQ Mathematics Student Society, exploring Berlekamp\'s factoring algorithm. Overall, I\'m quite happy with the result.\n')
 		]));
 var $author$project$Talk$ssets = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## Simplicial Sets, Simply (August 2024) [[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]\nMy second talk for the UQ Mathematics Student Society - it\'s about delta sets. In retrospect, I should have refrained from using any category theory words. I think they were confusing to many and useful to no one. I\'m quite happy with the pictures though.\n')
+			$author$project$Common$md('\n## Simplicial Sets, Simply (August 2024) [[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]\nMy second talk for the UQ Mathematics Student Society, introducing delta sets. In hindsight, I probably should have avoided category-theoretic terminology—it confused more than it clarified. Still, I\'m very pleased with how the visuals turned out.\n')
 		]));
 var $author$project$Talk$view = function (_v0) {
 	return A2(
@@ -9390,99 +9397,113 @@ var $author$project$Main$view = function (model) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('h-screen w-screen bg-flu-50')
+						$elm$html$Html$Attributes$class('h-screen w-screen p-3')
 					]),
-				_List_fromArray(
-					[
-						A2(
+				$elm$core$List$singleton(
+					A2(
 						$elm$html$Html$div,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class('h-[10%]')
+								$elm$html$Html$Attributes$class('w-full h-full bg-flu-50')
 							]),
 						_List_fromArray(
 							[
-								$author$project$Main$topBar(model.ah.av)
-							])),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('h-[90%] overflow-scroll')
-							]),
-						A3(
-							$elm$core$Basics$composeR,
-							$elm$html$Html$div(
+								A2(
+								$elm$html$Html$div,
 								_List_fromArray(
 									[
-										$elm$html$Html$Attributes$class('flex flex-col place-items-center space-y-6')
+										$elm$html$Html$Attributes$class('h-[10%] w-full')
+									]),
+								_List_fromArray(
+									[
+										$author$project$Main$topBar(model.ah.av)
 									])),
-							$elm$core$List$singleton,
-							$elm$core$List$concat(
+								A2(
+								$elm$html$Html$div,
 								_List_fromArray(
 									[
+										$elm$html$Html$Attributes$class('h-[1px]')
+									]),
+								_List_Nil),
+								A2(
+								$elm$html$Html$div,
+								_List_fromArray(
+									[
+										$elm$html$Html$Attributes$class('h-[90%] w-full overflow-scroll')
+									]),
+								A3(
+									$elm$core$Basics$composeR,
+									$elm$html$Html$div(
 										_List_fromArray(
-										[
-											A2($elm$html$Html$div, _List_Nil, _List_Nil)
-										]),
-										function () {
-										var _v0 = model.L;
-										switch (_v0.$) {
-											case 4:
-												return _List_fromArray(
-													[
-														A2(
-														$elm$html$Html$div,
-														_List_fromArray(
-															[
-																$elm$html$Html$Attributes$class('text-flu-600 font-bold text-2xl pt-8')
-															]),
-														_List_fromArray(
-															[
-																$elm$html$Html$text('Whoops! There\'s nothing here.')
-															]))
-													]);
-											case 0:
-												var m = _v0.a;
-												return A2(
-													$elm$core$List$map,
-													$elm$html$Html$map($author$project$Main$HomeMsg),
-													$author$project$Home$page.bd(m));
-											case 2:
-												var m = _v0.a;
-												return A2(
-													$elm$core$List$map,
-													$elm$html$Html$map($author$project$Main$TalkMsg),
-													$author$project$Talk$page.bd(m));
-											case 3:
-												var m = _v0.a;
-												return A2(
-													$elm$core$List$map,
-													$elm$html$Html$map($author$project$Main$ProjectsMsg),
-													$author$project$Projects$page.bd(m));
-											default:
-												var m = _v0.a;
-												return A2(
-													$elm$core$List$map,
-													$elm$html$Html$map($author$project$Main$ArticleMsg),
-													$author$project$Article$page.bd(m));
-										}
-									}(),
+											[
+												$elm$html$Html$Attributes$class('flex flex-col place-items-center space-y-6')
+											])),
+									$elm$core$List$singleton,
+									$elm$core$List$concat(
 										_List_fromArray(
-										[
-											A2(
-											$elm$html$Html$div,
-											_List_fromArray(
+											[
+												_List_fromArray(
 												[
-													$elm$html$Html$Attributes$class('w-full p-4 pb-8 text-flu-300 text-center')
+													A2($elm$html$Html$div, _List_Nil, _List_Nil)
 												]),
-											_List_fromArray(
+												function () {
+												var _v0 = model.L;
+												switch (_v0.$) {
+													case 4:
+														return _List_fromArray(
+															[
+																A2(
+																$elm$html$Html$div,
+																_List_fromArray(
+																	[
+																		$elm$html$Html$Attributes$class('text-flu-600 font-bold text-2xl pt-8')
+																	]),
+																_List_fromArray(
+																	[
+																		$elm$html$Html$text('Whoops! There\'s nothing here.')
+																	]))
+															]);
+													case 0:
+														var m = _v0.a;
+														return A2(
+															$elm$core$List$map,
+															$elm$html$Html$map($author$project$Main$HomeMsg),
+															$author$project$Home$page.bd(m));
+													case 2:
+														var m = _v0.a;
+														return A2(
+															$elm$core$List$map,
+															$elm$html$Html$map($author$project$Main$TalkMsg),
+															$author$project$Talk$page.bd(m));
+													case 3:
+														var m = _v0.a;
+														return A2(
+															$elm$core$List$map,
+															$elm$html$Html$map($author$project$Main$ProjectsMsg),
+															$author$project$Projects$page.bd(m));
+													default:
+														var m = _v0.a;
+														return A2(
+															$elm$core$List$map,
+															$elm$html$Html$map($author$project$Main$ArticleMsg),
+															$author$project$Article$page.bd(m));
+												}
+											}(),
+												_List_fromArray(
 												[
-													$elm$html$Html$text('that\'s it - the end.')
-												]))
-										])
-									]))))
-					]))),
+													A2(
+													$elm$html$Html$div,
+													_List_fromArray(
+														[
+															$elm$html$Html$Attributes$class('w-full p-4 pb-8 text-flu-300 text-center')
+														]),
+													_List_fromArray(
+														[
+															$elm$html$Html$text('that\'s it - the end.')
+														]))
+												])
+											]))))
+							]))))),
 		ca: 'Joel Richardson'
 	};
 };

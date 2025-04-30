@@ -664,6 +664,10 @@ video {
   height: 120px;
 }
 
+.h-\[1px\] {
+  height: 1px;
+}
+
 .h-\[25px\] {
   height: 25px;
 }
@@ -893,6 +897,10 @@ video {
   padding: 0.25rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .p-4 {
   padding: 1rem;
 }
@@ -1044,6 +1052,11 @@ video {
 @tailwindcss components;
 
 @tailwindcss utilities;
+
+body {
+  --tw-bg-opacity: 1;
+  background-color: rgb(8 9 11 / var(--tw-bg-opacity));
+}
 
 .content p {
   margin-top: 0.5rem;

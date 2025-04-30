@@ -5,6 +5,10 @@
 @tailwindcss base;
 @tailwindcss components;
 @tailwindcss utilities;
+body {
+  @apply bg-flu-700;
+}
+
 .content p {
   @apply my-2;
 }
