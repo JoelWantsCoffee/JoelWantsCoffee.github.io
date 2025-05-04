@@ -110,10 +110,10 @@ She says it flatly, her mind obviously elsewhere. Her eyes drift further down th
 > I just had lunch too.
 > Don't worry, I'm just having some fun.
 
-She takes up my forms and starts entering something into her computer. She types for a minute then stops and looks at me.
+She takes up my forms and starts entering something into her computer. She types for a minute, then stops and looks at me.
 
 > No. 
-> This is your first time here?
+> Is this your first time here?
 > Why haven't you been here before?
 > You're supposed to have new south wales license.
 > If you're here for longer than three months, you're supposed to request a new south wales license.
@@ -136,7 +136,7 @@ I search the counter top for a pen. She sees me looking, gets down from her chai
 > Because, look around.
 > No one has fun anymore.
 
-I turn to look around. The waiting room is full of waiting people. They don't *all* look glum---the people standing in front of counter two are laughing. I turn back to the woman.
+I turn to look around. The waiting room is full of waiting people. They don't *all* look glum---the people standing in front of service desk two are laughing. I turn back to the woman.
 
 > Queensland must be cheaper. 
 > It's expensive here.
@@ -177,7 +177,7 @@ She fixes her eyes on me.
 
 > That that isn't who really who you are?
 > That that's just a name some people gave you, and other people call you?
-> Do you know?
+> You know?
 > Who are you really?
 
 I finish filling in my form and slide it across the counter to her. She pushes my ID back to me. 
