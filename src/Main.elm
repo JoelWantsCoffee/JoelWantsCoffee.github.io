@@ -13,6 +13,7 @@ import List.Extra as List
 import Projects
 import Talk
 import Url exposing (Url)
+import Words
 
 
 
@@ -26,6 +27,7 @@ type SubModel
     | Article Article.Model
     | Talk Talk.Model
     | Projects Projects.Model
+    | Words Words.Model
     | Empty
 
 
@@ -34,6 +36,7 @@ type Msg
     | ArticleMsg Article.Msg
     | TalkMsg Talk.Msg
     | ProjectsMsg Projects.Msg
+    | WordsMsg Words.Msg
     | LinkClicked Browser.UrlRequest
     | Reset Url.Url
 
@@ -79,6 +82,9 @@ init url key =
             Just "projects" ->
                 Tuple.mapBoth Projects (Cmd.map ProjectsMsg) Projects.page.init
 
+            Just "words" ->
+                Tuple.mapBoth Words (Cmd.map WordsMsg) Words.page.init
+
             Just _ ->
                 ( Empty, Cmd.none )
 
@@ -91,34 +97,50 @@ view model =
     { title = "Joel Richardson"
     , body =
         List.singleton <|
-            Html.div [ class "h-screen w-screen p-3" ] <|
-                List.singleton <|
-                    Html.div [ class "w-full h-full bg-flu-50" ]
-                        [ Html.div [ class "h-[10%] w-full" ] [ topBar model.url.fragment ]
-                        , Html.div [ class "h-[1px]" ] []
-                        , Html.div [ class "h-[90%] w-full overflow-scroll" ] <|
-                            (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
-                                List.concat
-                                    [ [ Html.div [] [] ]
-                                    , case model.model of
-                                        Empty ->
-                                            [ Html.div [ class "text-flu-600 font-bold text-2xl pt-8" ] [ Html.text "Whoops! There's nothing here." ] ]
-
-                                        Home m ->
-                                            List.map (Html.map HomeMsg) (Home.page.view m)
-
-                                        Talk m ->
-                                            List.map (Html.map TalkMsg) (Talk.page.view m)
-
-                                        Projects m ->
-                                            List.map (Html.map ProjectsMsg) (Projects.page.view m)
-
-                                        Article m ->
-                                            List.map (Html.map ArticleMsg) (Article.page.view m)
-                                    , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
-                                    ]
-                        ]
+            Html.div [ class "h-screen w-screen p-3" ] [ viewInner model ]
     }
+
+
+viewInner : Model -> Html Msg
+viewInner model =
+    case model.model of
+        Empty ->
+            academic model <| [ Html.div [ class "text-flu-600 font-bold text-2xl pt-8" ] [ Html.text "Whoops! There's nothing here." ] ]
+
+        Home m ->
+            academic model <| List.map (Html.map HomeMsg) (Home.page.view m)
+
+        Talk m ->
+            academic model <| List.map (Html.map TalkMsg) (Talk.page.view m)
+
+        Projects m ->
+            academic model <| List.map (Html.map ProjectsMsg) (Projects.page.view m)
+
+        Article m ->
+            academic model <| List.map (Html.map ArticleMsg) (Article.page.view m)
+
+        Words m ->
+            creative <| List.map (Html.map WordsMsg) (Words.page.view m)
+
+
+academic : Model -> List (Html Msg) -> Html Msg
+academic model contents =
+    Html.div [ class "academic w-full h-full bg-flu-50" ]
+        [ Html.div [ class "h-[10%] w-full" ] [ topBar model.url.fragment ]
+        , Html.div [ class "h-[1px]" ] []
+        , Html.div [ class "h-[90%] w-full overflow-scroll" ] <|
+            (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
+                List.concat
+                    [ [ Html.div [] [] ]
+                    , contents
+                    , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
+                    ]
+        ]
+
+
+creative : List (Html Msg) -> Html Msg
+creative contents =
+    Html.div [ class "creative w-full h-full bg-flu-50 overflow-clip" ] contents
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -135,6 +157,9 @@ update message model =
 
         ( ArticleMsg msg, Article m ) ->
             Tuple.mapBoth (setSubModel model Article) (Cmd.map ArticleMsg) (Article.page.update msg m)
+
+        ( WordsMsg msg, Words m ) ->
+            Tuple.mapBoth (setSubModel model Words) (Cmd.map WordsMsg) (Words.page.update msg m)
 
         ( LinkClicked (Browser.External s), _ ) ->
             ( model, Nav.load s )
@@ -167,6 +192,9 @@ subscriptions model =
         Projects m ->
             Sub.map ProjectsMsg (Projects.page.subscriptions m)
 
+        Words m ->
+            Sub.map WordsMsg (Words.page.subscriptions m)
+
 
 
 -- -------------------------------
@@ -181,9 +209,9 @@ topBar s =
         [ Html.a [ Attr.href "", class <| ifThenElse (Nothing == s) "" "", class "cursor-pointer hover:underline font-bold" ] [ Html.text "Joel Richardson" ]
         , Html.div [ class "grow" ] []
         , Html.div [ class "w-1/3 flex space-x-6 items-center" ]
-            [ Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "font-bold" "", class "flex-1 grow text-right cursor-pointer hover:underline" ] [ Html.text "Projects" ]
-            , Html.a [ Attr.href "#talks", class <| ifThenElse (Just "talks" == s) "font-bold" "", class "flex-1 grow text-center cursor-pointer hover:underline" ] [ Html.text "Talks" ]
-            , Html.a [ Attr.href "#articles", class <| ifThenElse (Just "articles" == s) "font-bold" "", class "flex-1 grow text-left cursor-pointer hover:underline" ] [ Html.text "Articles " ]
+            [ Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "font-bold" "hover:underline", class "flex-1 grow text-right" ] [ Html.text "Projects" ]
+            , Html.a [ Attr.href "#talks", class <| ifThenElse (Just "talks" == s) "font-bold" "hover:underline", class "flex-1 grow text-center" ] [ Html.text "Talks" ]
+            , Html.a [ Attr.href "#articles", class <| ifThenElse (Just "articles" == s) "font-bold" "hover:underline", class "flex-1 grow text-left" ] [ Html.text "Articles " ]
             ]
         , Html.div [ class "grow" ] []
         , Html.div [ class "pointer-events-none opacity-0" ] [ Html.text "Joel Richardson____" ]

@@ -9,28 +9,58 @@ $font-mono: 'JetBrains Mono'
 body
     @apply bg-flu-700
 
-.content
-    p
-        @apply my-2
+.times-new-roman
+    font-family: 'times-new-roman'
 
-    a
-        @apply underline
+.creative
+    .content
+        .prose
+            p
+                @apply text-justify
 
-    h1
-        @apply text-2xl font-bold mb-4
-    
-    h2
-        @apply text-lg font-bold
-    
-    li
-        @apply list-decimal ml-5
+.creative
+    .content
+        p
+            @apply my-4 text-lg
 
-    code
-        @apply tracking-wide font-semibold rounded-md
-        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
-    
-    .katex-display
-        @apply my-6
+        blockquote
+            @apply italic pl-4
+
+        a
+            @apply underline
+
+        h1
+            @apply text-2xl font-bold mb-4
+        
+        h2
+            @apply text-xl font-bold
+        
+        li
+            @apply list-decimal ml-5
+
+.academic
+    .content
+        p
+            @apply my-2
+
+        a
+            @apply underline
+
+        h1
+            @apply text-2xl font-bold mb-4
+        
+        h2
+            @apply text-lg font-bold
+        
+        li
+            @apply list-decimal ml-5
+
+        code
+            @apply tracking-wide font-semibold rounded-md
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+        
+        .katex-display
+            @apply my-6
 
 
 .content_codelike

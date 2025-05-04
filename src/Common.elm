@@ -16,7 +16,12 @@ type alias Page model msg =
 
 md : String -> Html msg
 md x =
-    Markdown.toHtml
+    let
+        defaultOptions =
+            Markdown.defaultOptions
+    in
+    Markdown.toHtmlWith
+        { defaultOptions | githubFlavored = Just { tables = False, breaks = True }, smartypants = True }
         [ class "content" ]
         x
 

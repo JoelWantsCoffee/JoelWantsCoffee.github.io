@@ -59,11 +59,11 @@ about =
 *2025* Studying an **MRes. in Mathematics** at Macquarie University
 - Thesis project in category theory
 
+*2024* **Tutoring mathematics** at the University of Queensland (UQ)
+
 *2024* Completed a **B. Computer Science (honours)** at UQ
 - Thesis project in computer algebra
 - Received first class honours
-
-*2024* **Tutoring mathematics** at the University of Queensland (UQ)
 
 *2023* **Software Engineering** at Veitch Lister Consulting
 - Built type systems and programming languages

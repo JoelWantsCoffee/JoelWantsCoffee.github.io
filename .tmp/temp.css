@@ -9,26 +9,53 @@ body {
   @apply bg-flu-700;
 }
 
-.content p {
-  @apply my-2;
+.times-new-roman {
+  font-family: "times-new-roman";
 }
-.content a {
+
+.creative .content .prose p {
+  @apply text-justify;
+}
+
+.creative .content p {
+  @apply my-4 text-lg;
+}
+.creative .content blockquote {
+  @apply italic pl-4;
+}
+.creative .content a {
   @apply underline;
 }
-.content h1 {
+.creative .content h1 {
   @apply text-2xl font-bold mb-4;
 }
-.content h2 {
-  @apply text-lg font-bold;
+.creative .content h2 {
+  @apply text-xl font-bold;
 }
-.content li {
+.creative .content li {
   @apply list-decimal ml-5;
 }
-.content code {
+
+.academic .content p {
+  @apply my-2;
+}
+.academic .content a {
+  @apply underline;
+}
+.academic .content h1 {
+  @apply text-2xl font-bold mb-4;
+}
+.academic .content h2 {
+  @apply text-lg font-bold;
+}
+.academic .content li {
+  @apply list-decimal ml-5;
+}
+.academic .content code {
   @apply tracking-wide font-semibold rounded-md;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-.content .katex-display {
+.academic .content .katex-display {
   @apply my-6;
 }
 

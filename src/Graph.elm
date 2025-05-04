@@ -5,7 +5,7 @@ import Html exposing (Html)
 import Html.Attributes as Html
 import Math.Vector2 exposing (Vec2)
 import Svg exposing (..)
-import Svg.Attributes as Att exposing (..)
+import Svg.Attributes exposing (..)
 
 
 fromTuple ( x, y ) =
