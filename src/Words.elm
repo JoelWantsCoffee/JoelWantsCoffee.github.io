@@ -95,7 +95,7 @@ serviceDeskOne =
         [ md """
 # Service Desk One
 
-I cross the room and make it to the service desk. Service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed on me. 
+I cross the room and make it to service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed on me. 
 
 > What are you here for?
 
@@ -103,14 +103,14 @@ Her eyes snap down to the counter, to my forms and my id. She answers her own qu
 
 > A working with children's check.
 
-She says it flatly, her mind obviously elsewhere. Her eyes drift further down the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled *chopped fruit*.
+She says it flatly, her mind obviously elsewhere. Her eyes drift further down the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.
 
 > Lunch!
 > Lunch is good!
 > I just had lunch too.
 > Don't worry, I'm just having some fun.
 
-She takes up my forms and starts entering something into her computer. She types for a minute, then stops and looks at me.
+She takes up my forms and starts entering something into her computer. She types for a minute, then stops to look at me.
 
 > No. 
 > Is this your first time here?
@@ -133,10 +133,10 @@ I search the counter top for a pen. She sees me looking, gets down from her chai
 > There are never any pens these days.
 > Teamwork.
 > I'm just having some fun.
-> Because, look around.
+> Because, look around---
 > No one has fun anymore.
 
-I turn to look around. The waiting room is full of waiting people. They don't *all* look glum---the people standing in front of service desk two are laughing. I turn back to the woman.
+I turn to look around. The waiting room is full of waiting people. They don't all look glum; the people standing in front of service desk two are laughing. I turn back to the woman.
 
 > Queensland must be cheaper. 
 > It's expensive here.
@@ -173,12 +173,15 @@ She trails off for a moment, concentrating on her computer, then starts mumbling
 > Richardson...
 > Do you ever think about that?
 
-She fixes her eyes on me.
+She fixes her eyes on me once again.
 
 > That that isn't who really who you are?
 > That that's just a name some people gave you, and other people call you?
 > You know?
 > Who are you really?
+
+$$ \\ $$
+
 
 I finish filling in my form and slide it across the counter to her. She pushes my ID back to me. 
 
