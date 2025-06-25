@@ -33,9 +33,9 @@ mdCodeLike x =
         x
 
 
-bubble : Html msg -> Html (Maybe msg)
+bubble : Html msg -> Html msg
 bubble art =
-    Html.div [ class "w-1/2 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ] [ Html.map Just art ]
+    Html.div [ class "w-1/2 mb-12 p-4 border border-flu-300 bg-flu-0 rounded-lg" ] [ art ]
 
 
 article : Maybe Bool -> Html msg -> Html (Maybe msg)

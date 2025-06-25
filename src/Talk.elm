@@ -61,7 +61,7 @@ page =
 
 view : Model -> List (Html Msg)
 view _ =
-    List.map (Html.map (Maybe.withDefault ()) << bubble) [ algebras, ssets, berlekamp ]
+    List.map bubble [ algebras, ssets, berlekamp ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

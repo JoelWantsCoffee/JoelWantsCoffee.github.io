@@ -556,6 +556,10 @@ video {
   visibility: visible;
 }
 
+.static {
+  position: static;
+}
+
 .fixed {
   position: fixed;
 }
@@ -652,6 +656,10 @@ video {
   display: none;
 }
 
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
 .h-16 {
   height: 4rem;
 }
@@ -710,6 +718,10 @@ video {
 
 .w-3\/4 {
   width: 75%;
+}
+
+.w-64 {
+  width: 16rem;
 }
 
 .w-8 {
@@ -896,6 +908,11 @@ video {
 .bg-flu-0 {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-flu-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 244 244 / var(--tw-bg-opacity));
 }
 
 .bg-flu-200 {

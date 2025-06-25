@@ -103,7 +103,7 @@ Her eyes snap down to the counter, to my forms and my id. She answers her own qu
 
 > A working with children's check.
 
-She says it flatly, her mind obviously elsewhere. Her eyes drift further down the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.
+She says it flatly, her mind obviously elsewhere. Her eyes move along the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.
 
 > Lunch!
 > Lunch is good!
