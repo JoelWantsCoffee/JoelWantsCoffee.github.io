@@ -5,6 +5,10 @@
 @tailwindcss base;
 @tailwindcss components;
 @tailwindcss utilities;
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-flu-700;
 }
@@ -34,6 +38,19 @@ body {
 }
 .creative .content li {
   @apply list-decimal ml-5;
+}
+
+.home .content {
+  @apply flex flex-col space-y-6;
+}
+.home .content p {
+  @apply text-justify;
+}
+.home .content a {
+  @apply underline;
+}
+.home .content h1 {
+  @apply text-2xl font-bold;
 }
 
 .academic .content p {

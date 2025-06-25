@@ -4,6 +4,7 @@ import Common exposing (..)
 import Html exposing (Html)
 import Html.Attributes as Attr exposing (class)
 import Html.Events as Html
+import List.Extra as List
 
 
 type alias Model =
@@ -30,7 +31,7 @@ page =
 
 view : Model -> List (Html Msg)
 view _ =
-    [ Html.map (Maybe.withDefault ()) <| article Nothing about ]
+    [ about, cv ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -47,30 +48,92 @@ subscriptions _ =
 
 about : Html msg
 about =
-    Html.div [ class "space-x-6 flex" ]
-        [ Html.div [ class "flex-auto flex flex-col" ]
-            [ md
-                """
-# About Me
-
-**Hi, I'm Joel.** Here's a few things I've been up to recently:
-"""
-            , mdCodeLike """
-*2025* Studying an **MRes. in Mathematics** at Macquarie University
-- Thesis project in category theory
-
-*2024* **Tutoring mathematics** at the University of Queensland (UQ)
-
-*2024* Completed a **B. Computer Science (honours)** at UQ
-- Thesis project in computer algebra
-- Received first class honours
-
-*2023* **Software Engineering** at Veitch Lister Consulting
-- Built type systems and programming languages
-
-*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ
-"""
-            , Html.div [ class "mt-3" ] [ Html.text "I also like to sing, draw, and write. A copy of my full cv is available ", Html.a [ Attr.href "./Joel_Richardson_website_cv.pdf", class "italic underline" ] [ Html.text "here" ], Html.text "." ]
+    Html.div [ class "grid place-content-center py-32" ]
+        [ Html.div [ class "flex flex-row space-x-6 bg-flu-0" ]
+            [ Html.div [ class "flex-none w-[380px]" ] [ Html.img [ Attr.src "pfp.jpg", class "w-full aspect-square rounded-[2.5rem] object-cover object-left" ] [] ]
+            , Html.div [ class "flex flex-col py-4 space-y-2 justify-center" ]
+                [ Html.div [ class "text-5xl font-bold flex-col w-0 pt-2" ] [ Html.text "Joel Richardson" ]
+                , Html.div [ class "text-2xl" ] [ Html.text "Mathematics HDR Student" ]
+                , Html.div [ class "flex flex-row space-x-3 py-3" ] <|
+                    List.map (\( l, t ) -> Html.a [ class "text-xl grid place-content-center bg-flu-200 hover:bg-flu-0 hover:border border-flu-200 w-[128px] h-[64px] rounded-full cursor-pointer select-none transition duration-150 ease-in-out", Attr.href l ] [ Html.div [ class "" ] [ Html.text t ] ])
+                        [ ( "#cv", "CV" ), ( "#projects", "Projects" ) ]
+                ]
             ]
-        , Html.div [ class "flex-none w-1/3" ] [ Html.img [ Attr.src "pfp.jpg", class "w-full h-full rounded-lg border border-flu-300 object-cover object-left" ] [] ]
         ]
+
+
+cv : Html msg
+cv =
+    Html.section
+        [ class "px-6", Attr.id "cv" ]
+        [ Html.div [ class "pt-12 pb-3 px-64" ] [ me ]
+        , Html.div [ class "px-64 pt-8 pb-24" ] <| List.singleton <| Html.a [ Attr.href "/Joel_Richardson_website_cv.pdf", class "bg-flu-200 cursor-pointer select-none rounded-full text-xl hover:bg-flu-0 border border-flu-200 px-6 py-3 transition duration-150 ease-in-out" ] [ Html.text "Download Full CV" ]
+        , Html.div [ class "space-y-16" ] <| List.map (List.singleton >> Html.div [ class "py-12 px-64 bg-flu-200" ]) [ edu, work, talk ]
+        ]
+
+
+me : Html msg
+me =
+    md """
+# About Me
+I'm a Master of Research student at Macquarie University, studying category theory. Before moving to Sydney, I lived in Brisbane where I completed my undergraduate degrees at the University of Queensland and worked as Software Engineer. In my spare time I like to sing, draw, and write.
+"""
+
+
+edu : Html msg
+edu =
+    md """
+# Education
+
+**Master of Research (Mathematics)**
+*Project on Monads and Tangent Categories supervised by JS Lemay*
+*2025 - 2025*&ensp;Macquarie University
+
+
+**Bachelor of Computer Science (Honours)**
+*First class honours* ⋅ *Project on Computer Algebra supervised by Paul Vrbik*
+*2023 - 2024*&ensp;The University of Queensland
+
+
+**Bachelor of Mathematics / Bachelor of Computer Science**
+*Majors in Pure Mathematics and Programming Languages*
+*2019 - 2022*&ensp;The University of Queensland
+"""
+
+
+work : Html msg
+work =
+    md """
+# Employment
+
+**Software Engineer**&ensp;Veitch Lister Consulting
+*Building Type Systems and Programming Languages*
+*Nov 2022 - Feb 2024,&emsp;Sep 2024 - Jan 2025*
+
+
+**Tutor**&ensp;The University of Queensland
+*Teaching Mathematics and Computer Science*
+*Feb 2022 - Nov 2022,&emsp;Feb 2024 - Nov 2024*
+"""
+
+
+talk : Html msg
+talk =
+    md """
+# Talks
+
+**Algebras of the Tangent Bundle Monad** **[[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]**
+*Apr 2025*&ensp;Australian Category Seminar, Macquarie University
+
+
+**Simplicial Sets, Simply** **[[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]**
+*Aug 2024*&ensp;UQ Mathematics Student Society, The University of Queensland
+
+
+**Lambda Calculus**
+*Jun 2024*&ensp;Trinity Bay State High School
+
+
+**Finding Factors in Berlekamp's Algebra** **[[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]**
+*Apr 2024*&ensp;UQ Mathematics Student Society, The University of Queensland
+"""

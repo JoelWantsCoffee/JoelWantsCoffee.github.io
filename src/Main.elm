@@ -2,6 +2,7 @@ module Main exposing (main)
 
 import Article
 import Browser
+import Browser.Dom as Dom
 import Browser.Navigation as Nav
 import Common exposing (..)
 import Home
@@ -12,6 +13,7 @@ import List
 import List.Extra as List
 import Projects
 import Talk
+import Task
 import Url exposing (Url)
 import Words
 
@@ -38,6 +40,7 @@ type Msg
     | ProjectsMsg Projects.Msg
     | WordsMsg Words.Msg
     | LinkClicked Browser.UrlRequest
+    | NoOp
     | Reset Url.Url
 
 
@@ -85,6 +88,26 @@ init url key =
             Just "words" ->
                 Tuple.mapBoth Words (Cmd.map WordsMsg) Words.page.init
 
+            Just "cv" ->
+                Tuple.mapBoth Home (Cmd.map HomeMsg) Home.page.init
+                    |> Tuple.mapSecond
+                        (\cmd ->
+                            Cmd.batch
+                                [ cmd
+                                , Dom.getViewportOf "main"
+                                    |> Task.andThen
+                                        (\vp ->
+                                            if vp.viewport.height > vp.viewport.y then
+                                                Dom.setViewportOf "main" 0 vp.viewport.height
+
+                                            else
+                                                Task.succeed ()
+                                        )
+                                    |> Task.attempt (\_ -> NoOp)
+                                , Nav.pushUrl key (Url.toString { url | fragment = Nothing })
+                                ]
+                        )
+
             Just _ ->
                 ( Empty, Cmd.none )
 
@@ -108,7 +131,7 @@ viewInner model =
             academic model <| [ Html.div [ class "text-flu-600 font-bold text-2xl pt-8" ] [ Html.text "Whoops! There's nothing here." ] ]
 
         Home m ->
-            academic model <| List.map (Html.map HomeMsg) (Home.page.view m)
+            home model <| List.map (Html.map HomeMsg) (Home.page.view m)
 
         Talk m ->
             academic model <| List.map (Html.map TalkMsg) (Talk.page.view m)
@@ -126,12 +149,25 @@ viewInner model =
 academic : Model -> List (Html Msg) -> Html Msg
 academic model contents =
     Html.div [ class "academic w-full h-full bg-flu-50" ]
-        [ Html.div [ class "h-[10%] w-full" ] [ topBar model.url.fragment ]
-        , Html.div [ class "h-[1px]" ] []
-        , Html.div [ class "h-[90%] w-full overflow-scroll" ] <|
+        [ Html.div [ class "h-[9.1%] w-full bg-flu-0" ] [ topBar model.url.fragment ]
+        , Html.div [ class "h-[1px] bg-flu-200" ] []
+        , Html.div [ class "h-[90.9%] w-full overflow-scroll" ] <|
             (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
                 List.concat
                     [ [ Html.div [] [] ]
+                    , contents
+                    , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
+                    ]
+        ]
+
+
+home : Model -> List (Html Msg) -> Html Msg
+home model contents =
+    Html.div [ class "home w-full h-full bg-flu-0" ]
+        [ Html.div [ class "h-full w-full overflow-scroll", Attr.id "main" ] <|
+            (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
+                List.concat
+                    [ [ Html.div [ class "w-full" ] [ topBar model.url.fragment ] ]
                     , contents
                     , [ Html.div [ class "w-full p-4 pb-8 text-flu-300 text-center" ] [ Html.text "that's it - the end." ] ]
                     ]
@@ -170,6 +206,9 @@ update message model =
         ( Reset u, _ ) ->
             init u model.key
 
+        ( NoOp, _ ) ->
+            ( model, Cmd.none )
+
         _ ->
             update (Reset model.url) model
 
@@ -205,17 +244,29 @@ subscriptions model =
 topBar : Maybe String -> Html msg
 topBar s =
     Html.div
-        [ class "transition-fast w-full p-6 space-x-6 flex text-lg items-center border border-flu-300 bg-flu-0" ]
-        [ Html.a [ Attr.href "", class <| ifThenElse (Nothing == s) "" "", class "cursor-pointer hover:underline font-bold" ] [ Html.text "Joel Richardson" ]
+        [ class "transition-fast w-full text-md flex flex-row p-3" ]
+        [ Html.div [ class "p-3 space-x-2 flex flex-row w-auto" ] [ Html.a [ class "font-bold cursor-pointer select-none", Attr.href "" ] [ Html.text "Joel Richardson" ], Html.div [] [ Html.text "Mathematics HDR Student" ] ]
         , Html.div [ class "grow" ] []
-        , Html.div [ class "w-1/3 flex space-x-6 items-center" ]
-            [ Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "font-bold" "hover:underline", class "flex-1 grow text-right" ] [ Html.text "Projects" ]
-            , Html.a [ Attr.href "#talks", class <| ifThenElse (Just "talks" == s) "font-bold" "hover:underline", class "flex-1 grow text-center" ] [ Html.text "Talks" ]
-            , Html.a [ Attr.href "#articles", class <| ifThenElse (Just "articles" == s) "font-bold" "hover:underline", class "flex-1 grow text-left" ] [ Html.text "Articles " ]
+        , Html.div [ class "p-3 space-x-3 flex flex-row font-bold" ]
+            [ Html.a [ Attr.href (ifThenElse (Nothing == s) "#cv" ""), class "hover:underline" ] [ Html.text "CV" ]
+            , Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "underline" "hover:underline" ] [ Html.text "Research & Projects" ]
+            , Html.a [ Attr.href "#articles", class <| ifThenElse (Just "articles" == s) "underline" "hover:underline" ] [ Html.text "Articles" ]
             ]
-        , Html.div [ class "grow" ] []
-        , Html.div [ class "pointer-events-none opacity-0" ] [ Html.text "Joel Richardson____" ]
-
-        -- , Html.div [] [ Html.text "Home" ]
-        -- , Html.a [ class "cursor-pointer", Attr.href "mailto:joelwrichardson01@gmail.com" ] [ Html.text "Contact" ]
         ]
+
+
+
+-- Html.div
+--     [ class "transition-fast w-full p-3 space-x-6 flex text-lg items-center border border-flu-300 bg-flu-0" ]
+--     [ Html.a [ Attr.href "", class <| ifThenElse (Nothing == s) "" "", class "cursor-pointer hover:underline font-bold" ] [ Html.text "Joel Richardson" ]
+--     , Html.div [ class "grow" ] []
+--     , Html.div [ class "w-1/3 flex space-x-6 items-center" ]
+--         [ Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "font-bold" "hover:underline", class "flex-1 grow text-right" ] [ Html.text "Projects" ]
+--         , Html.a [ Attr.href "#talks", class <| ifThenElse (Just "talks" == s) "font-bold" "hover:underline", class "flex-1 grow text-center" ] [ Html.text "Talks" ]
+--         , Html.a [ Attr.href "#articles", class <| ifThenElse (Just "articles" == s) "font-bold" "hover:underline", class "flex-1 grow text-left" ] [ Html.text "Articles " ]
+--         ]
+--     , Html.div [ class "grow" ] []
+--     , Html.div [ class "pointer-events-none opacity-0" ] [ Html.text "Joel Richardson____" ]
+--     -- , Html.div [] [ Html.text "Home" ]
+--     -- , Html.a [ class "cursor-pointer", Attr.href "mailto:joelwrichardson01@gmail.com" ] [ Html.text "Contact" ]
+--     ]

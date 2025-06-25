@@ -114,11 +114,12 @@ view m =
         [ hpolys
         , sotrue
         , fluid
-        , euclidean m
-        , wordle
-        , learning
-        , minecraft
-        , software
+
+        -- , euclidean m
+        -- , wordle
+        -- , learning
+        -- , minecraft
+        -- , software
         , timer
         ]
 

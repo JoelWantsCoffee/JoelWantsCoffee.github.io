@@ -6,6 +6,9 @@
 $font-stack: 'Inter', sans-serif
 $font-mono: 'JetBrains Mono'
 
+html
+    scroll-behavior: smooth
+
 body
     @apply bg-flu-700
 
@@ -37,6 +40,20 @@ body
         
         li
             @apply list-decimal ml-5
+
+
+.home
+    .content
+        @apply flex flex-col space-y-6
+
+        p
+            @apply text-justify
+
+        a
+            @apply underline
+
+        h1
+            @apply text-2xl font-bold
 
 .academic
     .content

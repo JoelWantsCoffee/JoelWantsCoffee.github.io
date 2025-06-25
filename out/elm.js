@@ -5546,847 +5546,6 @@ var _Texture_size = function (texture) {
 };
 
 
-var _WebGL_guid = 0;
-
-function _WebGL_listEach(fn, list) {
-  for (; list.b; list = list.b) {
-    fn(list.a);
-  }
-}
-
-function _WebGL_listLength(list) {
-  var length = 0;
-  for (; list.b; list = list.b) {
-    length++;
-  }
-  return length;
-}
-
-var _WebGL_rAF = typeof requestAnimationFrame !== 'undefined' ?
-  requestAnimationFrame :
-  function (cb) { setTimeout(cb, 1000 / 60); };
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_entity = F5(function (settings, vert, frag, mesh, uniforms) {
-  return {
-    $: 0,
-    a: settings,
-    b: vert,
-    c: frag,
-    d: mesh,
-    e: uniforms
-  };
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableBlend = F2(function (cache, setting) {
-  var blend = cache.blend;
-  blend.toggle = cache.toggle;
-
-  if (!blend.enabled) {
-    cache.gl.enable(cache.gl.BLEND);
-    blend.enabled = true;
-  }
-
-  // a   b   c   d   e   f   g h i j
-  // eq1 f11 f12 eq2 f21 f22 r g b a
-  if (blend.a !== setting.a || blend.d !== setting.d) {
-    cache.gl.blendEquationSeparate(setting.a, setting.d);
-    blend.a = setting.a;
-    blend.d = setting.d;
-  }
-  if (blend.b !== setting.b || blend.c !== setting.c || blend.e !== setting.e || blend.f !== setting.f) {
-    cache.gl.blendFuncSeparate(setting.b, setting.c, setting.e, setting.f);
-    blend.b = setting.b;
-    blend.c = setting.c;
-    blend.e = setting.e;
-    blend.f = setting.f;
-  }
-  if (blend.g !== setting.g || blend.h !== setting.h || blend.i !== setting.i || blend.j !== setting.j) {
-    cache.gl.blendColor(setting.g, setting.h, setting.i, setting.j);
-    blend.g = setting.g;
-    blend.h = setting.h;
-    blend.i = setting.i;
-    blend.j = setting.j;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableDepthTest = F2(function (cache, setting) {
-  var depthTest = cache.depthTest;
-  depthTest.toggle = cache.toggle;
-
-  if (!depthTest.enabled) {
-    cache.gl.enable(cache.gl.DEPTH_TEST);
-    depthTest.enabled = true;
-  }
-
-  // a    b    c    d
-  // func mask near far
-  if (depthTest.a !== setting.a) {
-    cache.gl.depthFunc(setting.a);
-    depthTest.a = setting.a;
-  }
-  if (depthTest.b !== setting.b) {
-    cache.gl.depthMask(setting.b);
-    depthTest.b = setting.b;
-  }
-  if (depthTest.c !== setting.c || depthTest.d !== setting.d) {
-    cache.gl.depthRange(setting.c, setting.d);
-    depthTest.c = setting.c;
-    depthTest.d = setting.d;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableStencilTest = F2(function (cache, setting) {
-  var stencilTest = cache.stencilTest;
-  stencilTest.toggle = cache.toggle;
-
-  if (!stencilTest.enabled) {
-    cache.gl.enable(cache.gl.STENCIL_TEST);
-    stencilTest.enabled = true;
-  }
-
-  // a   b    c         d     e     f      g      h     i     j      k
-  // ref mask writeMask test1 fail1 zfail1 zpass1 test2 fail2 zfail2 zpass2
-  if (stencilTest.d !== setting.d || stencilTest.a !== setting.a || stencilTest.b !== setting.b) {
-    cache.gl.stencilFuncSeparate(cache.gl.FRONT, setting.d, setting.a, setting.b);
-    stencilTest.d = setting.d;
-    // a and b are set in the cache.gl.BACK diffing because they should be the same
-  }
-  if (stencilTest.e !== setting.e || stencilTest.f !== setting.f || stencilTest.g !== setting.g) {
-    cache.gl.stencilOpSeparate(cache.gl.FRONT, setting.e, setting.f, setting.g);
-    stencilTest.e = setting.e;
-    stencilTest.f = setting.f;
-    stencilTest.g = setting.g;
-  }
-  if (stencilTest.c !== setting.c) {
-    cache.gl.stencilMask(setting.c);
-    stencilTest.c = setting.c;
-  }
-  if (stencilTest.h !== setting.h || stencilTest.a !== setting.a || stencilTest.b !== setting.b) {
-    cache.gl.stencilFuncSeparate(cache.gl.BACK, setting.h, setting.a, setting.b);
-    stencilTest.h = setting.h;
-    stencilTest.a = setting.a;
-    stencilTest.b = setting.b;
-  }
-  if (stencilTest.i !== setting.i || stencilTest.j !== setting.j || stencilTest.k !== setting.k) {
-    cache.gl.stencilOpSeparate(cache.gl.BACK, setting.i, setting.j, setting.k);
-    stencilTest.i = setting.i;
-    stencilTest.j = setting.j;
-    stencilTest.k = setting.k;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableScissor = F2(function (cache, setting) {
-  var scissor = cache.scissor;
-  scissor.toggle = cache.toggle;
-
-  if (!scissor.enabled) {
-    cache.gl.enable(cache.gl.SCISSOR_TEST);
-    scissor.enabled = true;
-  }
-
-  if (scissor.a !== setting.a || scissor.b !== setting.b || scissor.c !== setting.c || scissor.d !== setting.d) {
-    cache.gl.scissor(setting.a, setting.b, setting.c, setting.d);
-    scissor.a = setting.a;
-    scissor.b = setting.b;
-    scissor.c = setting.c;
-    scissor.d = setting.d;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableColorMask = F2(function (cache, setting) {
-  var colorMask = cache.colorMask;
-  colorMask.toggle = cache.toggle;
-  colorMask.enabled = true;
-
-  if (colorMask.a !== setting.a || colorMask.b !== setting.b || colorMask.c !== setting.c || colorMask.d !== setting.d) {
-    cache.gl.colorMask(setting.a, setting.b, setting.c, setting.d);
-    colorMask.a = setting.a;
-    colorMask.b = setting.b;
-    colorMask.c = setting.c;
-    colorMask.d = setting.d;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableCullFace = F2(function (cache, setting) {
-  var cullFace = cache.cullFace;
-  cullFace.toggle = cache.toggle;
-
-  if (!cullFace.enabled) {
-    cache.gl.enable(cache.gl.CULL_FACE);
-    cullFace.enabled = true;
-  }
-
-  if (cullFace.a !== setting.a) {
-    cache.gl.cullFace(setting.a);
-    cullFace.a = setting.a;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enablePolygonOffset = F2(function (cache, setting) {
-  var polygonOffset = cache.polygonOffset;
-  polygonOffset.toggle = cache.toggle;
-
-  if (!polygonOffset.enabled) {
-    cache.gl.enable(cache.gl.POLYGON_OFFSET_FILL);
-    polygonOffset.enabled = true;
-  }
-
-  if (polygonOffset.a !== setting.a || polygonOffset.b !== setting.b) {
-    cache.gl.polygonOffset(setting.a, setting.b);
-    polygonOffset.a = setting.a;
-    polygonOffset.b = setting.b;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableSampleCoverage = F2(function (cache, setting) {
-  var sampleCoverage = cache.sampleCoverage;
-  sampleCoverage.toggle = cache.toggle;
-
-  if (!sampleCoverage.enabled) {
-    cache.gl.enable(cache.gl.SAMPLE_COVERAGE);
-    sampleCoverage.enabled = true;
-  }
-
-  if (sampleCoverage.a !== setting.a || sampleCoverage.b !== setting.b) {
-    cache.gl.sampleCoverage(setting.a, setting.b);
-    sampleCoverage.a = setting.a;
-    sampleCoverage.b = setting.b;
-  }
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableSampleAlphaToCoverage = function (cache) {
-  var sampleAlphaToCoverage = cache.sampleAlphaToCoverage;
-  sampleAlphaToCoverage.toggle = cache.toggle;
-
-  if (!sampleAlphaToCoverage.enabled) {
-    cache.gl.enable(cache.gl.SAMPLE_ALPHA_TO_COVERAGE);
-    sampleAlphaToCoverage.enabled = true;
-  }
-};
-
-var _WebGL_disableBlend = function (cache) {
-  if (cache.blend.enabled) {
-    cache.gl.disable(cache.gl.BLEND);
-    cache.blend.enabled = false;
-  }
-};
-
-var _WebGL_disableDepthTest = function (cache) {
-  if (cache.depthTest.enabled) {
-    cache.gl.disable(cache.gl.DEPTH_TEST);
-    cache.depthTest.enabled = false;
-  }
-};
-
-var _WebGL_disableStencilTest = function (cache) {
-  if (cache.stencilTest.enabled) {
-    cache.gl.disable(cache.gl.STENCIL_TEST);
-    cache.stencilTest.enabled = false;
-  }
-};
-
-var _WebGL_disableScissor = function (cache) {
-  if (cache.scissor.enabled) {
-    cache.gl.disable(cache.gl.SCISSOR_TEST);
-    cache.scissor.enabled = false;
-  }
-};
-
-var _WebGL_disableColorMask = function (cache) {
-  var colorMask = cache.colorMask;
-  if (!colorMask.a || !colorMask.b || !colorMask.c || !colorMask.d) {
-    cache.gl.colorMask(true, true, true, true);
-    colorMask.a = true;
-    colorMask.b = true;
-    colorMask.c = true;
-    colorMask.d = true;
-  }
-};
-
-var _WebGL_disableCullFace = function (cache) {
-  cache.gl.disable(cache.gl.CULL_FACE);
-};
-
-var _WebGL_disablePolygonOffset = function (cache) {
-  cache.gl.disable(cache.gl.POLYGON_OFFSET_FILL);
-};
-
-var _WebGL_disableSampleCoverage = function (cache) {
-  cache.gl.disable(cache.gl.SAMPLE_COVERAGE);
-};
-
-var _WebGL_disableSampleAlphaToCoverage = function (cache) {
-  cache.gl.disable(cache.gl.SAMPLE_ALPHA_TO_COVERAGE);
-};
-
-var _WebGL_settings = ['blend', 'depthTest', 'stencilTest', 'scissor', 'colorMask', 'cullFace', 'polygonOffset', 'sampleCoverage', 'sampleAlphaToCoverage'];
-var _WebGL_disableFunctions = [_WebGL_disableBlend, _WebGL_disableDepthTest, _WebGL_disableStencilTest, _WebGL_disableScissor, _WebGL_disableColorMask, _WebGL_disableCullFace, _WebGL_disablePolygonOffset, _WebGL_disableSampleCoverage, _WebGL_disableSampleAlphaToCoverage];
-
-function _WebGL_doCompile(gl, src, type) {
-  var shader = gl.createShader(type);
-  // Enable OES_standard_derivatives extension
-  gl.shaderSource(shader, '#extension GL_OES_standard_derivatives : enable\n' + src);
-  gl.compileShader(shader);
-  return shader;
-}
-
-function _WebGL_doLink(gl, vshader, fshader) {
-  var program = gl.createProgram();
-
-  gl.attachShader(program, vshader);
-  gl.attachShader(program, fshader);
-  gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    throw ('Link failed: ' + gl.getProgramInfoLog(program) +
-      '\nvs info-log: ' + gl.getShaderInfoLog(vshader) +
-      '\nfs info-log: ' + gl.getShaderInfoLog(fshader));
-  }
-
-  return program;
-}
-
-function _WebGL_getAttributeInfo(gl, type) {
-  switch (type) {
-    case gl.FLOAT:
-      return { size: 1, arraySize: 1, type: Float32Array, baseType: gl.FLOAT };
-    case gl.FLOAT_VEC2:
-      return { size: 2, arraySize: 1, type: Float32Array, baseType: gl.FLOAT };
-    case gl.FLOAT_VEC3:
-      return { size: 3, arraySize: 1, type: Float32Array, baseType: gl.FLOAT };
-    case gl.FLOAT_VEC4:
-      return { size: 4, arraySize: 1, type: Float32Array, baseType: gl.FLOAT };
-    case gl.FLOAT_MAT4:
-      return { size: 4, arraySize: 4, type: Float32Array, baseType: gl.FLOAT };
-    case gl.INT:
-      return { size: 1, arraySize: 1, type: Int32Array, baseType: gl.INT };
-  }
-}
-
-/**
- *  Form the buffer for a given attribute.
- *
- *  @param {WebGLRenderingContext} gl context
- *  @param {WebGLActiveInfo} attribute the attribute to bind to.
- *         We use its name to grab the record by name and also to know
- *         how many elements we need to grab.
- *  @param {Mesh} mesh The mesh coming in from Elm.
- *  @param {Object} attributes The mapping between the attribute names and Elm fields
- *  @return {WebGLBuffer}
- */
-function _WebGL_doBindAttribute(gl, attribute, mesh, attributes) {
-  // The length of the number of vertices that
-  // complete one 'thing' based on the drawing mode.
-  // ie, 2 for Lines, 3 for Triangles, etc.
-  var elemSize = mesh.a.elemSize;
-
-  var idxKeys = [];
-  for (var i = 0; i < elemSize; i++) {
-    idxKeys.push(String.fromCharCode(97 + i));
-  }
-
-  function dataFill(data, cnt, fillOffset, elem, key) {
-    var i;
-    if (elemSize === 1) {
-      for (i = 0; i < cnt; i++) {
-        data[fillOffset++] = cnt === 1 ? elem[key] : elem[key][i];
-      }
-    } else {
-      idxKeys.forEach(function (idx) {
-        for (i = 0; i < cnt; i++) {
-          data[fillOffset++] = cnt === 1 ? elem[idx][key] : elem[idx][key][i];
-        }
-      });
-    }
-  }
-
-  var attributeInfo = _WebGL_getAttributeInfo(gl, attribute.type);
-
-  if (attributeInfo === undefined) {
-    throw new Error('No info available for: ' + attribute.type);
-  }
-
-  var dataIdx = 0;
-  var dataOffset = attributeInfo.size * attributeInfo.arraySize * elemSize;
-  var array = new attributeInfo.type(_WebGL_listLength(mesh.b) * dataOffset);
-
-  _WebGL_listEach(function (elem) {
-    dataFill(array, attributeInfo.size * attributeInfo.arraySize, dataIdx, elem, attributes[attribute.name] || attribute.name);
-    dataIdx += dataOffset;
-  }, mesh.b);
-
-  var buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(gl.ARRAY_BUFFER, array, gl.STATIC_DRAW);
-  return buffer;
-}
-
-/**
- *  This sets up the binding caching buffers.
- *
- *  We don't actually bind any buffers now except for the indices buffer.
- *  The problem with filling the buffers here is that it is possible to
- *  have a buffer shared between two webgl shaders;
- *  which could have different active attributes. If we bind it here against
- *  a particular program, we might not bind them all. That final bind is now
- *  done right before drawing.
- *
- *  @param {WebGLRenderingContext} gl context
- *  @param {Mesh} mesh a mesh object from Elm
- *  @return {Object} buffer - an object with the following properties
- *  @return {Number} buffer.numIndices
- *  @return {WebGLBuffer|null} buffer.indexBuffer - optional index buffer
- *  @return {Object} buffer.buffers - will be used to buffer attributes
- */
-function _WebGL_doBindSetup(gl, mesh) {
-  if (mesh.a.indexSize > 0) {
-    var indexBuffer = gl.createBuffer();
-    var indices = _WebGL_makeIndexedBuffer(mesh.c, mesh.a.indexSize);
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW);
-    return {
-      numIndices: indices.length,
-      indexBuffer: indexBuffer,
-      buffers: {}
-    };
-  } else {
-    return {
-      numIndices: mesh.a.elemSize * _WebGL_listLength(mesh.b),
-      indexBuffer: null,
-      buffers: {}
-    };
-  }
-}
-
-/**
- *  Create an indices array and fill it from indices
- *  based on the size of the index
- *
- *  @param {List} indicesList the list of indices
- *  @param {Number} indexSize the size of the index
- *  @return {Uint32Array} indices
- */
-function _WebGL_makeIndexedBuffer(indicesList, indexSize) {
-  var indices = new Uint32Array(_WebGL_listLength(indicesList) * indexSize);
-  var fillOffset = 0;
-  var i;
-  _WebGL_listEach(function (elem) {
-    if (indexSize === 1) {
-      indices[fillOffset++] = elem;
-    } else {
-      for (i = 0; i < indexSize; i++) {
-        indices[fillOffset++] = elem[String.fromCharCode(97 + i)];
-      }
-    }
-  }, indicesList);
-  return indices;
-}
-
-function _WebGL_getProgID(vertID, fragID) {
-  return vertID + '#' + fragID;
-}
-
-var _WebGL_drawGL = F2(function (model, domNode) {
-  var cache = model.f;
-  var gl = cache.gl;
-
-  if (!gl) {
-    return domNode;
-  }
-
-  gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
-
-  if (!cache.depthTest.b) {
-    gl.depthMask(true);
-    cache.depthTest.b = true;
-  }
-  if (cache.stencilTest.c !== cache.STENCIL_WRITEMASK) {
-    gl.stencilMask(cache.STENCIL_WRITEMASK);
-    cache.stencilTest.c = cache.STENCIL_WRITEMASK;
-  }
-  _WebGL_disableScissor(cache);
-  _WebGL_disableColorMask(cache);
-  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT | gl.STENCIL_BUFFER_BIT);
-
-  function drawEntity(entity) {
-    if (!entity.d.b.b) {
-      return; // Empty list
-    }
-
-    var progid;
-    var program;
-    var i;
-
-    if (entity.b.id && entity.c.id) {
-      progid = _WebGL_getProgID(entity.b.id, entity.c.id);
-      program = cache.programs[progid];
-    }
-
-    if (!program) {
-
-      var vshader;
-      if (entity.b.id) {
-        vshader = cache.shaders[entity.b.id];
-      } else {
-        entity.b.id = _WebGL_guid++;
-      }
-
-      if (!vshader) {
-        vshader = _WebGL_doCompile(gl, entity.b.src, gl.VERTEX_SHADER);
-        cache.shaders[entity.b.id] = vshader;
-      }
-
-      var fshader;
-      if (entity.c.id) {
-        fshader = cache.shaders[entity.c.id];
-      } else {
-        entity.c.id = _WebGL_guid++;
-      }
-
-      if (!fshader) {
-        fshader = _WebGL_doCompile(gl, entity.c.src, gl.FRAGMENT_SHADER);
-        cache.shaders[entity.c.id] = fshader;
-      }
-
-      var glProgram = _WebGL_doLink(gl, vshader, fshader);
-
-      program = {
-        glProgram: glProgram,
-        attributes: Object.assign({}, entity.b.attributes, entity.c.attributes),
-        currentUniforms: {},
-        activeAttributes: [],
-        activeAttributeLocations: []
-      };
-
-      program.uniformSetters = _WebGL_createUniformSetters(
-        gl,
-        model,
-        program,
-        Object.assign({}, entity.b.uniforms, entity.c.uniforms)
-      );
-
-      var numActiveAttributes = gl.getProgramParameter(glProgram, gl.ACTIVE_ATTRIBUTES);
-      for (i = 0; i < numActiveAttributes; i++) {
-        var attribute = gl.getActiveAttrib(glProgram, i);
-        var attribLocation = gl.getAttribLocation(glProgram, attribute.name);
-        program.activeAttributes.push(attribute);
-        program.activeAttributeLocations.push(attribLocation);
-      }
-
-      progid = _WebGL_getProgID(entity.b.id, entity.c.id);
-      cache.programs[progid] = program;
-    }
-
-    if (cache.lastProgId !== progid) {
-      gl.useProgram(program.glProgram);
-      cache.lastProgId = progid;
-    }
-
-    _WebGL_setUniforms(program.uniformSetters, entity.e);
-
-    var buffer = cache.buffers.get(entity.d);
-
-    if (!buffer) {
-      buffer = _WebGL_doBindSetup(gl, entity.d);
-      cache.buffers.set(entity.d, buffer);
-    }
-
-    for (i = 0; i < program.activeAttributes.length; i++) {
-      attribute = program.activeAttributes[i];
-      attribLocation = program.activeAttributeLocations[i];
-
-      if (buffer.buffers[attribute.name] === undefined) {
-        buffer.buffers[attribute.name] = _WebGL_doBindAttribute(gl, attribute, entity.d, program.attributes);
-      }
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer.buffers[attribute.name]);
-
-      var attributeInfo = _WebGL_getAttributeInfo(gl, attribute.type);
-      if (attributeInfo.arraySize === 1) {
-        gl.enableVertexAttribArray(attribLocation);
-        gl.vertexAttribPointer(attribLocation, attributeInfo.size, attributeInfo.baseType, false, 0, 0);
-      } else {
-        // Point to four vec4 in case of mat4
-        var offset = attributeInfo.size * 4; // float32 takes 4 bytes
-        var stride = offset * attributeInfo.arraySize;
-        for (var m = 0; m < attributeInfo.arraySize; m++) {
-          gl.enableVertexAttribArray(attribLocation + m);
-          gl.vertexAttribPointer(attribLocation + m, attributeInfo.size, attributeInfo.baseType, false, stride, offset * m);
-        }
-      }
-    }
-
-    // Apply all the new settings
-    cache.toggle = !cache.toggle;
-    _WebGL_listEach($elm_explorations$webgl$WebGL$Internal$enableSetting(cache), entity.a);
-    // Disable the settings that were applied in the previous draw call
-    for (i = 0; i < _WebGL_settings.length; i++) {
-      var setting = cache[_WebGL_settings[i]];
-      if (setting.toggle !== cache.toggle && setting.enabled) {
-        _WebGL_disableFunctions[i](cache);
-        setting.enabled = false;
-        setting.toggle = cache.toggle;
-      }
-    }
-
-    if (buffer.indexBuffer) {
-      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, buffer.indexBuffer);
-      gl.drawElements(entity.d.a.mode, buffer.numIndices, gl.UNSIGNED_INT, 0);
-    } else {
-      gl.drawArrays(entity.d.a.mode, 0, buffer.numIndices);
-    }
-  }
-
-  _WebGL_listEach(drawEntity, model.g);
-  return domNode;
-});
-
-function _WebGL_createUniformSetters(gl, model, program, uniformsMap) {
-  var glProgram = program.glProgram;
-  var currentUniforms = program.currentUniforms;
-  var textureCounter = 0;
-  var cache = model.f;
-  function createUniformSetter(glProgram, uniform) {
-    var uniformName = uniform.name;
-    var uniformLocation = gl.getUniformLocation(glProgram, uniformName);
-    switch (uniform.type) {
-      case gl.INT:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniform1i(uniformLocation, value);
-            currentUniforms[uniformName] = value;
-          }
-        };
-      case gl.FLOAT:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniform1f(uniformLocation, value);
-            currentUniforms[uniformName] = value;
-          }
-        };
-      case gl.FLOAT_VEC2:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniform2f(uniformLocation, value[0], value[1]);
-            currentUniforms[uniformName] = value;
-          }
-        };
-      case gl.FLOAT_VEC3:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniform3f(uniformLocation, value[0], value[1], value[2]);
-            currentUniforms[uniformName] = value;
-          }
-        };
-      case gl.FLOAT_VEC4:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniform4f(uniformLocation, value[0], value[1], value[2], value[3]);
-            currentUniforms[uniformName] = value;
-          }
-        };
-      case gl.FLOAT_MAT4:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniformMatrix4fv(uniformLocation, false, new Float32Array(value));
-            currentUniforms[uniformName] = value;
-          }
-        };
-      case gl.SAMPLER_2D:
-        var currentTexture = textureCounter++;
-        return function (texture) {
-          gl.activeTexture(gl.TEXTURE0 + currentTexture);
-          var tex = cache.textures.get(texture);
-          if (!tex) {
-            tex = texture.createTexture(gl);
-            cache.textures.set(texture, tex);
-          }
-          gl.bindTexture(gl.TEXTURE_2D, tex);
-          if (currentUniforms[uniformName] !== texture) {
-            gl.uniform1i(uniformLocation, currentTexture);
-            currentUniforms[uniformName] = texture;
-          }
-        };
-      case gl.BOOL:
-        return function (value) {
-          if (currentUniforms[uniformName] !== value) {
-            gl.uniform1i(uniformLocation, value);
-            currentUniforms[uniformName] = value;
-          }
-        };
-      default:
-        return function () { };
-    }
-  }
-
-  var uniformSetters = {};
-  var numUniforms = gl.getProgramParameter(glProgram, gl.ACTIVE_UNIFORMS);
-  for (var i = 0; i < numUniforms; i++) {
-    var uniform = gl.getActiveUniform(glProgram, i);
-    uniformSetters[uniformsMap[uniform.name] || uniform.name] = createUniformSetter(glProgram, uniform);
-  }
-
-  return uniformSetters;
-}
-
-function _WebGL_setUniforms(setters, values) {
-  Object.keys(values).forEach(function (name) {
-    var setter = setters[name];
-    if (setter) {
-      setter(values[name]);
-    }
-  });
-}
-
-// VIRTUAL-DOM WIDGET
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_toHtml = F3(function (options, factList, entities) {
-  return _VirtualDom_custom(
-    factList,
-    {
-      g: entities,
-      f: {},
-      h: options
-    },
-    _WebGL_render,
-    _WebGL_diff
-  );
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableAlpha = F2(function (options, option) {
-  options.contextAttributes.alpha = true;
-  options.contextAttributes.premultipliedAlpha = option.a;
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableDepth = F2(function (options, option) {
-  options.contextAttributes.depth = true;
-  options.sceneSettings.push(function (gl) {
-    gl.clearDepth(option.a);
-  });
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableStencil = F2(function (options, option) {
-  options.contextAttributes.stencil = true;
-  options.sceneSettings.push(function (gl) {
-    gl.clearStencil(option.a);
-  });
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableAntialias = F2(function (options, option) {
-  options.contextAttributes.antialias = true;
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enableClearColor = F2(function (options, option) {
-  options.sceneSettings.push(function (gl) {
-    gl.clearColor(option.a, option.b, option.c, option.d);
-  });
-});
-
-// eslint-disable-next-line no-unused-vars
-var _WebGL_enablePreserveDrawingBuffer = F2(function (options, option) {
-  options.contextAttributes.preserveDrawingBuffer = true;
-});
-
-/**
- *  Creates canvas and schedules initial _WebGL_drawGL
- *  @param {Object} model
- *  @param {Object} model.f that may contain the following properties:
-           gl, shaders, programs, buffers, textures
- *  @param {List<Option>} model.h list of options coming from Elm
- *  @param {List<Entity>} model.g list of entities coming from Elm
- *  @return {HTMLElement} <canvas> if WebGL is supported, otherwise a <div>
- */
-function _WebGL_render(model) {
-  var options = {
-    contextAttributes: {
-      alpha: false,
-      depth: false,
-      stencil: false,
-      antialias: false,
-      premultipliedAlpha: false,
-      preserveDrawingBuffer: false
-    },
-    sceneSettings: []
-  };
-
-  _WebGL_listEach(function (option) {
-    return A2($elm_explorations$webgl$WebGL$Internal$enableOption, options, option);
-  }, model.h);
-
-  var canvas = _VirtualDom_doc.createElement('canvas');
-  var gl = canvas.getContext && (
-    canvas.getContext('webgl', options.contextAttributes) ||
-    canvas.getContext('experimental-webgl', options.contextAttributes)
-  );
-
-  if (gl && typeof WeakMap !== 'undefined') {
-    options.sceneSettings.forEach(function (sceneSetting) {
-      sceneSetting(gl);
-    });
-
-    // Activate extensions
-    gl.getExtension('OES_standard_derivatives');
-    gl.getExtension('OES_element_index_uint');
-
-    model.f.gl = gl;
-
-    // Cache the current settings in order to diff them to avoid redundant calls
-    // https://emscripten.org/docs/optimizing/Optimizing-WebGL.html#avoid-redundant-calls
-    model.f.toggle = false; // used to diff the settings from the previous and current draw calls
-    model.f.blend = { enabled: false, toggle: false };
-    model.f.depthTest = { enabled: false, toggle: false };
-    model.f.stencilTest = { enabled: false, toggle: false };
-    model.f.scissor = { enabled: false, toggle: false };
-    model.f.colorMask = { enabled: false, toggle: false };
-    model.f.cullFace = { enabled: false, toggle: false };
-    model.f.polygonOffset = { enabled: false, toggle: false };
-    model.f.sampleCoverage = { enabled: false, toggle: false };
-    model.f.sampleAlphaToCoverage = { enabled: false, toggle: false };
-
-    model.f.shaders = [];
-    model.f.programs = {};
-    model.f.lastProgId = null;
-    model.f.buffers = new WeakMap();
-    model.f.textures = new WeakMap();
-    // Memorize the initial stencil write mask, because
-    // browsers may have different number of stencil bits
-    model.f.STENCIL_WRITEMASK = gl.getParameter(gl.STENCIL_WRITEMASK);
-
-    // Render for the first time.
-    // This has to be done in animation frame,
-    // because the canvas is not in the DOM yet
-    _WebGL_rAF(function () {
-      return A2(_WebGL_drawGL, model, canvas);
-    });
-
-  } else {
-    canvas = _VirtualDom_doc.createElement('div');
-    canvas.innerHTML = '<a href="https://get.webgl.org/">Enable WebGL</a> to see this content!';
-  }
-
-  return canvas;
-}
-
-function _WebGL_diff(oldModel, newModel) {
-  newModel.f = oldModel.f;
-  return _WebGL_drawGL(newModel);
-}
-
-
 function _Url_percentEncode(string)
 {
 	return encodeURIComponent(string);
@@ -7214,6 +6373,7 @@ var $author$project$Main$Model = F3(
 	function (key, url, model) {
 		return {key: key, model: model, url: url};
 	});
+var $author$project$Main$NoOp = {$: 'NoOp'};
 var $author$project$Main$Projects = function (a) {
 	return {$: 'Projects', a: a};
 };
@@ -7232,6 +6392,32 @@ var $author$project$Main$Words = function (a) {
 var $author$project$Main$WordsMsg = function (a) {
 	return {$: 'WordsMsg', a: a};
 };
+var $elm$core$Basics$composeL = F3(
+	function (g, f, x) {
+		return g(
+			f(x));
+	});
+var $elm$core$Task$onError = _Scheduler_onError;
+var $elm$core$Task$attempt = F2(
+	function (resultToMessage, task) {
+		return $elm$core$Task$command(
+			$elm$core$Task$Perform(
+				A2(
+					$elm$core$Task$onError,
+					A2(
+						$elm$core$Basics$composeL,
+						A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+						$elm$core$Result$Err),
+					A2(
+						$elm$core$Task$andThen,
+						A2(
+							$elm$core$Basics$composeL,
+							A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
+							$elm$core$Result$Ok),
+						task))));
+	});
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$browser$Browser$Dom$getViewportOf = _Browser_getViewportOf;
 var $elm$core$Platform$Cmd$map = _Platform_map;
 var $elm$core$Tuple$mapBoth = F3(
 	function (funcA, funcB, _v0) {
@@ -7249,7 +6435,14 @@ var $elm$core$Tuple$mapFirst = F2(
 			func(x),
 			y);
 	});
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Tuple$mapSecond = F2(
+	function (func, _v0) {
+		var x = _v0.a;
+		var y = _v0.b;
+		return _Utils_Tuple2(
+			x,
+			func(y));
+	});
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
@@ -8506,11 +7699,6 @@ var $author$project$Article$mathchar = function (i) {
 			$elm$core$Char$fromCode(97 + i)));
 };
 var $author$project$Article$funnyBijection = A2($author$project$Article$funnyBijection_, 150, $author$project$Article$mathchar);
-var $elm$core$Basics$composeL = F3(
-	function (g, f, x) {
-		return g(
-			f(x));
-	});
 var $elm$core$List$intersperse = F2(
 	function (sep, xs) {
 		if (!xs.b) {
@@ -9473,6 +8661,107 @@ var $elm$html$Html$Attributes$href = function (url) {
 		_VirtualDom_noJavaScriptUri(url));
 };
 var $elm$html$Html$img = _VirtualDom_node('img');
+var $author$project$Home$about = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('grid place-content-center py-32')
+		]),
+	_List_fromArray(
+		[
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('flex flex-row space-x-6 bg-flu-0')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('flex-none w-[380px]')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src('pfp.jpg'),
+									$elm$html$Html$Attributes$class('w-full aspect-square rounded-[2.5rem] object-cover object-left')
+								]),
+							_List_Nil)
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('flex flex-col py-4 space-y-2 justify-center')
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('text-5xl font-bold flex-col w-0 pt-2')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Joel Richardson')
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('text-2xl')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('Mathematics HDR Student')
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('flex flex-row space-x-3 py-3')
+								]),
+							A2(
+								$elm$core$List$map,
+								function (_v0) {
+									var l = _v0.a;
+									var t = _v0.b;
+									return A2(
+										$elm$html$Html$a,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('text-xl grid place-content-center bg-flu-200 hover:bg-flu-0 hover:border border-flu-200 w-[128px] h-[64px] rounded-full cursor-pointer select-none transition duration-150 ease-in-out'),
+												$elm$html$Html$Attributes$href(l)
+											]),
+										_List_fromArray(
+											[
+												A2(
+												$elm$html$Html$div,
+												_List_fromArray(
+													[
+														$elm$html$Html$Attributes$class('')
+													]),
+												_List_fromArray(
+													[
+														$elm$html$Html$text(t)
+													]))
+											]));
+								},
+								_List_fromArray(
+									[
+										_Utils_Tuple2('#cv', 'CV'),
+										_Utils_Tuple2('#projects', 'Projects')
+									])))
+						]))
+				]))
+		]));
 var $author$project$Common$md = function (x) {
 	var defaultOptions = $elm_explorations$markdown$Markdown$defaultOptions;
 	return A3(
@@ -9490,20 +8779,22 @@ var $author$project$Common$md = function (x) {
 			]),
 		x);
 };
-var $author$project$Common$mdCodeLike = function (x) {
-	return A2(
-		$elm_explorations$markdown$Markdown$toHtml,
-		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class('content_codelike')
-			]),
-		x);
+var $author$project$Home$edu = $author$project$Common$md('\n# Education\n\n**Master of Research (Mathematics)**\n*Project on Monads and Tangent Categories supervised by JS Lemay*\n*2025 - 2025*&ensp;Macquarie University\n\n\n**Bachelor of Computer Science (Honours)**\n*First class honours* ⋅ *Project on Computer Algebra supervised by Paul Vrbik*\n*2023 - 2024*&ensp;The University of Queensland\n\n\n**Bachelor of Mathematics / Bachelor of Computer Science**\n*Majors in Pure Mathematics and Programming Languages*\n*2019 - 2022*&ensp;The University of Queensland\n');
+var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
+var $author$project$Home$me = $author$project$Common$md('\n# About Me\nI\'m a Master of Research student at Macquarie University, studying category theory. Before moving to Sydney, I lived in Brisbane where I completed my undergraduate degrees at the University of Queensland and worked as Software Engineer. In my spare time I like to sing, draw, and write.\n');
+var $elm$html$Html$section = _VirtualDom_node('section');
+var $elm$core$List$singleton = function (value) {
+	return _List_fromArray(
+		[value]);
 };
-var $author$project$Home$about = A2(
-	$elm$html$Html$div,
+var $author$project$Home$talk = $author$project$Common$md('\n# Talks\n\n**Algebras of the Tangent Bundle Monad** **[[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]**\n*Apr 2025*&ensp;Australian Category Seminar, Macquarie University\n\n\n**Simplicial Sets, Simply** **[[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]**\n*Aug 2024*&ensp;UQ Mathematics Student Society, The University of Queensland\n\n\n**Lambda Calculus**\n*Jun 2024*&ensp;Trinity Bay State High School\n\n\n**Finding Factors in Berlekamp\'s Algebra** **[[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]**\n*Apr 2024*&ensp;UQ Mathematics Student Society, The University of Queensland\n');
+var $author$project$Home$work = $author$project$Common$md('\n# Employment\n\n**Software Engineer**&ensp;Veitch Lister Consulting\n*Building Type Systems and Programming Languages*\n*Nov 2022 - Feb 2024,&emsp;Sep 2024 - Jan 2025*\n\n\n**Tutor**&ensp;The University of Queensland\n*Teaching Mathematics and Computer Science*\n*Feb 2022 - Nov 2022,&emsp;Feb 2024 - Nov 2024*\n');
+var $author$project$Home$cv = A2(
+	$elm$html$Html$section,
 	_List_fromArray(
 		[
-			$elm$html$Html$Attributes$class('space-x-6 flex')
+			$elm$html$Html$Attributes$class('px-6'),
+			$elm$html$Html$Attributes$id('cv')
 		]),
 	_List_fromArray(
 		[
@@ -9511,86 +8802,56 @@ var $author$project$Home$about = A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$class('flex-auto flex flex-col')
+					$elm$html$Html$Attributes$class('pt-12 pb-3 px-64')
 				]),
 			_List_fromArray(
-				[
-					$author$project$Common$md('\n# About Me\n\n**Hi, I\'m Joel.** Here\'s a few things I\'ve been up to recently:\n'),
-					$author$project$Common$mdCodeLike('\n*2025* Studying an **MRes. in Mathematics** at Macquarie University\n- Thesis project in category theory\n\n*2024* **Tutoring mathematics** at the University of Queensland (UQ)\n\n*2024* Completed a **B. Computer Science (honours)** at UQ\n- Thesis project in computer algebra\n- Received first class honours\n\n*2023* **Software Engineering** at Veitch Lister Consulting\n- Built type systems and programming languages\n\n*2022* Completed a dual **B. Mathematics / B. Computer Science** at UQ\n'),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$class('mt-3')
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text('I also like to sing, draw, and write. A copy of my full cv is available '),
-							A2(
-							$elm$html$Html$a,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$href('./Joel_Richardson_website_cv.pdf'),
-									$elm$html$Html$Attributes$class('italic underline')
-								]),
-							_List_fromArray(
-								[
-									$elm$html$Html$text('here')
-								])),
-							$elm$html$Html$text('.')
-						]))
-				])),
+				[$author$project$Home$me])),
 			A2(
 			$elm$html$Html$div,
 			_List_fromArray(
 				[
-					$elm$html$Html$Attributes$class('flex-none w-1/3')
+					$elm$html$Html$Attributes$class('px-64 pt-8 pb-24')
 				]),
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$img,
+			$elm$core$List$singleton(
+				A2(
+					$elm$html$Html$a,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$src('pfp.jpg'),
-							$elm$html$Html$Attributes$class('w-full h-full rounded-lg border border-flu-300 object-cover object-left')
+							$elm$html$Html$Attributes$href('/Joel_Richardson_website_cv.pdf'),
+							$elm$html$Html$Attributes$class('bg-flu-200 cursor-pointer select-none rounded-full text-xl hover:bg-flu-0 border border-flu-200 px-6 py-3 transition duration-150 ease-in-out')
 						]),
-					_List_Nil)
-				]))
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Download Full CV')
+						])))),
+			A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('space-y-16')
+				]),
+			A2(
+				$elm$core$List$map,
+				A2(
+					$elm$core$Basics$composeR,
+					$elm$core$List$singleton,
+					$elm$html$Html$div(
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$class('py-12 px-64 bg-flu-200')
+							]))),
+				_List_fromArray(
+					[$author$project$Home$edu, $author$project$Home$work, $author$project$Home$talk])))
 		]));
 var $author$project$Home$view = function (_v0) {
 	return _List_fromArray(
-		[
-			A2(
-			$elm$html$Html$map,
-			$elm$core$Maybe$withDefault(_Utils_Tuple0),
-			A2($author$project$Common$article, $elm$core$Maybe$Nothing, $author$project$Home$about))
-		]);
+		[$author$project$Home$about, $author$project$Home$cv]);
 };
 var $author$project$Home$page = {init: $author$project$Home$init, subscriptions: $author$project$Home$subscriptions, update: $author$project$Home$update, view: $author$project$Home$view};
 var $author$project$Projects$SetTexture = function (a) {
 	return {$: 'SetTexture', a: a};
 };
 var $author$project$Projects$keys = {a: false, d: false, s: false, w: false};
-var $elm$core$Task$onError = _Scheduler_onError;
-var $elm$core$Task$attempt = F2(
-	function (resultToMessage, task) {
-		return $elm$core$Task$command(
-			$elm$core$Task$Perform(
-				A2(
-					$elm$core$Task$onError,
-					A2(
-						$elm$core$Basics$composeL,
-						A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
-						$elm$core$Result$Err),
-					A2(
-						$elm$core$Task$andThen,
-						A2(
-							$elm$core$Basics$composeL,
-							A2($elm$core$Basics$composeL, $elm$core$Task$succeed, resultToMessage),
-							$elm$core$Result$Ok),
-						task))));
-	});
 var $elm_explorations$webgl$WebGL$Texture$Resize = function (a) {
 	return {$: 'Resize', a: a};
 };
@@ -9809,164 +9070,6 @@ var $author$project$Common$bubble = function (art) {
 			]),
 		_List_fromArray(
 			[art]));
-};
-var $elm_explorations$webgl$WebGL$Internal$DepthTest = F4(
-	function (a, b, c, d) {
-		return {$: 'DepthTest', a: a, b: b, c: c, d: d};
-	});
-var $elm_explorations$webgl$WebGL$Settings$DepthTest$less = function (_v0) {
-	var write = _v0.write;
-	var near = _v0.near;
-	var far = _v0.far;
-	return A4($elm_explorations$webgl$WebGL$Internal$DepthTest, 513, write, near, far);
-};
-var $elm_explorations$webgl$WebGL$Settings$DepthTest$default = $elm_explorations$webgl$WebGL$Settings$DepthTest$less(
-	{far: 1, near: 0, write: true});
-var $elm_explorations$webgl$WebGL$Internal$enableOption = F2(
-	function (ctx, option) {
-		switch (option.$) {
-			case 'Alpha':
-				return A2(_WebGL_enableAlpha, ctx, option);
-			case 'Depth':
-				return A2(_WebGL_enableDepth, ctx, option);
-			case 'Stencil':
-				return A2(_WebGL_enableStencil, ctx, option);
-			case 'Antialias':
-				return A2(_WebGL_enableAntialias, ctx, option);
-			case 'ClearColor':
-				return A2(_WebGL_enableClearColor, ctx, option);
-			default:
-				return A2(_WebGL_enablePreserveDrawingBuffer, ctx, option);
-		}
-	});
-var $elm_explorations$webgl$WebGL$Internal$enableSetting = F2(
-	function (cache, setting) {
-		switch (setting.$) {
-			case 'Blend':
-				return A2(_WebGL_enableBlend, cache, setting);
-			case 'DepthTest':
-				return A2(_WebGL_enableDepthTest, cache, setting);
-			case 'StencilTest':
-				return A2(_WebGL_enableStencilTest, cache, setting);
-			case 'Scissor':
-				return A2(_WebGL_enableScissor, cache, setting);
-			case 'ColorMask':
-				return A2(_WebGL_enableColorMask, cache, setting);
-			case 'CullFace':
-				return A2(_WebGL_enableCullFace, cache, setting);
-			case 'PolygonOffset':
-				return A2(_WebGL_enablePolygonOffset, cache, setting);
-			case 'SampleCoverage':
-				return A2(_WebGL_enableSampleCoverage, cache, setting);
-			default:
-				return _WebGL_enableSampleAlphaToCoverage(cache);
-		}
-	});
-var $elm_explorations$webgl$WebGL$entityWith = _WebGL_entity;
-var $elm_explorations$webgl$WebGL$entity = $elm_explorations$webgl$WebGL$entityWith(
-	_List_fromArray(
-		[$elm_explorations$webgl$WebGL$Settings$DepthTest$default]));
-var $author$project$GLSL$fragmentShader = {
-	src: ' // backported from version 300 es by chat\nprecision highp float;\n\n/* ------------- interface ------------- */\nvarying vec2 uv;\nuniform float u_time;\nuniform sampler2D u_texture;\n\n/* ------------- constants ------------- */\nconst float PI 		= 3.14159265;\nconst float EPSILON = 0.01;\nconst float INF		= 1e20;\nconst int MAX_ITERATIONS = 1000;\n\n/* ------------- helper structs -------- */\nstruct Line {\n    vec3 p;   // point\n    vec3 d;   // direction (not normalised here on purpose)\n    mat3 b;   // basis\n};\n\nstruct RectPlane {\n    vec3 p;   // one corner\n    vec3 u;   // span-vector #1 (width)\n    vec3 v;   // span-vector #2 (height)\n};\n\n/* ------------- rotations ------------- */\nmat2 rot2(float a){\n    float c = cos(a), s = sin(a);\n    return mat2( c, -s,\n                 s,  c);\n}\n/* square matrices are fine in ES 100 so rot3* stay the same */\nmat3 rot3z(float a){\n    float c = cos(a), s = sin(a);\n    return mat3( c,-s,0.,\n                 s, c,0.,\n                 0.,0.,1.);\n}\nmat3 rot3y(float a){\n    float c = cos(a), s = sin(a);\n    return mat3( c,0., s,\n                 0.,1.,0.,\n                -s,0., c);\n}\nmat3 rot3x(float a){\n    float c = cos(a), s = sin(a);\n    return mat3(1.,0.,0.,\n                0., c,-s,\n                0., s, c);\n}\n\nmat3 axisAngle(vec3 axis, float a){\n    axis      = normalize(axis);\n    float s   = sin(a);\n    float c   = cos(a);\n    float ic  = 1.0 - c;\n    return mat3(\n        c + axis.x*axis.x*ic,\n        axis.x*axis.y*ic - axis.z*s,\n        axis.x*axis.z*ic + axis.y*s,\n\n        axis.y*axis.x*ic + axis.z*s,\n        c + axis.y*axis.y*ic,\n        axis.y*axis.z*ic - axis.x*s,\n\n        axis.z*axis.x*ic - axis.y*s,\n        axis.z*axis.y*ic + axis.x*s,\n        c + axis.z*axis.z*ic\n    );\n}\n\nvec3 fromPolar3(vec3 v){\n  return rot3y(v.x) * rot3x(v.y) * vec3(0., 0., v.z);\n}\n\n/* ------------- geometry -------------- */\nfloat linePlaneIntersect(Line line, vec3 planeP, vec3 planeN){\n    float denom = dot(line.d, planeN);\n    if(abs(denom) < EPSILON) return INF;\n    return dot(planeP - line.p, planeN)/denom;\n}\n\n/*  bounded rectangle */\nfloat linePlaneIntersect(Line line, RectPlane pl){\n    vec3 n = normalize(cross(pl.u, pl.v));\n    float denom = dot(line.d, n);\n    if(abs(denom) < EPSILON) return INF;\n\n    float t = dot(pl.p - line.p, n)/denom;\n    vec3  hit = line.p + line.d * t;\n    vec3  rel = hit - pl.p;\n\n    float u = dot(rel, pl.u) / dot(pl.u, pl.u);\n    float v = dot(rel, pl.v) / dot(pl.v, pl.v);\n\n    return (u < -EPSILON || u > 1.+EPSILON ||\n            v < -EPSILON || v > 1.+EPSILON) ? INF : t;\n}\n\nvec3 mirror(vec3 dir, vec3 normal){\n    return dir - 2.0 * dot(dir,normal) / dot(normal,normal) * normal;\n}\n\n/* reflect-and-advance along a “portal” rectangle */\nLine transport(Line ray, float l){\n    RectPlane pl = RectPlane(\n        vec3( 1., -1., 10.),   // corner\n        vec3( 0.,  6.,  0.),   // width  vector\n        vec3(-2.,  0.,  0.)    // height vector\n    );\n\n    float t  = linePlaneIntersect(ray, pl);\n\n    if(t==INF || t<0.0 || t>l) \n    { \n        ray.p += ray.d*l;\n        return ray;\n    }\n\n    ray.p += ray.d*t;\n\n    float scale = 1.0;\n    vec3 n = cross(pl.u,pl.v);\n    ray.d = mirror(ray.d, n);\n    ray.d.x *= scale;\n    ray.d.z *= scale;\n    if (ray.b != mat3(0.))\n    {\n        ray.b = mat3(mirror(ray.b[0], n), mirror(ray.b[1], n), mirror(ray.b[2], n));\n        ray.b[0] *= scale;\n        ray.b[2] *= scale;\n    }\n\n    ray.p += ray.d*(l - t);\n    return ray;\n}\n\n/* ----------- scene SDF --------------- */\nfloat box(vec3 p, vec3 b){\n    vec3 q = abs(p) - b;\n    return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)), 0.0);\n}\n\nfloat torus(vec3 p, vec2 t){\n    vec2 q = vec2(length(p.xz)-t.x, p.y);\n    return length(q)-t.y;\n}\n\nfloat sphere(vec3 p,float r){ return length(p) - r; }\n\nfloat sdf(vec3 p)\n{\n    /* ------------- static floor ---------------------------------- */\n    float floorY = p.y + 1.0;\n\n    /* ------------- wobbling sphere ------------------------------- */\n    float ball = sphere(p - vec3(-2.0,\n                                 0.9 + 0.4*sin(u_time*1.3),\n                                 5.0),\n                        1.0);\n\n    /* ------------- torus that slowly spins ----------------------- */\n    vec3  torPos = p - vec3(3.0, 0.0, 4.0);\n    torPos.xz    = rot2(u_time*0.4) * torPos.xz;\n    float dough  = torus(torPos, vec2(1.2, 0.35));\n\n    /* ------------- tiled boxes for background -------------------- */\n    // vec3  rep    = p;\n    // rep.xz = mod(rep.xz, 10.0) - 2.0;           // repeat every 4 units\n    float cubes  = box(p - vec3(0.0, -0.25, 0.0), vec3(0.5));\n\n    /* ------------- combine --------------------------------------- */\n    return min(min(floorY, ball),\n               min(dough, cubes));\n}\n\nvec3 calcNormal(vec3 p){\n    vec2 h = vec2(EPSILON,0.);\n    return normalize(vec3(\n        sdf(p+h.xyy) - sdf(p-h.xyy),\n        sdf(p+h.yxy) - sdf(p-h.yxy),\n        sdf(p+h.yyx) - sdf(p-h.yyx)\n    ));\n}\n\nLine makeCamera(mat3 b, float t){\n    vec3 pos = vec3( 5.0 * sin(t*0.5),\n                     0.7 * sin(t*0.3) + 1.5,\n                    -4.0 * cos(t*0.5) + 4.0 );\n\n    Line cam = Line(vec3(0.), normalize(pos), b);\n    cam = transport(cam, sqrt(dot(pos, pos)) );\n\n    vec3 tgt = vec3( 0.0, 0.5, 10.0 ); // centre of the mirror\n    cam.d = normalize(tgt - pos);\n\n    return cam;\n}\n\n\nmat3 makeBasis(vec3 fwd){\n    fwd = normalize(fwd);\n\n    vec3 tmpUp = (abs(fwd.y) > 0.99)          // too close to ±Y?\n               ? vec3(0.0, 0.0, 1.0)          // use Z instead\n               : vec3(0.0, 1.0, 0.0);\n\n    vec3 right = normalize(cross(tmpUp, fwd));\n    vec3 up    = cross(fwd, right);           // already unit-length\n\n    return mat3(right, up, fwd);              // columns = (x,y,z)\n}\n\n/* ------------- main ------------------ */\nvoid main(){\n    /* camera pos and dir -------------------------------------------------- */\n\n    float fov = PI * 0.5;\n    mat3 id = mat3(1.);\n    vec3 fwd = normalize( uv.x * fov * 0.5 * id[0] + uv.y * fov * 0.5 * id[1] + id[2] );\n\n    Line cam = makeCamera(makeBasis(fwd), u_time);\n\n    cam.d = cam.b[2];\n    cam.b = mat3(0.);\n\n    /* ray-march ----------------------------------------------------------- */\n    float distAcc = 0.;\n    vec3  color   = vec3(0.5, 0.8, 1.);  // arbitrary start\n\n    for(int i=0;i<MAX_ITERATIONS;++i){\n        float l = sdf(cam.p);\n        if(l < EPSILON){                         /* hit                      */\n            vec3 n = calcNormal(cam.p);\n            float lighting = max(0.05, dot(n, normalize(vec3(0.5,1.,-0.5))));\n            if(cam.p.y + 1. < EPSILON) color = texture2D(u_texture, cam.p.xz).rgb;\n            else color = vec3(1.);\n            color *= lighting;\n            break;\n        }\n        else if(l > 1./EPSILON){ distAcc = INF; break; }\n\n        distAcc += l;\n        cam = transport(cam,l);\n    }\n\n    // color *= max(0.5, 1. / pow(distAcc, 0.1));\n\n    /* cheap distance fog ------------------------------------------------ */\n    float fog = clamp(exp(-0.0001 * distAcc * distAcc), 0.0, 1.0);\n    color = mix(vec3(0.6,0.7,0.8), color, fog);\n\n    /* rim-light accent on silhouettes ----------------------------------- */\n    vec3  viewDir = normalize(cam.d);\n    float rim     = pow(1.0 - max(dot(calcNormal(cam.p), viewDir), 0.0), 3.0);\n    color += 0.25 * rim;\n    color = vec3(pow(color.x, 1.5), pow(color.y, 1.5), pow(color.z, 1.5));\n\n    gl_FragColor = vec4(color,1.);\n}\n',
-	attributes: {},
-	uniforms: {u_texture: 'u_texture', u_time: 'u_time'}
-};
-var $elm_explorations$webgl$WebGL$Mesh3 = F2(
-	function (a, b) {
-		return {$: 'Mesh3', a: a, b: b};
-	});
-var $elm_explorations$webgl$WebGL$triangles = $elm_explorations$webgl$WebGL$Mesh3(
-	{elemSize: 3, indexSize: 0, mode: 4});
-var $elm_explorations$linear_algebra$Math$Vector3$vec3 = _MJS_v3;
-var $author$project$GLSL$mesh = $elm_explorations$webgl$WebGL$triangles(
-	_List_fromArray(
-		[
-			_Utils_Tuple3(
-			{
-				position: A3($elm_explorations$linear_algebra$Math$Vector3$vec3, -1, 1, 0)
-			},
-			{
-				position: A3($elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 1, 0)
-			},
-			{
-				position: A3($elm_explorations$linear_algebra$Math$Vector3$vec3, -1, -1, 0)
-			}),
-			_Utils_Tuple3(
-			{
-				position: A3($elm_explorations$linear_algebra$Math$Vector3$vec3, -1, -1, 0)
-			},
-			{
-				position: A3($elm_explorations$linear_algebra$Math$Vector3$vec3, 1, 1, 0)
-			},
-			{
-				position: A3($elm_explorations$linear_algebra$Math$Vector3$vec3, 1, -1, 0)
-			})
-		]));
-var $elm_explorations$webgl$WebGL$Internal$Alpha = function (a) {
-	return {$: 'Alpha', a: a};
-};
-var $elm_explorations$webgl$WebGL$alpha = $elm_explorations$webgl$WebGL$Internal$Alpha;
-var $elm_explorations$webgl$WebGL$Internal$Antialias = {$: 'Antialias'};
-var $elm_explorations$webgl$WebGL$antialias = $elm_explorations$webgl$WebGL$Internal$Antialias;
-var $elm_explorations$webgl$WebGL$Internal$Depth = function (a) {
-	return {$: 'Depth', a: a};
-};
-var $elm_explorations$webgl$WebGL$depth = $elm_explorations$webgl$WebGL$Internal$Depth;
-var $elm_explorations$webgl$WebGL$toHtmlWith = F3(
-	function (options, attributes, entities) {
-		return A3(_WebGL_toHtml, options, attributes, entities);
-	});
-var $elm_explorations$webgl$WebGL$toHtml = $elm_explorations$webgl$WebGL$toHtmlWith(
-	_List_fromArray(
-		[
-			$elm_explorations$webgl$WebGL$alpha(true),
-			$elm_explorations$webgl$WebGL$antialias,
-			$elm_explorations$webgl$WebGL$depth(1)
-		]));
-var $author$project$GLSL$vertexShader = {
-	src: '\n        attribute vec3 position;\n        varying vec2 uv;\n\n        void main () {\n            gl_Position = vec4(position, 1.0);\n            uv = position.xy;\n        }\n    ',
-	attributes: {position: 'position'},
-	uniforms: {}
-};
-var $author$project$GLSL$view = F3(
-	function (t, text, a) {
-		return A2(
-			$elm_explorations$webgl$WebGL$toHtml,
-			a,
-			_List_fromArray(
-				[
-					A4(
-					$elm_explorations$webgl$WebGL$entity,
-					$author$project$GLSL$vertexShader,
-					$author$project$GLSL$fragmentShader,
-					$author$project$GLSL$mesh,
-					{u_texture: text, u_time: t})
-				]));
-	});
-var $author$project$Projects$euclidean = function (m) {
-	return A2(
-		$elm$html$Html$div,
-		_List_Nil,
-		_List_fromArray(
-			[
-				$author$project$Common$md('\n## Noneuclidean Rendering\n'),
-				A2(
-				$elm$core$Maybe$withDefault,
-				$elm$html$Html$text(''),
-				A2(
-					$elm$core$Maybe$map,
-					function (scene) {
-						return scene(
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$class('rounded-md border border-flu-300 overflow-clip aspect-square w-64 mx-auto bg-flu-100')
-								]));
-					},
-					A2(
-						$elm$core$Maybe$map,
-						$author$project$GLSL$view(m.time / 1000),
-						m.texture)))
-			]));
 };
 var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube = F2(
 	function (a, b) {
@@ -10347,27 +9450,6 @@ var $author$project$Projects$hpolys = A2(
 		[
 			$author$project$Common$md('\n## Polynomial Factoring in Haskell [[GitHub](https://github.com/JoelWantsCoffee/Haskell-Polynomials)]\nMy Honours thesis project, a haskell program to factor polynomials. All built and verified from the ground up.\n')
 		]));
-var $author$project$Projects$learning = A2(
-	$elm$html$Html$div,
-	_List_Nil,
-	_List_fromArray(
-		[
-			$author$project$Common$md('\n## Neural Network Image Generation\n')
-		]));
-var $author$project$Projects$minecraft = A2(
-	$elm$html$Html$div,
-	_List_Nil,
-	_List_fromArray(
-		[
-			$author$project$Common$md('\n## Programmable Minecraft Computer\n')
-		]));
-var $author$project$Projects$software = A2(
-	$elm$html$Html$div,
-	_List_Nil,
-	_List_fromArray(
-		[
-			$author$project$Common$md('\n## Software Renderer\n')
-		]));
 var $author$project$Projects$sotrue = A2(
 	$elm$html$Html$div,
 	_List_Nil,
@@ -10382,29 +9464,12 @@ var $author$project$Projects$timer = A2(
 		[
 			$author$project$Common$md('\n## Study Timer [[GitHub](https://github.com/JoelWantsCoffee/uni-timer)] [[Website](/uni-timer)]\nA Pomodoro timer I cobbled together in my first year of undergrad. Somehow it seems to have survived beyond graduation in 2022. The background—artfully drawn in Microsoft Paint—captures the atmosphere of Room 102, Building 31A during SWOTVAC, Semester 2, 2019 at UQ.\n')
 		]));
-var $author$project$Projects$wordle = A2(
-	$elm$html$Html$div,
-	_List_Nil,
-	_List_fromArray(
-		[
-			$author$project$Common$md('\n## Optimal Wordle\n')
-		]));
 var $author$project$Projects$view = function (m) {
 	return A2(
 		$elm$core$List$map,
 		$author$project$Common$bubble,
 		_List_fromArray(
-			[
-				$author$project$Projects$hpolys,
-				$author$project$Projects$sotrue,
-				$author$project$Projects$fluid,
-				$author$project$Projects$euclidean(m),
-				$author$project$Projects$wordle,
-				$author$project$Projects$learning,
-				$author$project$Projects$minecraft,
-				$author$project$Projects$software,
-				$author$project$Projects$timer
-			]));
+			[$author$project$Projects$hpolys, $author$project$Projects$sotrue, $author$project$Projects$fluid, $author$project$Projects$timer]));
 };
 var $author$project$Projects$page = {init: $author$project$Projects$init, subscriptions: $author$project$Projects$subscriptions, update: $author$project$Projects$update, view: $author$project$Projects$view};
 var $author$project$Talk$init = _Utils_Tuple2(_Utils_Tuple0, $elm$core$Platform$Cmd$none);
@@ -10462,7 +9527,7 @@ var $author$project$Words$serviceDeskOne = A2(
 		]),
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n# Service Desk One\n\nI cross the room and make it to service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed on me. \n\n> What are you here for?\n\nHer eyes snap down to the counter, to my forms and my id. She answers her own question. \n\n> A working with children\'s check.\n\nShe says it flatly, her mind obviously elsewhere. Her eyes move along the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.\n\n> Lunch!\n> Lunch is good!\n> I just had lunch too.\n> Don\'t worry, I\'m just having some fun.\n\nShe takes up my forms and starts entering something into her computer. She types for a minute, then stops to look at me.\n\n> No. \n> Is this your first time here?\n> Why haven\'t you been here before?\n> You\'re supposed to have new south wales license.\n> If you\'re here for longer than three months, you\'re supposed to request a new south wales license.\n> It\'s... no, no, don\'t worry.\n> The police won\'t know how long you\'ve been here.\n> It\'s a technicality.\n> It\'s up to you, whatever you want.\n\nShe turns back to her computer desk, produces a form, and places it on the counter. \n\n> You fill this in so you can get on the system.\n> I\'ll do this.\n> That is teamwork.\n\nI search the counter top for a pen. She sees me looking, gets down from her chair, walks about a metre to a set of draws, and produces a fresh pen. She gives it to me.\n\n> There are never any pens these days.\n> Teamwork.\n> I\'m just having some fun.\n> Because, look around---\n> No one has fun anymore.\n\nI turn to look around. The waiting room is full of waiting people. They don\'t all look glum; the people standing in front of service desk two are laughing. I turn back to the woman.\n\n> Queensland must be cheaper. \n> It\'s expensive here.\n\nI tell her that I think Brisbane is catching up to Sydney, cost of living wise.\n\n> It\'s because everyone here is running to Brisbane.\n> The people in Brisbane won\'t like it.\n> Soon all the states will be angry at each other.\n> And no one will think about immigrants anymore.\n> Sorry, I\'m just being an immigrant. \n> I\'m just having some fun.\n> No one has fun anymore.\n> And it doesn\'t even matter who you vote for.\n> The greens, one nation---all of the votes will go back to the two parties.\n> And they\'re both the same.\n> Everyone is the same.\n\nShe lowers her voice conspiratorially:\n\n> But I think labour\'s better.\n\nShe quickly returns to her normal volume.\n\n> But I\'m just being an immigrant.\n> I\'m just having fun.\n\nShe trails off for a moment, concentrating on her computer, then starts mumbling to herself as she types.\n\n> Who are you?\n> You are:\n> Joel...\n> William...\n> Richardson...\n> Do you ever think about that?\n\nShe fixes her eyes on me once again.\n\n> That that isn\'t who really who you are?\n> That that\'s just a name some people gave you, and other people call you?\n> You know?\n> Who are you really?\n\n$$ \\ $$\n\n\nI finish filling in my form and slide it across the counter to her. She pushes my ID back to me. \n\n> Teamwork.\n\nShe prints off something and hands it to me---a temporary working with children\'s check, for use until my proper one arrives. I collect my things.\n\n> Do you read?\n> You should read this book.\n> It\'s a wonderful book.\n> The author is brilliant.\n\nShe writes the name of the book on a scrap of paper and slides it across the counter to me.\n\n> Don\'t buy it though.\n> You\'re at the university.\n> You\'re like me -- poor.\n> Get it from the library.\n\nI tell her to have a good afternoon. I wave goodbye.\n\n> Come back sometime.\n> Tell me if you like it.\n')
+			$author$project$Common$md('\n# Service Desk One\n\nI cross the room and make it to service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed on me. \n\n> What are you here for?\n\nHer eyes snap down to the counter, to my forms and my id. She answers her own question. \n\n> A working with children\'s check.\n\nShe says it flatly, her mind obviously elsewhere. Her eyes move along the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.\n\n> Lunch!\n> Lunch is good!\n> I just had lunch too.\n> Don\'t worry, I\'m just having some fun.\n\nShe takes up my forms and starts entering something into her computer. She types for a minute, then stops to look at me.\n\n> No. \n> Is this your first time here?\n> Why haven\'t you been here before?\n> You\'re supposed to have new south wales license.\n> If you\'re here for longer than three months, you\'re supposed to request a new south wales license.\n> It\'s... no, no, don\'t worry.\n> The police won\'t know how long you\'ve been here.\n> It\'s a technicality.\n> It\'s up to you, whatever you want.\n\nShe turns back to her computer desk, produces a form, and places it on the counter. \n\n> You fill this in so you can get on the system.\n> I\'ll do this.\n> That is teamwork.\n\nI search the counter top for a pen. She sees me looking, gets down from her chair, walks about a metre to a set of draws, and produces a fresh pen. She gives it to me.\n\n> There are never any pens these days.\n> Teamwork.\n> I\'m just having some fun.\n> Because, look around---\n> No one has fun anymore.\n\nI turn to look around. The waiting room is full of waiting people. They don\'t all look glum; the people standing in front of service desk two are laughing. I turn back to the woman.\n\n> Queensland must be cheaper. \n> It\'s expensive here.\n\nI tell her that I think Brisbane is catching up to Sydney, cost of living wise.\n\n> It\'s because everyone here is running to Brisbane.\n> The people in Brisbane won\'t like it.\n> Soon all the states will be angry at each other.\n> And no one will think about immigrants anymore.\n> Sorry, I\'m just being an immigrant. \n> I\'m just having some fun.\n> No one has fun anymore.\n> And it doesn\'t even matter who you vote for.\n> The greens, one nation---all of the votes will go back to the two parties.\n> And they\'re both the same.\n> Everyone is the same.\n\nShe lowers her voice conspiratorially:\n\n> But I think labour\'s better.\n\nShe quickly returns to her normal volume.\n\n> But I\'m just being an immigrant.\n> I\'m just having fun.\n\nShe trails off for a moment, concentrating on her computer, then starts mumbling to herself as she types.\n\n> Who are you?\n> You are:\n> Joel...\n> William...\n> Richardson...\n> Do you ever think about that?\n\nShe fixes her eyes on me once again.\n\n> That that isn\'t who really who you are?\n> That that\'s just a name some people gave you, and other people call you?\n> You know?\n> Who are you really?\n\n&emsp;\n\n&emsp;\n\nI finish filling in my form and slide it across the counter to her. She pushes my ID back to me. \n\n> Teamwork.\n\nShe prints off something and hands it to me---a temporary working with children\'s check, for use until my proper one arrives. I collect my things.\n\n> Do you read?\n> You should read this book.\n> It\'s a wonderful book.\n> The author is brilliant.\n\nShe writes the name of the book on a scrap of paper and slides it across the counter to me.\n\n> Don\'t buy it though.\n> You\'re at the university.\n> You\'re like me -- poor.\n> Get it from the library.\n\nI tell her to have a good afternoon. I wave goodbye.\n\n> Come back sometime.\n> Tell me if you like it.\n')
 		]));
 var $author$project$Words$Msg = function (a) {
 	return {$: 'Msg', a: a};
@@ -10547,6 +9612,8 @@ var $author$project$Words$view = function (m) {
 		]);
 };
 var $author$project$Words$page = {init: $author$project$Words$init, subscriptions: $author$project$Words$subscriptions, update: $author$project$Words$update, view: $author$project$Words$view};
+var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
+var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
 var $author$project$Main$init = F2(
 	function (url, key) {
 		return A2(
@@ -10580,6 +9647,39 @@ var $author$project$Main$init = F2(
 								$author$project$Main$Words,
 								$elm$core$Platform$Cmd$map($author$project$Main$WordsMsg),
 								$author$project$Words$page.init);
+						case 'cv':
+							return A2(
+								$elm$core$Tuple$mapSecond,
+								function (cmd) {
+									return $elm$core$Platform$Cmd$batch(
+										_List_fromArray(
+											[
+												cmd,
+												A2(
+												$elm$core$Task$attempt,
+												function (_v1) {
+													return $author$project$Main$NoOp;
+												},
+												A2(
+													$elm$core$Task$andThen,
+													function (vp) {
+														return (_Utils_cmp(vp.viewport.height, vp.viewport.y) > 0) ? A3($elm$browser$Browser$Dom$setViewportOf, 'main', 0, vp.viewport.height) : $elm$core$Task$succeed(_Utils_Tuple0);
+													},
+													$elm$browser$Browser$Dom$getViewportOf('main'))),
+												A2(
+												$elm$browser$Browser$Navigation$pushUrl,
+												key,
+												$elm$url$Url$toString(
+													_Utils_update(
+														url,
+														{fragment: $elm$core$Maybe$Nothing})))
+											]));
+								},
+								A3(
+									$elm$core$Tuple$mapBoth,
+									$author$project$Main$Home,
+									$elm$core$Platform$Cmd$map($author$project$Main$HomeMsg),
+									$author$project$Home$page.init));
 						default:
 							return _Utils_Tuple2($author$project$Main$Empty, $elm$core$Platform$Cmd$none);
 					}
@@ -10644,7 +9744,7 @@ var $author$project$Main$update = F2(
 		update:
 		while (true) {
 			var _v0 = _Utils_Tuple2(message, model.model);
-			_v0$8:
+			_v0$9:
 			while (true) {
 				switch (_v0.a.$) {
 					case 'HomeMsg':
@@ -10657,7 +9757,7 @@ var $author$project$Main$update = F2(
 								$elm$core$Platform$Cmd$map($author$project$Main$HomeMsg),
 								A2($author$project$Home$page.update, msg, m));
 						} else {
-							break _v0$8;
+							break _v0$9;
 						}
 					case 'TalkMsg':
 						if (_v0.b.$ === 'Talk') {
@@ -10669,7 +9769,7 @@ var $author$project$Main$update = F2(
 								$elm$core$Platform$Cmd$map($author$project$Main$TalkMsg),
 								A2($author$project$Talk$page.update, msg, m));
 						} else {
-							break _v0$8;
+							break _v0$9;
 						}
 					case 'ProjectsMsg':
 						if (_v0.b.$ === 'Projects') {
@@ -10681,7 +9781,7 @@ var $author$project$Main$update = F2(
 								$elm$core$Platform$Cmd$map($author$project$Main$ProjectsMsg),
 								A2($author$project$Projects$page.update, msg, m));
 						} else {
-							break _v0$8;
+							break _v0$9;
 						}
 					case 'ArticleMsg':
 						if (_v0.b.$ === 'Article') {
@@ -10693,7 +9793,7 @@ var $author$project$Main$update = F2(
 								$elm$core$Platform$Cmd$map($author$project$Main$ArticleMsg),
 								A2($author$project$Article$page.update, msg, m));
 						} else {
-							break _v0$8;
+							break _v0$9;
 						}
 					case 'WordsMsg':
 						if (_v0.b.$ === 'Words') {
@@ -10705,7 +9805,7 @@ var $author$project$Main$update = F2(
 								$elm$core$Platform$Cmd$map($author$project$Main$WordsMsg),
 								A2($author$project$Words$page.update, msg, m));
 						} else {
-							break _v0$8;
+							break _v0$9;
 						}
 					case 'LinkClicked':
 						if (_v0.a.a.$ === 'External') {
@@ -10720,9 +9820,12 @@ var $author$project$Main$update = F2(
 								$elm$browser$Browser$Navigation$load(
 									$elm$url$Url$toString(u)));
 						}
-					default:
+					case 'Reset':
 						var u = _v0.a.a;
 						return A2($author$project$Main$init, u, model.key);
+					default:
+						var _v1 = _v0.a;
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
 			}
 			var $temp$message = $author$project$Main$Reset(model.url),
@@ -10732,48 +9835,20 @@ var $author$project$Main$update = F2(
 			continue update;
 		}
 	});
-var $elm$core$List$singleton = function (value) {
-	return _List_fromArray(
-		[value]);
-};
 var $author$project$Main$topBar = function (s) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class('transition-fast w-full p-6 space-x-6 flex text-lg items-center border border-flu-300 bg-flu-0')
+				$elm$html$Html$Attributes$class('transition-fast w-full text-md flex flex-row p-3')
 			]),
 		_List_fromArray(
 			[
 				A2(
-				$elm$html$Html$a,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$href(''),
-						$elm$html$Html$Attributes$class(
-						A3(
-							$author$project$Common$ifThenElse,
-							_Utils_eq($elm$core$Maybe$Nothing, s),
-							'',
-							'')),
-						$elm$html$Html$Attributes$class('cursor-pointer hover:underline font-bold')
-					]),
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Joel Richardson')
-					])),
-				A2(
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('grow')
-					]),
-				_List_Nil),
-				A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('w-1/3 flex space-x-6 items-center')
+						$elm$html$Html$Attributes$class('p-3 space-x-2 flex flex-row w-auto')
 					]),
 				_List_fromArray(
 					[
@@ -10781,58 +9856,19 @@ var $author$project$Main$topBar = function (s) {
 						$elm$html$Html$a,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$href('#projects'),
-								$elm$html$Html$Attributes$class(
-								A3(
-									$author$project$Common$ifThenElse,
-									_Utils_eq(
-										$elm$core$Maybe$Just('projects'),
-										s),
-									'font-bold',
-									'hover:underline')),
-								$elm$html$Html$Attributes$class('flex-1 grow text-right')
+								$elm$html$Html$Attributes$class('font-bold cursor-pointer select-none'),
+								$elm$html$Html$Attributes$href('')
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Projects')
+								$elm$html$Html$text('Joel Richardson')
 							])),
 						A2(
-						$elm$html$Html$a,
+						$elm$html$Html$div,
+						_List_Nil,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$href('#talks'),
-								$elm$html$Html$Attributes$class(
-								A3(
-									$author$project$Common$ifThenElse,
-									_Utils_eq(
-										$elm$core$Maybe$Just('talks'),
-										s),
-									'font-bold',
-									'hover:underline')),
-								$elm$html$Html$Attributes$class('flex-1 grow text-center')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Talks')
-							])),
-						A2(
-						$elm$html$Html$a,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$href('#articles'),
-								$elm$html$Html$Attributes$class(
-								A3(
-									$author$project$Common$ifThenElse,
-									_Utils_eq(
-										$elm$core$Maybe$Just('articles'),
-										s),
-									'font-bold',
-									'hover:underline')),
-								$elm$html$Html$Attributes$class('flex-1 grow text-left')
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Articles ')
+								$elm$html$Html$text('Mathematics HDR Student')
 							]))
 					])),
 				A2(
@@ -10846,11 +9882,62 @@ var $author$project$Main$topBar = function (s) {
 				$elm$html$Html$div,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class('pointer-events-none opacity-0')
+						$elm$html$Html$Attributes$class('p-3 space-x-3 flex flex-row font-bold')
 					]),
 				_List_fromArray(
 					[
-						$elm$html$Html$text('Joel Richardson____')
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq($elm$core$Maybe$Nothing, s),
+									'#cv',
+									'')),
+								$elm$html$Html$Attributes$class('hover:underline')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('CV')
+							])),
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href('#projects'),
+								$elm$html$Html$Attributes$class(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq(
+										$elm$core$Maybe$Just('projects'),
+										s),
+									'underline',
+									'hover:underline'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Research & Projects')
+							])),
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$elm$html$Html$Attributes$href('#articles'),
+								$elm$html$Html$Attributes$class(
+								A3(
+									$author$project$Common$ifThenElse,
+									_Utils_eq(
+										$elm$core$Maybe$Just('articles'),
+										s),
+									'underline',
+									'hover:underline'))
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Articles')
+							]))
 					]))
 			]));
 };
@@ -10868,7 +9955,7 @@ var $author$project$Main$academic = F2(
 					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('h-[10%] w-full')
+							$elm$html$Html$Attributes$class('h-[9.1%] w-full bg-flu-0')
 						]),
 					_List_fromArray(
 						[
@@ -10878,14 +9965,14 @@ var $author$project$Main$academic = F2(
 					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('h-[1px]')
+							$elm$html$Html$Attributes$class('h-[1px] bg-flu-200')
 						]),
 					_List_Nil),
 					A2(
 					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('h-[90%] w-full overflow-scroll')
+							$elm$html$Html$Attributes$class('h-[90.9%] w-full overflow-scroll')
 						]),
 					A3(
 						$elm$core$Basics$composeR,
@@ -10928,6 +10015,64 @@ var $author$project$Main$creative = function (contents) {
 			]),
 		contents);
 };
+var $author$project$Main$home = F2(
+	function (model, contents) {
+		return A2(
+			$elm$html$Html$div,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class('home w-full h-full bg-flu-0')
+				]),
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class('h-full w-full overflow-scroll'),
+							$elm$html$Html$Attributes$id('main')
+						]),
+					A3(
+						$elm$core$Basics$composeR,
+						$elm$html$Html$div(
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$class('flex flex-col place-items-center space-y-6')
+								])),
+						$elm$core$List$singleton,
+						$elm$core$List$concat(
+							_List_fromArray(
+								[
+									_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$div,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('w-full')
+											]),
+										_List_fromArray(
+											[
+												$author$project$Main$topBar(model.url.fragment)
+											]))
+									]),
+									contents,
+									_List_fromArray(
+									[
+										A2(
+										$elm$html$Html$div,
+										_List_fromArray(
+											[
+												$elm$html$Html$Attributes$class('w-full p-4 pb-8 text-flu-300 text-center')
+											]),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('that\'s it - the end.')
+											]))
+									])
+								]))))
+				]));
+	});
 var $author$project$Main$viewInner = function (model) {
 	var _v0 = model.model;
 	switch (_v0.$) {
@@ -10951,7 +10096,7 @@ var $author$project$Main$viewInner = function (model) {
 		case 'Home':
 			var m = _v0.a;
 			return A2(
-				$author$project$Main$academic,
+				$author$project$Main$home,
 				model,
 				A2(
 					$elm$core$List$map,
