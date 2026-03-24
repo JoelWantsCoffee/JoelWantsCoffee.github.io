@@ -76,7 +76,7 @@ me : Html msg
 me =
     md """
 # About Me
-I'm a Master of Research student at Macquarie University, studying category theory. Before moving to Sydney, I lived in Brisbane where I completed my undergraduate degrees at the University of Queensland and worked as Software Engineer. In my spare time I like to sing, draw, and write.
+I'm a PhD student at the University of Sydney, studying pure maths. Before moving to Sydney, I lived in Brisbane where I completed my undergraduate degrees at the University of Queensland and worked as a Software Engineer. In my spare time I like to sing, draw, and write.
 """
 
 
@@ -85,13 +85,18 @@ edu =
     md """
 # Education
 
+**Doctor of Philosophy (Mathematics)**
+*Thesis on Algebra and Knot Theory supervised by Zsuzsanna Dancso*
+*2026 - 2029*&ensp;The University of Sydney
+
+
 **Master of Research (Mathematics)**
-*Project on Monads and Tangent Categories supervised by JS Lemay*
+*Thesis on Monads and Tangent Categories supervised by JS Lemay*
 *2025 - 2025*&ensp;Macquarie University
 
 
 **Bachelor of Computer Science (Honours)**
-*First class honours* ⋅ *Project on Computer Algebra supervised by Paul Vrbik*
+*First class honours* ⋅ *Thesis on Computer Algebra supervised by Paul Vrbik*
 *2023 - 2024*&ensp;The University of Queensland
 
 
@@ -106,12 +111,17 @@ work =
     md """
 # Employment
 
+**Casual Tutor**&ensp;The University of Sydney
+*Teaching Mathematics*
+*Jun 2025 - Present*
+
+
 **Software Engineer**&ensp;Veitch Lister Consulting
 *Building Type Systems and Programming Languages*
 *Nov 2022 - Feb 2024,&emsp;Sep 2024 - Jan 2025*
 
 
-**Tutor**&ensp;The University of Queensland
+**Casual Tutor**&ensp;The University of Queensland
 *Teaching Mathematics and Computer Science*
 *Feb 2022 - Nov 2022,&emsp;Feb 2024 - Nov 2024*
 """
@@ -121,6 +131,14 @@ talk : Html msg
 talk =
     md """
 # Talks
+
+**Algebras of Tangent Bundle Monads** **[[Slides](/data/AustMS25.pdf)]**
+*Dec 2025*&ensp;Australian Mathematical Society, La Trobe University
+
+
+**Combining Machines and Braids**
+*Nov 2025*&ensp;Groves Christian College
+
 
 **Algebras of the Tangent Bundle Monad** **[[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]**
 *Apr 2025*&ensp;Australian Category Seminar, Macquarie University

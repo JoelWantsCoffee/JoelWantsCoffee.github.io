@@ -11,7 +11,7 @@ import Markdown
 
 
 type Model
-    = Bluetack
+    = Poems
     | ServiceDeskOne
 
 
@@ -31,14 +31,14 @@ view m =
                 ServiceDeskOne ->
                     serviceDeskOne
 
-                Bluetack ->
-                    Html.text ""
+                Poems ->
+                    poems
             ]
         , Html.div [ class "absolute top-0 left-0 p-8 flex flex-col gap-2 select-none" ]
             [ Html.a [ class "w-[0px] text-3xl times-new-roman pb-4 cursor-pointer hover:underline", Attr.href "/" ] [ Html.text "Joel Richardson" ]
             , sidebarItem m ServiceDeskOne
 
-            -- , sidebarItem m Bluetack
+            -- , sidebarItem m Poems
             ]
         ]
     ]
@@ -46,7 +46,7 @@ view m =
 
 sidebarItem : Model -> Model -> Html Msg
 sidebarItem m m2 =
-    Html.div [ class <| "font-light " ++ ifThenElse (m == m2) "text-flu-500" "text-flu-400 hover:underline cursor-pointer", onClick (Msg m2) ] [ Html.text (toString m2) ]
+    Html.div [ class <| "font-light " ++ ifThenElse (m == m2) "text-flu-800" "text-flu-400 hover:underline cursor-pointer", onClick (Msg m2) ] [ Html.text (toString m2) ]
 
 
 toString : Model -> String
@@ -55,8 +55,8 @@ toString m =
         ServiceDeskOne ->
             "Service Desk One"
 
-        Bluetack ->
-            "Blue-tack"
+        Poems ->
+            "Five Poems"
 
 
 init : ( Model, Cmd Msg )
@@ -89,17 +89,56 @@ subscriptions _ =
 --
 
 
+poems : Html msg
+poems =
+    Html.div [ class "w-2/5 mx-auto py-16 prose" ]
+        [ md """
+# Five Poems
+
+&emsp;
+
+## 1. Durry Head
+Durry head, durry eyes
+Durry breath just outside
+Wet heat, durry fumes
+Scrunch your eyes, think thoughts of doom
+Shut the window, sleep in sweat
+Post-exams the durries end
+It's just the stress, so he says
+What's to do a durry head?
+
+&emsp;
+
+## 2. Flames
+Flames, flames laugh with me
+Tell me of your woody glee
+Flames, flames louder you
+Sing to me of burnt black wood
+
+&emsp;
+
+## 3. Bluetack
+We stick to each other.
+We separate in a thousand wispy strands.
+Bits of us float, suspended in the mess of it all, and I can't tell with which of us each originally belonged.
+
+&emsp;
+
+##
+""" ]
+
+
 serviceDeskOne : Html msg
 serviceDeskOne =
     Html.div [ class "w-2/5 mx-auto py-16 prose" ]
         [ md """
 # Service Desk One
 
-I cross the room and make it to service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed on me. 
+I cross the room and arrive at service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed to me. 
 
 > What are you here for?
 
-Her eyes snap down to the counter, to my forms and my id. She answers her own question. 
+The eyes snap down to the counter, to my forms and my id. She answers her own question.
 
 > A working with children's check.
 
@@ -108,15 +147,16 @@ She says it flatly, her mind obviously elsewhere. Her eyes move along the counte
 > Lunch!
 > Lunch is good!
 > I just had lunch too.
-> Don't worry, I'm just having some fun.
+> Don't worry! 
+> I'm just having some fun.
 
-She takes up my forms and starts entering something into her computer. She types for a minute, then stops to look at me.
+Her though lingers, somehow unresolved, as she takes up my forms and starts entering something into her computer. She types in silence for a minute, two, three, then stops, looking to me.
 
 > No. 
-> Is this your first time here?
-> Why haven't you been here before?
-> You're supposed to have new south wales license.
-> If you're here for longer than three months, you're supposed to request a new south wales license.
+> Is this your first time here? 
+> Why haven't you been here before? 
+> You're supposed to have New South Wales license.
+> If you're here for longer than three months, you're supposed to request a New South Wales license.
 > It's... no, no, don't worry.
 > The police won't know how long you've been here.
 > It's a technicality.
@@ -146,7 +186,7 @@ I tell her that I think Brisbane is catching up to Sydney, cost of living wise.
 > It's because everyone here is running to Brisbane.
 > The people in Brisbane won't like it.
 > Soon all the states will be angry at each other.
-> And no one will think about immigrants anymore.
+> And no one will think about immigrants anymore!
 > Sorry, I'm just being an immigrant. 
 > I'm just having some fun.
 > No one has fun anymore.
@@ -159,7 +199,7 @@ She lowers her voice conspiratorially:
 
 > But I think labour's better.
 
-She quickly returns to her normal volume.
+She quickly returns.
 
 > But I'm just being an immigrant.
 > I'm just having fun.

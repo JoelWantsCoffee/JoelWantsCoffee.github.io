@@ -6,7 +6,7 @@ import Embed.Youtube
 import Embed.Youtube.Attributes
 import GLSL
 import Html exposing (Html)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, src)
 import Html.Events as Html
 import Json.Decode as Decode
 import WebGL.Texture exposing (Texture)
@@ -92,16 +92,25 @@ fluid =
     Html.div []
         [ md """
 ## High Performance Fluid Simulation [[GitHub](https://github.com/JoelWantsCoffee/fluid-sim)]
-A fluid sim coded in C, complete with `CUDA` and `AVX` optimizations. I built this for the (excellent!) *COSC3500: High-Performance Computing* course at UQ. Here's a project reflection video.
+A fluid sim coded in C, complete with `CUDA` and `AVX` optimizations. I built this for the (excellent!) *COSC3500: High-Performance Computing* course at UQ.
 """
-        , Embed.Youtube.fromString "-RVnkuJ1Oao"
-            |> Embed.Youtube.attributes
-                [ Embed.Youtube.Attributes.width 480
-                , Embed.Youtube.Attributes.height 270
-                ]
-            |> Embed.Youtube.toHtml
-            |> (\x -> Html.div [ class "w-full flex" ] [ Html.div [ class "grow" ] [], Html.div [ class "rounded-md border border-flu-300 overflow-clip bg-flu-100" ] [ x ], Html.div [ class "grow" ] [] ])
+
+        -- , Embed.Youtube.fromString "-RVnkuJ1Oao"
+        --     |> Embed.Youtube.attributes
+        --         [ Embed.Youtube.Attributes.width 480
+        --         , Embed.Youtube.Attributes.height 270
+        --         ]
+        --     |> Embed.Youtube.toHtml
+        --     |> (\x -> Html.div [ class "w-full flex" ] [ Html.div [ class "grow" ] [], Html.div [ class "rounded-md border border-flu-300 overflow-clip bg-flu-100" ] [ x ], Html.div [ class "grow" ] [] ])
         ]
+
+
+test : Html Msg
+test =
+    Html.div []
+        [ md """
+## Test
+""", Html.iframe [ class "w-full bg-flu-100", src "./data/1854slides.pdf" ] [] ]
 
 
 
@@ -111,8 +120,10 @@ A fluid sim coded in C, complete with `CUDA` and `AVX` optimizations. I built th
 view : Model -> List (Html Msg)
 view m =
     List.map bubble
-        [ hpolys
+        [ -- euclidean m
+          hpolys
         , sotrue
+        , timer
         , fluid
 
         -- , euclidean m
@@ -120,7 +131,6 @@ view m =
         -- , learning
         -- , minecraft
         -- , software
-        , timer
         ]
 
 

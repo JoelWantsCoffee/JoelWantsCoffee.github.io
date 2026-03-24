@@ -249,7 +249,7 @@ topBar s =
         , Html.div [ class "grow" ] []
         , Html.div [ class "p-3 space-x-3 flex flex-row font-bold" ]
             [ Html.a [ Attr.href (ifThenElse (Nothing == s) "#cv" ""), class "hover:underline" ] [ Html.text "CV" ]
-            , Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "underline" "hover:underline" ] [ Html.text "Research & Projects" ]
+            , Html.a [ Attr.href "#projects", class <| ifThenElse (Just "projects" == s) "underline" "hover:underline" ] [ Html.text "Projects" ]
             , Html.a [ Attr.href "#articles", class <| ifThenElse (Just "articles" == s) "underline" "hover:underline" ] [ Html.text "Articles" ]
             ]
         ]

@@ -5544,24 +5544,7 @@ var _Texture_load = F6(function (magnify, mininify, horizontalWrap, verticalWrap
 var _Texture_size = function (texture) {
   return _Utils_Tuple2(texture.a, texture.b);
 };
-
-
-function _Url_percentEncode(string)
-{
-	return encodeURIComponent(string);
-}
-
-function _Url_percentDecode(string)
-{
-	try
-	{
-		return $elm$core$Maybe$Just(decodeURIComponent(string));
-	}
-	catch (e)
-	{
-		return $elm$core$Maybe$Nothing;
-	}
-}var $author$project$Main$LinkClicked = function (a) {
+var $author$project$Main$LinkClicked = function (a) {
 	return {$: 'LinkClicked', a: a};
 };
 var $author$project$Main$Reset = function (a) {
@@ -8779,16 +8762,16 @@ var $author$project$Common$md = function (x) {
 			]),
 		x);
 };
-var $author$project$Home$edu = $author$project$Common$md('\n# Education\n\n**Master of Research (Mathematics)**\n*Project on Monads and Tangent Categories supervised by JS Lemay*\n*2025 - 2025*&ensp;Macquarie University\n\n\n**Bachelor of Computer Science (Honours)**\n*First class honours* ⋅ *Project on Computer Algebra supervised by Paul Vrbik*\n*2023 - 2024*&ensp;The University of Queensland\n\n\n**Bachelor of Mathematics / Bachelor of Computer Science**\n*Majors in Pure Mathematics and Programming Languages*\n*2019 - 2022*&ensp;The University of Queensland\n');
+var $author$project$Home$edu = $author$project$Common$md('\n# Education\n\n**Doctor of Philosophy (Mathematics)**\n*Thesis on Algebra and Knot Theory supervised by Zsuzsanna Dancso*\n*2026 - 2029*&ensp;The University of Sydney\n\n\n**Master of Research (Mathematics)**\n*Thesis on Monads and Tangent Categories supervised by JS Lemay*\n*2025 - 2025*&ensp;Macquarie University\n\n\n**Bachelor of Computer Science (Honours)**\n*First class honours* ⋅ *Thesis on Computer Algebra supervised by Paul Vrbik*\n*2023 - 2024*&ensp;The University of Queensland\n\n\n**Bachelor of Mathematics / Bachelor of Computer Science**\n*Majors in Pure Mathematics and Programming Languages*\n*2019 - 2022*&ensp;The University of Queensland\n');
 var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
-var $author$project$Home$me = $author$project$Common$md('\n# About Me\nI\'m a Master of Research student at Macquarie University, studying category theory. Before moving to Sydney, I lived in Brisbane where I completed my undergraduate degrees at the University of Queensland and worked as Software Engineer. In my spare time I like to sing, draw, and write.\n');
+var $author$project$Home$me = $author$project$Common$md('\n# About Me\nI\'m a PhD student at the University of Sydney, studying pure maths. Before moving to Sydney, I lived in Brisbane where I completed my undergraduate degrees at the University of Queensland and worked as a Software Engineer. In my spare time I like to sing, draw, and write.\n');
 var $elm$html$Html$section = _VirtualDom_node('section');
 var $elm$core$List$singleton = function (value) {
 	return _List_fromArray(
 		[value]);
 };
-var $author$project$Home$talk = $author$project$Common$md('\n# Talks\n\n**Algebras of the Tangent Bundle Monad** **[[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]**\n*Apr 2025*&ensp;Australian Category Seminar, Macquarie University\n\n\n**Simplicial Sets, Simply** **[[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]**\n*Aug 2024*&ensp;UQ Mathematics Student Society, The University of Queensland\n\n\n**Lambda Calculus**\n*Jun 2024*&ensp;Trinity Bay State High School\n\n\n**Finding Factors in Berlekamp\'s Algebra** **[[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]**\n*Apr 2024*&ensp;UQ Mathematics Student Society, The University of Queensland\n');
-var $author$project$Home$work = $author$project$Common$md('\n# Employment\n\n**Software Engineer**&ensp;Veitch Lister Consulting\n*Building Type Systems and Programming Languages*\n*Nov 2022 - Feb 2024,&emsp;Sep 2024 - Jan 2025*\n\n\n**Tutor**&ensp;The University of Queensland\n*Teaching Mathematics and Computer Science*\n*Feb 2022 - Nov 2022,&emsp;Feb 2024 - Nov 2024*\n');
+var $author$project$Home$talk = $author$project$Common$md('\n# Talks\n\n**Algebras of Tangent Bundle Monads** **[[Slides](/data/AustMS25.pdf)]**\n*Dec 2025*&ensp;Australian Mathematical Society, La Trobe University\n\n\n**Combining Machines and Braids**\n*Nov 2025*&ensp;Groves Christian College\n\n\n**Algebras of the Tangent Bundle Monad** **[[Link](https://centre-of-australian-category-theory.github.io/seminar/talks/1854)] [[Slides](/data/1854slides.pdf)]**\n*Apr 2025*&ensp;Australian Category Seminar, Macquarie University\n\n\n**Simplicial Sets, Simply** **[[Slides](https://uqmss.org/assets/slides/2024/wk4_joel_richardson.pdf)]**\n*Aug 2024*&ensp;UQ Mathematics Student Society, The University of Queensland\n\n\n**Lambda Calculus**\n*Jun 2024*&ensp;Trinity Bay State High School\n\n\n**Finding Factors in Berlekamp\'s Algebra** **[[Slides](https://uqmss.org/assets/slides/2024/wk9_joel_richardson.pdf)]**\n*Apr 2024*&ensp;UQ Mathematics Student Society, The University of Queensland\n');
+var $author$project$Home$work = $author$project$Common$md('\n# Employment\n\n**Casual Tutor**&ensp;The University of Sydney\n*Teaching Mathematics*\n*Jun 2025 - Present*\n\n\n**Software Engineer**&ensp;Veitch Lister Consulting\n*Building Type Systems and Programming Languages*\n*Nov 2022 - Feb 2024,&emsp;Sep 2024 - Jan 2025*\n\n\n**Casual Tutor**&ensp;The University of Queensland\n*Teaching Mathematics and Computer Science*\n*Feb 2022 - Nov 2022,&emsp;Feb 2024 - Nov 2024*\n');
 var $author$project$Home$cv = A2(
 	$elm$html$Html$section,
 	_List_fromArray(
@@ -9071,377 +9054,12 @@ var $author$project$Common$bubble = function (art) {
 		_List_fromArray(
 			[art]));
 };
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube = F2(
-	function (a, b) {
-		return {$: 'Youtube', a: a, b: b};
-	});
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$attributes = F2(
-	function (a, _v0) {
-		var youtubeVideoid = _v0.a;
-		var listOfAttributes = _v0.b;
-		return A2(
-			$bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube,
-			youtubeVideoid,
-			_Utils_ap(listOfAttributes, a));
-	});
-var $bellroy$elm_embed_youtube$Embed$Youtube$attributes = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$attributes;
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$YoutubeVideoId = function (a) {
-	return {$: 'YoutubeVideoId', a: a};
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$fromString = function (stringYoutubeVideoid) {
-	return A2(
-		$bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$Youtube,
-		$bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$YoutubeVideoId(stringYoutubeVideoid),
-		_List_Nil);
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$fromString = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Youtube$fromString;
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Height = function (a) {
-	return {$: 'Height', a: a};
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$Attributes$height = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Height;
-var $elm$virtual_dom$VirtualDom$attribute = F2(
-	function (key, value) {
-		return A2(
-			_VirtualDom_attribute,
-			_VirtualDom_noOnOrFormAction(key),
-			_VirtualDom_noJavaScriptOrHtmlUri(value));
-	});
-var $elm$html$Html$Attributes$attribute = $elm$virtual_dom$VirtualDom$attribute;
-var $elm$core$List$maybeCons = F3(
-	function (f, mx, xs) {
-		var _v0 = f(mx);
-		if (_v0.$ === 'Just') {
-			var x = _v0.a;
-			return A2($elm$core$List$cons, x, xs);
-		} else {
-			return xs;
-		}
-	});
-var $elm$core$List$filterMap = F2(
-	function (f, xs) {
-		return A3(
-			$elm$core$List$foldr,
-			$elm$core$List$maybeCons(f),
-			_List_Nil,
-			xs);
-	});
-var $elm$html$Html$Attributes$height = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'height',
-		$elm$core$String$fromInt(n));
-};
-var $elm$html$Html$Attributes$width = function (n) {
-	return A2(
-		_VirtualDom_attribute,
-		'width',
-		$elm$core$String$fromInt(n));
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttribute = function (attribute) {
-	switch (attribute.$) {
-		case 'Width':
-			var a = attribute.a;
-			return $elm$core$Maybe$Just(
-				$elm$html$Html$Attributes$width(a));
-		case 'Height':
-			var a = attribute.a;
-			return $elm$core$Maybe$Just(
-				$elm$html$Html$Attributes$height(a));
-		case 'LazyLoad':
-			return $elm$core$Maybe$Just(
-				A2($elm$html$Html$Attributes$attribute, 'loading', 'lazy'));
-		default:
-			return $elm$core$Maybe$Nothing;
-	}
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttributes = function (_v0) {
-	var attributes = _v0.b;
-	return A2($elm$core$List$filterMap, $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttribute, attributes);
-};
-var $elm$url$Url$addPort = F2(
-	function (maybePort, starter) {
-		if (maybePort.$ === 'Nothing') {
-			return starter;
-		} else {
-			var port_ = maybePort.a;
-			return starter + (':' + $elm$core$String$fromInt(port_));
-		}
-	});
-var $elm$url$Url$addPrefixed = F3(
-	function (prefix, maybeSegment, starter) {
-		if (maybeSegment.$ === 'Nothing') {
-			return starter;
-		} else {
-			var segment = maybeSegment.a;
-			return _Utils_ap(
-				starter,
-				_Utils_ap(prefix, segment));
-		}
-	});
-var $elm$url$Url$toString = function (url) {
-	var http = function () {
-		var _v0 = url.protocol;
-		if (_v0.$ === 'Http') {
-			return 'http://';
-		} else {
-			return 'https://';
-		}
-	}();
-	return A3(
-		$elm$url$Url$addPrefixed,
-		'#',
-		url.fragment,
-		A3(
-			$elm$url$Url$addPrefixed,
-			'?',
-			url.query,
-			_Utils_ap(
-				A2(
-					$elm$url$Url$addPort,
-					url.port_,
-					_Utils_ap(http, url.host)),
-				url.path)));
-};
-var $elm$url$Url$Builder$toQueryPair = function (_v0) {
-	var key = _v0.a;
-	var value = _v0.b;
-	return key + ('=' + value);
-};
-var $elm$url$Url$Builder$toQuery = function (parameters) {
-	if (!parameters.b) {
-		return '';
-	} else {
-		return '?' + A2(
-			$elm$core$String$join,
-			'&',
-			A2($elm$core$List$map, $elm$url$Url$Builder$toQueryPair, parameters));
-	}
-};
-var $elm$url$Url$Builder$QueryParameter = F2(
-	function (a, b) {
-		return {$: 'QueryParameter', a: a, b: b};
-	});
-var $elm$url$Url$percentEncode = _Url_percentEncode;
-var $elm$url$Url$Builder$string = F2(
-	function (key, value) {
-		return A2(
-			$elm$url$Url$Builder$QueryParameter,
-			$elm$url$Url$percentEncode(key),
-			$elm$url$Url$percentEncode(value));
-	});
-var $elm$url$Url$Builder$int = F2(
-	function (key, value) {
-		return A2(
-			$elm$url$Url$Builder$QueryParameter,
-			$elm$url$Url$percentEncode(key),
-			$elm$core$String$fromInt(value));
-	});
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters_ = F2(
-	function (_v0, attribute) {
-		var stringYoutubeVideoId = _v0.a;
-		switch (attribute.$) {
-			case 'Width':
-				return _List_Nil;
-			case 'Height':
-				return _List_Nil;
-			case 'LazyLoad':
-				return _List_Nil;
-			case 'Autoplay':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'autoplay', '1'),
-						A2($elm$url$Url$Builder$string, 'mute', '1')
-					]);
-			case 'Loop':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'loop', '1'),
-						A2($elm$url$Url$Builder$string, 'playlist', stringYoutubeVideoId)
-					]);
-			case 'Start':
-				var a = attribute.a;
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$int, 'start', a)
-					]);
-			case 'End':
-				var a = attribute.a;
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$int, 'end', a)
-					]);
-			case 'Mute':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'mute', '1')
-					]);
-			case 'ColorRed':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'color', 'red')
-					]);
-			case 'ColorWhite':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'color', 'white')
-					]);
-			case 'ModestBranding':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'modestbranding', '1'),
-						A2($elm$url$Url$Builder$string, 'showinfo', '1')
-					]);
-			case 'PlaysInline':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'playsinline', '1'),
-						A2($elm$url$Url$Builder$string, 'webkit-playsinline', '1')
-					]);
-			case 'HideControls':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'controls', '0')
-					]);
-			case 'DisableKeyboard':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'disablekb', '1')
-					]);
-			case 'DisableFullscreen':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'fs', '0')
-					]);
-			case 'VideoAnnotations':
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'iv_load_policy', '3')
-					]);
-			case 'Language':
-				var a = attribute.a;
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'hl', a)
-					]);
-			case 'ClosedCaptionsLanguagePreference':
-				var a = attribute.a;
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'cc_lang_pref', a)
-					]);
-			default:
-				return _List_fromArray(
-					[
-						A2($elm$url$Url$Builder$string, 'cc_load_policy', '1')
-					]);
-		}
-	});
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters = function (_v0) {
-	var youtubeVideoId = _v0.a;
-	var attributes = _v0.b;
-	return _Utils_ap(
-		A3(
-			$elm$core$List$foldl,
-			function (a) {
-				return $elm$core$Basics$append(
-					A2($bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters_, youtubeVideoId, a));
-			},
-			_List_Nil,
-			attributes),
-		_List_fromArray(
-			[
-				A2($elm$url$Url$Builder$string, 'version', '3'),
-				A2($elm$url$Url$Builder$string, 'rel', '0'),
-				A2($elm$url$Url$Builder$string, 'enablejsapi', '1')
-			]));
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toYoutubeUrl = function (yt) {
-	var stringYoutubeVideoid = yt.a.a;
-	return {
-		fragment: $elm$core$Maybe$Nothing,
-		host: 'www.youtube-nocookie.com',
-		path: '/embed/' + stringYoutubeVideoid,
-		port_: $elm$core$Maybe$Nothing,
-		protocol: $elm$url$Url$Https,
-		query: $elm$core$Maybe$Just(
-			A2(
-				$elm$core$String$dropLeft,
-				1,
-				$elm$url$Url$Builder$toQuery(
-					$bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toQueryParameters(yt))))
-	};
-};
-var $elm$html$Html$Attributes$type_ = $elm$html$Html$Attributes$stringProperty('type');
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toIframe = function (yt) {
-	return A2(
-		$elm$html$Html$iframe,
-		_Utils_ap(
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$src(
-					$elm$url$Url$toString(
-						$bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toYoutubeUrl(yt))),
-					$elm$html$Html$Attributes$type_('text/html'),
-					A2($elm$html$Html$Attributes$attribute, 'allowfullscreen', 'true'),
-					A2($elm$html$Html$Attributes$attribute, 'allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen'),
-					A2($elm$html$Html$Attributes$attribute, 'frameborder', '0')
-				]),
-			$bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toHtmlAttributes(yt)),
-		_List_Nil);
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$toHtml = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$View$toIframe;
-var $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Width = function (a) {
-	return {$: 'Width', a: a};
-};
-var $bellroy$elm_embed_youtube$Embed$Youtube$Attributes$width = $bellroy$elm_embed_youtube$Embed$Youtube$Internal$Attribute$Width;
 var $author$project$Projects$fluid = A2(
 	$elm$html$Html$div,
 	_List_Nil,
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n## High Performance Fluid Simulation [[GitHub](https://github.com/JoelWantsCoffee/fluid-sim)]\nA fluid sim coded in C, complete with `CUDA` and `AVX` optimizations. I built this for the (excellent!) *COSC3500: High-Performance Computing* course at UQ. Here\'s a project reflection video.\n'),
-			function (x) {
-			return A2(
-				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class('w-full flex')
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('grow')
-							]),
-						_List_Nil),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('rounded-md border border-flu-300 overflow-clip bg-flu-100')
-							]),
-						_List_fromArray(
-							[x])),
-						A2(
-						$elm$html$Html$div,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class('grow')
-							]),
-						_List_Nil)
-					]));
-		}(
-			$bellroy$elm_embed_youtube$Embed$Youtube$toHtml(
-				A2(
-					$bellroy$elm_embed_youtube$Embed$Youtube$attributes,
-					_List_fromArray(
-						[
-							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$width(480),
-							$bellroy$elm_embed_youtube$Embed$Youtube$Attributes$height(270)
-						]),
-					$bellroy$elm_embed_youtube$Embed$Youtube$fromString('-RVnkuJ1Oao'))))
+			$author$project$Common$md('\n## High Performance Fluid Simulation [[GitHub](https://github.com/JoelWantsCoffee/fluid-sim)]\nA fluid sim coded in C, complete with `CUDA` and `AVX` optimizations. I built this for the (excellent!) *COSC3500: High-Performance Computing* course at UQ.\n')
 		]));
 var $author$project$Projects$hpolys = A2(
 	$elm$html$Html$div,
@@ -9469,7 +9087,7 @@ var $author$project$Projects$view = function (m) {
 		$elm$core$List$map,
 		$author$project$Common$bubble,
 		_List_fromArray(
-			[$author$project$Projects$hpolys, $author$project$Projects$sotrue, $author$project$Projects$fluid, $author$project$Projects$timer]));
+			[$author$project$Projects$hpolys, $author$project$Projects$sotrue, $author$project$Projects$timer, $author$project$Projects$fluid]));
 };
 var $author$project$Projects$page = {init: $author$project$Projects$init, subscriptions: $author$project$Projects$subscriptions, update: $author$project$Projects$update, view: $author$project$Projects$view};
 var $author$project$Talk$init = _Utils_Tuple2(_Utils_Tuple0, $elm$core$Platform$Cmd$none);
@@ -9519,6 +9137,16 @@ var $author$project$Words$update = F2(
 		var m = msg.a;
 		return _Utils_Tuple2(m, $elm$core$Platform$Cmd$none);
 	});
+var $author$project$Words$poems = A2(
+	$elm$html$Html$div,
+	_List_fromArray(
+		[
+			$elm$html$Html$Attributes$class('w-2/5 mx-auto py-16 prose')
+		]),
+	_List_fromArray(
+		[
+			$author$project$Common$md('\n# Five Poems\n\n&emsp;\n\n## 1. Durry Head\nDurry head, durry eyes\nDurry breath just outside\nWet heat, durry fumes\nScrunch your eyes, think thoughts of doom\nShut the window, sleep in sweat\nPost-exams the durries end\nIt\'s just the stress, so he says\nWhat\'s to do a durry head?\n\n&emsp;\n\n## 2. Flames\nFlames, flames laugh with me\nTell me of your woody glee\nFlames, flames louder you\nSing to me of burnt black wood\n\n&emsp;\n\n## 3. Bluetack\nWe stick to each other.\nWe separate in a thousand wispy strands.\nBits of us float, suspended in the mess of it all, and I can\'t tell with which of us each originally belonged.\n\n&emsp;\n\n##\n')
+		]));
 var $author$project$Words$serviceDeskOne = A2(
 	$elm$html$Html$div,
 	_List_fromArray(
@@ -9527,7 +9155,7 @@ var $author$project$Words$serviceDeskOne = A2(
 		]),
 	_List_fromArray(
 		[
-			$author$project$Common$md('\n# Service Desk One\n\nI cross the room and make it to service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed on me. \n\n> What are you here for?\n\nHer eyes snap down to the counter, to my forms and my id. She answers her own question. \n\n> A working with children\'s check.\n\nShe says it flatly, her mind obviously elsewhere. Her eyes move along the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.\n\n> Lunch!\n> Lunch is good!\n> I just had lunch too.\n> Don\'t worry, I\'m just having some fun.\n\nShe takes up my forms and starts entering something into her computer. She types for a minute, then stops to look at me.\n\n> No. \n> Is this your first time here?\n> Why haven\'t you been here before?\n> You\'re supposed to have new south wales license.\n> If you\'re here for longer than three months, you\'re supposed to request a new south wales license.\n> It\'s... no, no, don\'t worry.\n> The police won\'t know how long you\'ve been here.\n> It\'s a technicality.\n> It\'s up to you, whatever you want.\n\nShe turns back to her computer desk, produces a form, and places it on the counter. \n\n> You fill this in so you can get on the system.\n> I\'ll do this.\n> That is teamwork.\n\nI search the counter top for a pen. She sees me looking, gets down from her chair, walks about a metre to a set of draws, and produces a fresh pen. She gives it to me.\n\n> There are never any pens these days.\n> Teamwork.\n> I\'m just having some fun.\n> Because, look around---\n> No one has fun anymore.\n\nI turn to look around. The waiting room is full of waiting people. They don\'t all look glum; the people standing in front of service desk two are laughing. I turn back to the woman.\n\n> Queensland must be cheaper. \n> It\'s expensive here.\n\nI tell her that I think Brisbane is catching up to Sydney, cost of living wise.\n\n> It\'s because everyone here is running to Brisbane.\n> The people in Brisbane won\'t like it.\n> Soon all the states will be angry at each other.\n> And no one will think about immigrants anymore.\n> Sorry, I\'m just being an immigrant. \n> I\'m just having some fun.\n> No one has fun anymore.\n> And it doesn\'t even matter who you vote for.\n> The greens, one nation---all of the votes will go back to the two parties.\n> And they\'re both the same.\n> Everyone is the same.\n\nShe lowers her voice conspiratorially:\n\n> But I think labour\'s better.\n\nShe quickly returns to her normal volume.\n\n> But I\'m just being an immigrant.\n> I\'m just having fun.\n\nShe trails off for a moment, concentrating on her computer, then starts mumbling to herself as she types.\n\n> Who are you?\n> You are:\n> Joel...\n> William...\n> Richardson...\n> Do you ever think about that?\n\nShe fixes her eyes on me once again.\n\n> That that isn\'t who really who you are?\n> That that\'s just a name some people gave you, and other people call you?\n> You know?\n> Who are you really?\n\n&emsp;\n\n&emsp;\n\nI finish filling in my form and slide it across the counter to her. She pushes my ID back to me. \n\n> Teamwork.\n\nShe prints off something and hands it to me---a temporary working with children\'s check, for use until my proper one arrives. I collect my things.\n\n> Do you read?\n> You should read this book.\n> It\'s a wonderful book.\n> The author is brilliant.\n\nShe writes the name of the book on a scrap of paper and slides it across the counter to me.\n\n> Don\'t buy it though.\n> You\'re at the university.\n> You\'re like me -- poor.\n> Get it from the library.\n\nI tell her to have a good afternoon. I wave goodbye.\n\n> Come back sometime.\n> Tell me if you like it.\n')
+			$author$project$Common$md('\n# Service Desk One\n\nI cross the room and arrive at service desk one. I place my things on the counter and look to the small lady sitting opposite me. Her eyes are fixed to me. \n\n> What are you here for?\n\nThe eyes snap down to the counter, to my forms and my id. She answers her own question.\n\n> A working with children\'s check.\n\nShe says it flatly, her mind obviously elsewhere. Her eyes move along the counter and come to rest on the remnants of my lunch: a plastic tray, covered in quick-sale tags, labelled chopped fruit.\n\n> Lunch!\n> Lunch is good!\n> I just had lunch too.\n> Don\'t worry! \n> I\'m just having some fun.\n\nHer though lingers, somehow unresolved, as she takes up my forms and starts entering something into her computer. She types in silence for a minute, two, three, then stops, looking to me.\n\n> No. \n> Is this your first time here? \n> Why haven\'t you been here before? \n> You\'re supposed to have New South Wales license.\n> If you\'re here for longer than three months, you\'re supposed to request a New South Wales license.\n> It\'s... no, no, don\'t worry.\n> The police won\'t know how long you\'ve been here.\n> It\'s a technicality.\n> It\'s up to you, whatever you want.\n\nShe turns back to her computer desk, produces a form, and places it on the counter. \n\n> You fill this in so you can get on the system.\n> I\'ll do this.\n> That is teamwork.\n\nI search the counter top for a pen. She sees me looking, gets down from her chair, walks about a metre to a set of draws, and produces a fresh pen. She gives it to me.\n\n> There are never any pens these days.\n> Teamwork.\n> I\'m just having some fun.\n> Because, look around---\n> No one has fun anymore.\n\nI turn to look around. The waiting room is full of waiting people. They don\'t all look glum; the people standing in front of service desk two are laughing. I turn back to the woman.\n\n> Queensland must be cheaper. \n> It\'s expensive here.\n\nI tell her that I think Brisbane is catching up to Sydney, cost of living wise.\n\n> It\'s because everyone here is running to Brisbane.\n> The people in Brisbane won\'t like it.\n> Soon all the states will be angry at each other.\n> And no one will think about immigrants anymore!\n> Sorry, I\'m just being an immigrant. \n> I\'m just having some fun.\n> No one has fun anymore.\n> And it doesn\'t even matter who you vote for.\n> The greens, one nation---all of the votes will go back to the two parties.\n> And they\'re both the same.\n> Everyone is the same.\n\nShe lowers her voice conspiratorially:\n\n> But I think labour\'s better.\n\nShe quickly returns.\n\n> But I\'m just being an immigrant.\n> I\'m just having fun.\n\nShe trails off for a moment, concentrating on her computer, then starts mumbling to herself as she types.\n\n> Who are you?\n> You are:\n> Joel...\n> William...\n> Richardson...\n> Do you ever think about that?\n\nShe fixes her eyes on me once again.\n\n> That that isn\'t who really who you are?\n> That that\'s just a name some people gave you, and other people call you?\n> You know?\n> Who are you really?\n\n&emsp;\n\n&emsp;\n\nI finish filling in my form and slide it across the counter to her. She pushes my ID back to me. \n\n> Teamwork.\n\nShe prints off something and hands it to me---a temporary working with children\'s check, for use until my proper one arrives. I collect my things.\n\n> Do you read?\n> You should read this book.\n> It\'s a wonderful book.\n> The author is brilliant.\n\nShe writes the name of the book on a scrap of paper and slides it across the counter to me.\n\n> Don\'t buy it though.\n> You\'re at the university.\n> You\'re like me -- poor.\n> Get it from the library.\n\nI tell her to have a good afternoon. I wave goodbye.\n\n> Come back sometime.\n> Tell me if you like it.\n')
 		]));
 var $author$project$Words$Msg = function (a) {
 	return {$: 'Msg', a: a};
@@ -9536,7 +9164,7 @@ var $author$project$Words$toString = function (m) {
 	if (m.$ === 'ServiceDeskOne') {
 		return 'Service Desk One';
 	} else {
-		return 'Blue-tack';
+		return 'Five Poems';
 	}
 };
 var $author$project$Words$sidebarItem = F2(
@@ -9549,7 +9177,7 @@ var $author$project$Words$sidebarItem = F2(
 					'font-light ' + A3(
 						$author$project$Common$ifThenElse,
 						_Utils_eq(m, m2),
-						'text-flu-500',
+						'text-flu-800',
 						'text-flu-400 hover:underline cursor-pointer')),
 					$elm$html$Html$Events$onClick(
 					$author$project$Words$Msg(m2))
@@ -9583,7 +9211,7 @@ var $author$project$Words$view = function (m) {
 							if (m.$ === 'ServiceDeskOne') {
 								return $author$project$Words$serviceDeskOne;
 							} else {
-								return $elm$html$Html$text('');
+								return $author$project$Words$poems;
 							}
 						}()
 						])),
@@ -9614,6 +9242,50 @@ var $author$project$Words$view = function (m) {
 var $author$project$Words$page = {init: $author$project$Words$init, subscriptions: $author$project$Words$subscriptions, update: $author$project$Words$update, view: $author$project$Words$view};
 var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
 var $elm$browser$Browser$Dom$setViewportOf = _Browser_setViewportOf;
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 'Nothing') {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 'Nothing') {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.protocol;
+		if (_v0.$ === 'Http') {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.fragment,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.query,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.port_,
+					_Utils_ap(http, url.host)),
+				url.path)));
+};
 var $author$project$Main$init = F2(
 	function (url, key) {
 		return A2(
@@ -9918,7 +9590,7 @@ var $author$project$Main$topBar = function (s) {
 							]),
 						_List_fromArray(
 							[
-								$elm$html$Html$text('Research & Projects')
+								$elm$html$Html$text('Projects')
 							])),
 						A2(
 						$elm$html$Html$a,
