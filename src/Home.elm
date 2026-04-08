@@ -90,7 +90,7 @@ edu =
 *2026 - 2029*&ensp;The University of Sydney
 
 
-**Master of Research (Mathematics)**
+**Master of Research (Mathematics) [[Thesis]](https://doi.org/10.25949/31593289)** 
 *Thesis on Monads and Tangent Categories supervised by JS Lemay*
 *2025 - 2025*&ensp;Macquarie University
 

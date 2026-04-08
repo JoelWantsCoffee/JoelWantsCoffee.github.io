@@ -21,6 +21,10 @@ body {
   @apply text-justify;
 }
 
+.invert {
+  filter: invert(1) hue-rotate(180deg);
+}
+
 .creative .content p {
   @apply my-4 text-lg;
 }

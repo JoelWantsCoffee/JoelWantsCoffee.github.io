@@ -708,12 +708,20 @@ video {
   width: 50%;
 }
 
+.w-1\/5 {
+  width: 20%;
+}
+
 .w-2\/5 {
   width: 40%;
 }
 
 .w-3\/4 {
   width: 75%;
+}
+
+.w-4\/5 {
+  width: 80%;
 }
 
 .w-8 {
@@ -895,6 +903,10 @@ video {
   overflow: scroll;
 }
 
+.overflow-x-clip {
+  overflow-x: clip;
+}
+
 .overflow-y-clip {
   overflow-y: clip;
 }
@@ -1054,6 +1066,10 @@ video {
   padding-bottom: 2rem;
 }
 
+.pr-16 {
+  padding-right: 4rem;
+}
+
 .pt-12 {
   padding-top: 3rem;
 }
@@ -1157,6 +1173,11 @@ video {
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
 
+.invert {
+  --tw-invert: invert(100%);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
@@ -1204,6 +1225,10 @@ body {
 
 .creative .prose .content p {
   text-align: justify;
+}
+
+.invert {
+  filter: invert(1) hue-rotate(180deg);
 }
 
 .creative .content p {

@@ -26,6 +26,18 @@ md x =
         x
 
 
+md_ : String -> Html msg
+md_ x =
+    let
+        defaultOptions =
+            Markdown.defaultOptions
+    in
+    Markdown.toHtmlWith
+        { defaultOptions | githubFlavored = Just { tables = True, breaks = True }, smartypants = True, sanitize = False }
+        [ class "content" ]
+        x
+
+
 mdCodeLike : String -> Html msg
 mdCodeLike x =
     Markdown.toHtml
@@ -61,6 +73,10 @@ ifThenElse c a b =
 
     else
         b
+
+
+flip f a b =
+    f b a
 
 
 port render : {} -> Cmd msg

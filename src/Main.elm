@@ -11,6 +11,7 @@ import Html.Attributes as Attr exposing (class)
 import Html.Events as Html
 import List
 import List.Extra as List
+import Notes
 import Projects
 import Talk
 import Task
@@ -30,6 +31,7 @@ type SubModel
     | Talk Talk.Model
     | Projects Projects.Model
     | Words Words.Model
+    | Notes Notes.Model
     | Empty
 
 
@@ -39,6 +41,7 @@ type Msg
     | TalkMsg Talk.Msg
     | ProjectsMsg Projects.Msg
     | WordsMsg Words.Msg
+    | NotesMsg Notes.Msg
     | LinkClicked Browser.UrlRequest
     | NoOp
     | Reset Url.Url
@@ -87,6 +90,9 @@ init url key =
 
             Just "words" ->
                 Tuple.mapBoth Words (Cmd.map WordsMsg) Words.page.init
+
+            Just "notes" ->
+                Tuple.mapBoth Notes (Cmd.map NotesMsg) Notes.page.init
 
             Just "cv" ->
                 Tuple.mapBoth Home (Cmd.map HomeMsg) Home.page.init
@@ -143,7 +149,10 @@ viewInner model =
             academic model <| List.map (Html.map ArticleMsg) (Article.page.view m)
 
         Words m ->
-            creative <| List.map (Html.map WordsMsg) (Words.page.view m)
+            creative False <| List.map (Html.map WordsMsg) (Words.page.view m)
+
+        Notes m ->
+            creative True <| List.map (Html.map NotesMsg) (Notes.page.view m)
 
 
 academic : Model -> List (Html Msg) -> Html Msg
@@ -174,9 +183,9 @@ home model contents =
         ]
 
 
-creative : List (Html Msg) -> Html Msg
-creative contents =
-    Html.div [ class "creative w-full h-full bg-flu-50 overflow-clip" ] contents
+creative : Bool -> List (Html Msg) -> Html Msg
+creative dark contents =
+    Html.div [ class "creative w-full h-full bg-flu-50 overflow-clip", Attr.classList [ ( "invert", dark ) ] ] contents
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -196,6 +205,9 @@ update message model =
 
         ( WordsMsg msg, Words m ) ->
             Tuple.mapBoth (setSubModel model Words) (Cmd.map WordsMsg) (Words.page.update msg m)
+
+        ( NotesMsg msg, Notes m ) ->
+            Tuple.mapBoth (setSubModel model Notes) (Cmd.map NotesMsg) (Notes.page.update msg m)
 
         ( LinkClicked (Browser.External s), _ ) ->
             ( model, Nav.load s )
@@ -233,6 +245,9 @@ subscriptions model =
 
         Words m ->
             Sub.map WordsMsg (Words.page.subscriptions m)
+
+        Notes m ->
+            Sub.map NotesMsg (Notes.page.subscriptions m)
 
 
 

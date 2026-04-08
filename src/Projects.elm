@@ -16,6 +16,15 @@ import WebGL.Texture exposing (Texture)
 -- PROJECTS
 
 
+notes : Html Msg
+notes =
+    Html.div []
+        [ md """
+## Maths Notes [[Link](/#notes)]
+A collection of maths notes.
+""" ]
+
+
 hpolys : Html Msg
 hpolys =
     Html.div []
@@ -121,7 +130,8 @@ view : Model -> List (Html Msg)
 view m =
     List.map bubble
         [ -- euclidean m
-          hpolys
+          notes
+        , hpolys
         , sotrue
         , timer
         , fluid
