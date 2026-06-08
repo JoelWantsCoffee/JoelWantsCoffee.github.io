@@ -19,36 +19,45 @@ type alias Path =
     String
 
 
-type alias Unloaded_ =
-    { name : String, path : String, download_url : Maybe String }
+type alias Metadata =
+    { name : String, path : Path, download_url : Maybe String }
 
 
 type File
-    = Unloaded Unloaded_
-    | Folder (List ( String, File ))
+    = Folder Bool (List Metadata)
     | Markdown String
-    | Pdf String
+    | Pdf
 
 
 type alias Model =
-    { selected : Maybe Path, notes : Dict Path File }
+    { flags : Flags, selected : Maybe Path, data : Dict Path ( Metadata, File ), loading : Int }
 
 
 type Msg
-    = Select Path
-    | FileGet Path (Result Http.Error File)
+    = Select Metadata
+    | FileGet Metadata (Result Http.Error File)
 
 
-file : D.Decoder File
-file =
-    D.oneOf
-        [ folder
-        ]
+file : Metadata -> D.Decoder File
+file m =
+    if Nothing == m.download_url then
+        folder
+
+    else
+        case List.last (String.split "." m.path) of
+            Just "md" ->
+                markdown
+
+            Just "pdf" ->
+                pdf
+
+            _ ->
+                D.fail "Unknown file type."
 
 
-unloaded : D.Decoder Unloaded_
-unloaded =
-    D.map3 Unloaded_
+metadata : D.Decoder Metadata
+metadata =
+    D.map3 Metadata
         (D.field "name" D.string)
         (D.field "path" D.string)
         (D.field "download_url" (D.nullable D.string))
@@ -56,35 +65,21 @@ unloaded =
 
 folder : D.Decoder File
 folder =
-    D.map Folder <|
-        D.list <|
-            D.map2 Tuple.pair (D.field "name" D.string) (D.map Unloaded unloaded)
+    D.map (Folder False) (D.list metadata)
 
 
-markdowns : D.Decoder (Dict String String)
-markdowns =
-    D.list
-        (D.map2 Tuple.pair
-            (D.field "path" D.string)
-            (D.field "download_url" (D.nullable D.string))
-        )
-        |> D.map
-            (List.filterMap
-                (\( a, b ) ->
-                    ifThenElse (String.right 3 a == ".md") (Just <| String.dropRight 3 a) Nothing
-                        |> Maybe.map2 (flip Tuple.pair) b
-                )
-            )
-        |> D.map Dict.fromList
+markdown : D.Decoder File
+markdown =
+    D.map Markdown D.string
+
+
+pdf : D.Decoder File
+pdf =
+    D.map (\_ -> Pdf) D.string
 
 
 
 -- ACTUAL CODE
-
-
-requestNote : String -> String -> Cmd Msg
-requestNote name url =
-    Http.get { url = url, expect = Http.expectString (FileGet name) }
 
 
 mapOdd : (a -> a) -> List a -> List a
@@ -104,22 +99,28 @@ cleanMaths =
         >> String.replace "*" "\\*"
 
 
-clean : String -> String
-clean str =
-    String.split "$$" str
-        |> List.indexedMap
-            (\i ->
-                ifThenElse (modBy 2 i == 0)
-                    (String.split "$"
-                        >> mapOdd cleanMaths
-                        >> String.join "$"
+clean : File -> File
+clean f =
+    case f of
+        Markdown str ->
+            String.split "$$" str
+                |> List.indexedMap
+                    (\i ->
+                        ifThenElse (modBy 2 i == 0)
+                            (String.split "$"
+                                >> mapOdd cleanMaths
+                                >> String.join "$"
+                            )
+                            (cleanMaths
+                                >> (++) "$$ "
+                                >> flip (++) " $$"
+                            )
                     )
-                    (cleanMaths
-                        >> (++) "$$ "
-                        >> flip (++) " $$"
-                    )
-            )
-        |> String.concat
+                |> String.concat
+                |> Markdown
+
+        a ->
+            a
 
 
 view : Model -> List (Html Msg)
@@ -128,72 +129,112 @@ view m =
         [ Html.div
             [ class "top-0 left-0 p-8 flex flex-col gap-2 select-none w-1/5 h-full" ]
             (Html.a [ class "w-[0px] text-3xl times-new-roman pb-4 cursor-pointer hover:underline", Attr.href "/" ] [ Html.text "Joel Richardson" ]
-                :: List.map (sidebarItem m) (Dict.keys m.notes)
+                :: List.map (Tuple.second >> Tuple.first >> sidebarItem m) (Dict.toList m.data)
             )
         , Html.div [ class "h-full w-4/5 overflow-y-scroll overflow-x-clip" ]
             [ Html.div [ class "pr-16 py-16" ]
-                [ case Dict.get m.selected m.notes of
-                    Just file ->
-                        md_ ("# " ++ m.selected ++ "\n" ++ file)
+                [ case Maybe.andThen (flip Dict.get m.data) m.selected of
+                    Just ( meta, Pdf ) ->
+                        Html.iframe [ Attr.src (Maybe.withDefault "" meta.download_url), class "w-full h-full" ] []
+
+                    Just ( meta, Markdown str ) ->
+                        md_ ("# " ++ meta.name ++ "\n" ++ str)
+
+                    Just ( _, Folder _ _ ) ->
+                        md_ "# Oops! We don't display folders."
 
                     Nothing ->
-                        md_ "# Oops! Nothing here."
+                        md_ <| "# Oops! This file doesn't exist!\n" ++ String.join "\n" (Dict.keys m.data)
                 ]
             ]
         ]
     ]
 
 
-sidebarItem : Model -> String -> Html Msg
-sidebarItem m m2 =
-    Html.div [ class <| "font-light " ++ ifThenElse (m.selected == m2) "text-flu-800" "text-flu-400 hover:underline cursor-pointer", onClick (Select m2) ] [ Html.text m2 ]
+sidebarFile : Model -> Metadata -> Html Msg
+sidebarFile m m2 =
+    Html.div [ class <| "font-light " ++ ifThenElse (m.selected == Just m2.path) "text-flu-800" "text-flu-400 hover:underline cursor-pointer", onClick (Select m2) ] [ Html.text m2.name ]
+
+
+sidebarItem : Model -> Metadata -> Html Msg
+sidebarItem m meta =
+    case Dict.get meta.path m.data of
+        Just ( _, Folder True lst ) ->
+            sidebarFolder m meta lst
+
+        _ ->
+            sidebarFile m meta
+
+
+sidebarFolder : Model -> Metadata -> List Metadata -> Html Msg
+sidebarFolder m m_ lst =
+    Html.div []
+        [ Html.div [ class "font-light text-flu-400 cursor-pointer" ] [ Html.text m_.name ]
+        , Html.div [ class "pl-1 w-full" ] (List.map (sidebarItem m) lst)
+        ]
+
+
+load : Flags -> Metadata -> Cmd Msg
+load f m =
+    case m.download_url of
+        Just url ->
+            Http.get { url = url, expect = Http.expectString (Result.map Markdown >> FileGet m) }
+
+        Nothing ->
+            Http.get { url = f.url ++ m.path, expect = Http.expectJson (FileGet m) (file m) }
 
 
 init : Flags -> ( Model, Cmd Msg )
 init f =
-    ( Model Nothing Dict.empty, Http.get { url = f.url, expect = Http.expectJson (FileGet <| FileId f.url) markdowns } )
-
-
-default : Dict String String
-default =
-    Dict.fromList
-        [ ( "README"
-          , "Hello!\n \nThese are my notes. I can't promise everything here is correct.\n \nEnjoy.\n \n \nJoel"
-          )
-        ]
+    ( Model f Nothing Dict.empty 1, load f (Metadata "/" "" Nothing) )
 
 
 page : Page Model Msg
 page =
-    { init = init
+    { init = init { url = "https://api.github.com/repos/JoelWantsCoffee/PhD-Notes/contents/" }
     , view = view
     , update = update
     , subscriptions = subscriptions
     }
 
 
+toggleFolder : Path -> Model -> Model
+toggleFolder p m =
+    case Dict.get p m.data of
+        Just ( meta, Folder b lst ) ->
+            { m | data = Dict.insert meta.path ( meta, Folder (not b) lst ) m.data }
+
+        _ ->
+            m
+
+
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg m =
     Tuple.mapSecond (\l -> Cmd.batch [ render {}, l ]) <|
         case msg of
-            Select f ->
-                ( { m | selected = f }, Cmd.none )
+            Select meta ->
+                let
+                    m_ =
+                        case meta.download_url of
+                            Just _ ->
+                                { m | selected = Just meta.path }
 
-            InitGet res ->
+                            Nothing ->
+                                toggleFolder meta.path m
+                in
+                if Dict.member meta.path m.data then
+                    ( m_, Cmd.none )
+
+                else
+                    ( { m_ | loading = m_.loading + 1 }, load m_.flags meta )
+
+            FileGet meta res ->
                 case res of
-                    Result.Ok a ->
-                        ( { m | notes = Dict.union m.notes (Dict.map (\k _ -> "# Loading: " ++ k) a) }, (Dict.values >> Cmd.batch) (Dict.map requestNote a) )
+                    Result.Ok f ->
+                        ( { m | loading = m.loading - 1, data = Dict.insert meta.path ( meta, clean f ) m.data }, Cmd.none )
 
                     Result.Err _ ->
-                        ( m, Cmd.none )
-
-            FileGet name res ->
-                case res of
-                    Result.Ok file ->
-                        ( { m | notes = Dict.insert name (clean file) m.notes }, Cmd.none )
-
-                    Result.Err _ ->
-                        ( { m | notes = Dict.remove name m.notes }, Cmd.none )
+                        ( { m | loading = m.loading - 1, data = Dict.remove meta.path m.data }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# elm make src/Main.elm --output=./out/elm.js --optimize
-elm make src/Main.elm --output=./out/elm.js 
+elm make src/Main.elm --output=./out/elm.js --optimize
+# elm make src/Main.elm --output=./out/elm.js --debug
 
 sass src/styles.sass .tmp/temp.css
 
