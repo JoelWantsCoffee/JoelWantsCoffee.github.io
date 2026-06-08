@@ -10951,7 +10951,7 @@ var $author$project$Main$home = F2(
 					$elm$html$Html$div,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class('h-full w-full overflow-scroll'),
+							$elm$html$Html$Attributes$class('h-full w-full overflow-y-scroll'),
 							$elm$html$Html$Attributes$id('main')
 						]),
 					A3(
@@ -11064,7 +11064,7 @@ var $author$project$Main$viewInner = function (model) {
 			var m = _v0.a;
 			return A2(
 				$author$project$Main$creative,
-				true,
+				false,
 				A2(
 					$elm$core$List$map,
 					$elm$html$Html$map($author$project$Main$NotesMsg),

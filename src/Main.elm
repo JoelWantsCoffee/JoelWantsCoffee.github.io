@@ -152,7 +152,7 @@ viewInner model =
             creative False <| List.map (Html.map WordsMsg) (Words.page.view m)
 
         Notes m ->
-            creative True <| List.map (Html.map NotesMsg) (Notes.page.view m)
+            creative False <| List.map (Html.map NotesMsg) (Notes.page.view m)
 
 
 academic : Model -> List (Html Msg) -> Html Msg
@@ -173,7 +173,7 @@ academic model contents =
 home : Model -> List (Html Msg) -> Html Msg
 home model contents =
     Html.div [ class "home w-full h-full bg-flu-0" ]
-        [ Html.div [ class "h-full w-full overflow-scroll", Attr.id "main" ] <|
+        [ Html.div [ class "h-full w-full overflow-y-scroll", Attr.id "main" ] <|
             (Html.div [ class "flex flex-col place-items-center space-y-6" ] >> List.singleton) <|
                 List.concat
                     [ [ Html.div [ class "w-full" ] [ topBar model.url.fragment ] ]
